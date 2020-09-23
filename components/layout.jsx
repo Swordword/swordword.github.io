@@ -4,7 +4,7 @@ import utilStyles from "../styles/utils.module.css";
 import Link from "next/link";
 
 const name = "your name";
-export const siteTitle = "Next.js Sample Website";
+export const siteTitle = "Swordword blog";
 
 export default function Layout({ children, home }) {
   return (
@@ -25,7 +25,6 @@ export default function Layout({ children, home }) {
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <header className={styles.header}>
-        I am Bob
         {/* {home ? (
           <>
             <h1 className={utilStyles.heading2Xl}>{name}</h1>

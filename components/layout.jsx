@@ -3,7 +3,7 @@ import styles from "./layout.module.css";
 import utilStyles from "../styles/utils.module.css";
 import Link from "next/link";
 
-const name = "your name";
+const name = "Swordword";
 export const siteTitle = "Swordword blog";
 
 export default function Layout({ children, home }) {
@@ -25,7 +25,7 @@ export default function Layout({ children, home }) {
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
       <header className={styles.header}>
-        {/* {home ? (
+        {home ? (
           <>
             <h1 className={utilStyles.heading2Xl}>{name}</h1>
           </>
@@ -37,7 +37,7 @@ export default function Layout({ children, home }) {
               </Link>
             </h2>
           </>
-        )} */}
+        )}
       </header>
       <main>{children}</main>
       {!home && (

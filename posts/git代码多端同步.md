@@ -15,7 +15,7 @@ tag: Git、Node、Webhook
    * 选中触发事件的类型，通常选择推送事件，
    * 选择**活动**复选框
 
-   ![](./webhook.png)
+   ![](http://img.massivejohn.com/webhook.png)
 
 2. **将存储库克隆到服务器**
 

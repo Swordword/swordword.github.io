@@ -1,5 +1,5 @@
 import { format, parseISO } from "date-fns";
-export default function Date({ dateString }) {
+export default function Date({ dateString }:{ dateString: string }) {
   console.log("dateString", dateString);
   if (!dateString) return <span>no time </span>;
   const date = parseISO(dateString);

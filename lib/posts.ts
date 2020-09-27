@@ -7,7 +7,7 @@ import remarkHtml from "remark-html";
 const postsDirectory = path.join(process.cwd(), "posts");
 
 // 格式化gray-matter数据
-const dateStripped = (obj) => {
+const dateStripped = (obj: { data?: any }): { data?: any } => {
   let newObj = {};
   Object.keys(obj).forEach((key) => {
     let value = obj[key];

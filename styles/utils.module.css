@@ -25,8 +25,9 @@
   line-height: 1.5;
 }
 .headingBs{
+  color: #666;
   font-size: 1rem;
-  line-height: 2.2;
+  line-height: 1.8;
 }
 
 .borderCircle {
@@ -53,5 +54,6 @@
 
 .lightText {
   color: #999;
-  font-size: 14px;
+  font-size: 16px;
+  margin-bottom: 0.25rem;
 }

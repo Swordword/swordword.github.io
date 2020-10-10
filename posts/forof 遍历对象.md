@@ -5,9 +5,9 @@ description: description
 tag: javascript
 ---
 
-### 数组为何可以使用for...of遍历
-
 数组 for、forEach、every、some都是通过数组下标遍历属性，ES6 `for...of`可以直接通过迭代器遍历数组的值。
+
+### 数组为何可以使用for...of遍历
 
 for...of语法适用于定义了迭代器的对象，而数组刚好有内置的`@@iterator`,因此可以直接应用。
 

@@ -5,6 +5,8 @@ description: description
 tag: javascript
 ---
 
+### 数组为何可以使用forof遍历
+
 数组 for、forEach、every、some都是通过数组下标遍历属性，ES6 `for...of`可以直接通过迭代器遍历数组的值。
 
 for...of语法适用于定义了迭代器的对象，而数组刚好有内置的`@@iterator`,因此可以直接应用。
@@ -20,4 +22,33 @@ console.log(it.next()) // {value:undefined,done:true}
 ```
 
 符号`Symbol.iterator`获取对象的`@@iterator`内部属性。引用类似iterator的特殊属性时要使用符号名，而不是符号代表的值。(?) `@@iterator`其实并不是一个迭代器对象，而是一个返回迭代器对象的函数
+
+### 给普通的对象定义@@iterator迭代器
+
+比如一个普通的obj对象，含有a、b两个属性。为该对象定义一个`Symbol.iterator`迭代器属性，即可使用for-of 遍历
+
+```js
+var myObject = {
+  a: 2,
+  b: 3,
+};
+Object.defineProperty(myObject, Symbol.iterator, {
+  enumerable: true,
+  writable: false,
+  configurable: true,
+  value: function () {
+    var o = this;
+    var idx = 0;
+    var ks = Object.keys(o);
+    return {
+      next: function () {
+        return {
+          value: o[ks[idx++]],
+          done: idx > ks.length,
+        };
+      },
+    };
+  },
+});
+```
 

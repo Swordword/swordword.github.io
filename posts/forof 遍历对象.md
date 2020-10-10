@@ -1,5 +1,5 @@
 ---
-title: for...of 遍历对象
+title: 使用forof 遍历对象
 date: 2020-10-10 23:17:42
 description: description
 tag: javascript

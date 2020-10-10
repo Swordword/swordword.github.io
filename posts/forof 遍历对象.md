@@ -1,11 +1,11 @@
 ---
-title: 使用forof 遍历对象
+title: 使用for...of 遍历对象
 date: 2020-10-10 23:17:42
 description: description
 tag: javascript
 ---
 
-### 数组为何可以使用forof遍历
+### 数组为何可以使用for...of遍历
 
 数组 for、forEach、every、some都是通过数组下标遍历属性，ES6 `for...of`可以直接通过迭代器遍历数组的值。
 

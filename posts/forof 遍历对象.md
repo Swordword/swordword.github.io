@@ -5,7 +5,7 @@ description: description
 tag: javascript
 ---
 
-数组 for、forEach、every、some都是通过数组下标遍历属性，ES6 `for...of`可以直接通过迭代器遍历数组的值。
+数组使用 for、forEach、every、some都是通过数组下标遍历属性，ES6 `for...of`可以直接通过迭代器遍历数组的值。
 
 for...of 其实创建一个循环用于遍历可迭代对象，包括:内置的string、array、类数组对象(例如函数参数arguments或节点nodeList)、TypedArray、Map、Set和用户定义的迭代对象。它调用一个定制的迭代钩子，其中包含针对对象的每个不同属性的值执行的语句
 

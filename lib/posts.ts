@@ -84,7 +84,7 @@ export function getAllPostIds() {
 
 // 获取单个博客的内容
 export async function getPostData(id) {
-  console.log("id 11", id);
+  console.log("post id", id);
   const fullPath = path.join(postsDirectory, `${id}.md`);
   const fileContents = fs.readFileSync(fullPath, "utf8");
   const matterResult = matter(fileContents);

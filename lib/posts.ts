@@ -1,9 +1,12 @@
 import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
-import remark from "remark";
+import unified from "unified";
+import slug from "remark-slug";
+import markdown from "remark-parse";
+import headings from "remark-autolink-headings";
+import html from "remark-html";
 import guide from "remark-preset-lint-markdown-style-guide";
-import remarkHtml from "remark-html";
 import highlight from "remark-highlight.js";
 
 const postsDirectory = path.join(process.cwd(), "posts");
@@ -90,12 +93,17 @@ export async function getPostData(id) {
   const fullPath = path.join(postsDirectory, `${id}.md`);
   const fileContents = fs.readFileSync(fullPath, "utf8");
   const matterResult = matter(fileContents);
-  const processedContent = await remark()
+  const processedContent = unified()
+    .use(markdown)
     .use(guide)
     .use(highlight)
-    .use(remarkHtml)
-    .process(matterResult.content);
+    .use(slug)
+    .use(headings)
+    .use(html)
+    .processSync(matterResult.content);
+
   const contentHtml = processedContent.toString();
+  console.log("contentHtml", contentHtml);
   return {
     id,
     contentHtml,

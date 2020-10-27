@@ -3,6 +3,7 @@ import path from "path";
 import matter from "gray-matter";
 import unified from "unified";
 import slug from "remark-slug";
+import toc from "remark-toc";
 import markdown from "remark-parse";
 import headings from "remark-autolink-headings";
 import html from "remark-html";
@@ -98,6 +99,7 @@ export async function getPostData(id) {
     .use(guide)
     .use(highlight)
     .use(slug)
+    .use(toc)
     .use(headings)
     .use(html)
     .processSync(matterResult.content);

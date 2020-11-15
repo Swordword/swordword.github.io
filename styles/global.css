@@ -23,6 +23,15 @@ a:hover {
   text-decoration-color: rgba(0, 0, 0, 0.6);
 }
 
+code {
+  color: #c7254e;
+  background-color: #f9f2f4;
+  border-radius: 2px;
+  padding: 2px 4px;
+  font-size: 16px;
+
+}
+
 img {
   max-width: 100%;
   display: block;

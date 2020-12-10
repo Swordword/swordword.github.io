@@ -1,5 +1,5 @@
 ---
-title: 使用plop生成博客
+title: 使用plop生成博客模板
 date: 2020-06-28 7:21:32
 description: 使用plop自动生成博客模板
 tag: 工作流、JavaScript

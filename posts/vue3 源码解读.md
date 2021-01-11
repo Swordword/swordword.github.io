@@ -5,4 +5,5 @@ description: description
 tag: vue
 ---
 
-vue3在20年9月18号已经正式发布了，趁着年底有空，抓紧看一下源码是怎么实现的吧，
+vue3 在20年9月18号已经正式发布。
+

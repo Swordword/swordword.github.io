@@ -6,7 +6,27 @@
     "dev": "next dev",
     "start": "next start --port 8001",
     "build": "next build && next export",
-    "new": "plop blog"
+    "new": "plop blog",
+    "prepare": "husky install"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "pages/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "eslint --fix",
+      "git add"
+    ],
+    "components/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "eslint --fix",
+      "git add"
+    ],
+    "posts/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "eslint --fix",
+      "git add"
+    ]
   },
   "dependencies": {
     "date-fns": "^2.16.1",

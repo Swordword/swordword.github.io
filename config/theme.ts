@@ -3,7 +3,7 @@ import React from 'react'
 const themes = {
   light: {
     foreground: '#000000',
-    background: '#eeeeee',
+    background: '#ffffff',
   },
   dark: {
     foreground: '#ffffff',

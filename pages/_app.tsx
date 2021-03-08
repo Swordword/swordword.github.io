@@ -11,8 +11,5 @@ export default function App({ Component, pageProps }: AppProps) {
     console.log('fn toggleTheme');
     setTheme((prev) => (prev === themes.light ? themes.dark : themes.light))
   }
-  return <ThemeContext.Provider value={{ theme, toggleTheme }}><Component style={{
-    background: theme.background,
-    color: theme.foreground,
-  }} {...pageProps} /></ThemeContext.Provider>
+  return <ThemeContext.Provider value={{ theme, toggleTheme }}><Component {...pageProps} /></ThemeContext.Provider>
 }

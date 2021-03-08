@@ -1,3 +1,4 @@
+import React, { useContext } from 'react'
 import Head from "next/head";
 import Link from "next/link";
 
@@ -6,6 +7,8 @@ import utilStyles from "../styles/utils.module.css";
 import { getSortedPostsData } from "../lib/posts";
 import Date from "../components/Date";
 import { GetStaticProps } from "next";
+
+import { ThemeContext, themes } from '../config/theme'
 
 export default function Home({
   allPostsData,
@@ -18,6 +21,8 @@ export default function Home({
     tag: string;
   }[];
 }) {
+  const { theme } = useContext(ThemeContext)
+
   return (
     <Layout home>
       <Head>
@@ -35,7 +40,10 @@ export default function Home({
               </div>
 
               <Link href={`/posts/${id}`}>
-                <a>{title}</a>
+                <a style={{
+                  background: theme.background,
+                  color: theme.foreground,
+                }}>{title}</a>
               </Link>
               {/* <div className={utilStyles.lightText}>
                 <small>{tag}</small>
@@ -47,6 +55,7 @@ export default function Home({
         </ul>
       </section>
     </Layout>
+
   );
 }
 

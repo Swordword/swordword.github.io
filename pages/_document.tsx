@@ -1,4 +1,5 @@
 import Document, { Html, Head, Main, NextScript } from 'next/document'
+import { ThemeContext } from '../config/theme'
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
@@ -7,8 +8,9 @@ class MyDocument extends Document {
   }
 
   render() {
+    let { theme } = this.context
     return (
-      <Html lang='zh-Hans'>
+      <Html lang='zh-Hans'  >
         <Head />
         <body>
           <Main />
@@ -18,5 +20,6 @@ class MyDocument extends Document {
     )
   }
 }
+MyDocument.contextType = ThemeContext
 
 export default MyDocument

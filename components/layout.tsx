@@ -1,10 +1,16 @@
+import React,{useContext} from 'react'
 import Head from "next/head";
 import styles from "./layout.module.css";
 import utilStyles from "../styles/utils.module.css";
 import Link from "next/link";
+import Theme from './Theme'
+
 
 const name = "Swordword";
-export const siteTitle = "Swordword frontend blog";
+export const siteTitle = "Swordword's blog";
+
+import { ThemeContext } from '../config/theme'
+
 
 export default function Layout({
   children,
@@ -13,11 +19,13 @@ export default function Layout({
   children: React.ReactNode,
   home?: boolean,
 }) {
+  const { theme } = useContext(ThemeContext)
+
   return (
     <div className={styles.container}>
       <Head>
         <link rel="icon" href="/favicon.ico" />
-<meta name="description"
+        <meta name="description"
           content="Learn how to build a personal website using Next.js"
         />
         <meta
@@ -29,10 +37,13 @@ export default function Layout({
         <meta name="og:title" content={siteTitle} />
         <meta name="twitter:card" content="summary_large_image" />
       </Head>
+      <Theme style={{ position: 'fixed', right: '40px', top: '80px' }} />
       <header className={styles.header}>
         {home ? (
           <>
-            <h1 className={utilStyles.heading2Xl}>{name}</h1>
+            <h1 className={utilStyles.heading2Xl}>
+              <span>{name}</span>
+            </h1>
           </>
         ) : (
           <>
@@ -53,5 +64,6 @@ export default function Layout({
         </div>
       )}
     </div>
+
   );
 }

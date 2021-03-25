@@ -7,7 +7,7 @@ tag: ES6、JavaScript
 
 #### ES7的async、await语法彻底消除了异步回调，但是在错误处理上却带来了新的麻烦
 
-常见的错误处理都是使用try catch语法，感觉相当麻烦。有一个封装函数可以摆脱try catch的束缚
+常见的错误处理都是使用try catch语法，感觉相当麻烦。无意中发现有一个[封装函数]([await-to-js - npm (npmjs.com)](https://www.npmjs.com/package/await-to-js))可以摆脱try catch的束缚
 
 ```js
 // to.js

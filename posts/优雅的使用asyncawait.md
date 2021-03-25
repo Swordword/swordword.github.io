@@ -1,5 +1,5 @@
 ---
-title: [优雅]使用asyncawait
+title: 优雅使用asyncawait
 date: 2020-04-2 13:45:05
 description: ES7的async、await语法彻底消除了异步回调，但是在错误处理上却带来了新的问题。。
 tag: ES6、JavaScript

@@ -5,7 +5,7 @@ description: react中的状态管理,从props到context到redux
 tag: react,state
 ---
 
-### 状态概述
+### 概述
 
 ### props
 

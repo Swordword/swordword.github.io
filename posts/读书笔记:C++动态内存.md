@@ -19,6 +19,15 @@ C++内存大致分成三种：静态内存、栈内存和堆内存(又叫内存�
 
 1. 是个模版，所以也需要尖括号指明类型。`shared_ptr<int> pi`
 
+   定义和改变`shared_ptr` 的其他方法
+
+   | 定义                                           | 说明                           |
+   | ---------------------------------------------- | ------------------------------ |
+   | shared_ptr<T>  p(q) 、shared_ptr<T>  p(u)      | p管理内置指针q所指向的对象     |
+   | shared_ptr<T>  p(q, d)、shared_ptr<T>  p(q, d) | 使用可调用对象代替默认的delete |
+
+   
+
 2. 智能指针的使用与普通指针类似。 `if(pi && pi->empty()) *pi = 11;`
 
 3. `pi.get()`返回 pi 保存的指针，`swap(p,q)` 交换p和q的指针
@@ -35,7 +44,7 @@ C++内存大致分成三种：静态内存、栈内存和堆内存(又叫内存�
 
    查看当前智能指针的计数器可以通过 `pi.use_count()`方法，
 
-   或者根据自己的经验。当我们试图拷贝一个shared_ptr 时，计数器就会递增，反之则递减。拷贝的方式如下
+   或者根据自己的经验。当我们试图拷贝一个shared_ptr 时，计数器就会递增，反之则递减。智能指针常见的拷贝情形如下
 
    * 用一个新 shared_ptr 初始化shared_ptr
    * 将 shared_ptr 作为参数传递给一个函数
@@ -99,7 +108,93 @@ C++内存大致分成三种：静态内存、栈内存和堆内存(又叫内存�
 
 #### `shared_ptr`和`new`结合使用
 
+接受指针参数的智能指针构造函数是explicit的（无法将内置指针隐式转换为一个智能指针），因此必须直接初始化一个智能指针
 
+`shared_ptr<int> p1 = new int(1024)` 	// 错误 打算将 `new` 内置指针转换为智能指针
+
+`shared_ptr<int> p1(new int(1024))`
+
+默认情况下，一个用来初始化智能指针的普通指针必须指向动态内存，因为智能指针默认使用delete释放它所关联的对象。但是，如果我们**提供自己的delete操作**，我们**可以将智能指针绑定到一个指向其他类型的资源的指针上**
+
+**不要混合使用普通指针和智能指针**
+
+```c++
+void process(shared_ptr<int> ptr){
+} // ptr 离开作用域，被销毁
+
+int *x(new int(1024)); // x 是一个普通指针，而不是一个智能指针
+process(x);	// error shared_ptr 是explicit的
+process(shared_ptr<int>(x))	// 合法！但是 x 的内存会被释放，导致下一行的j获取不到值
+int j = *x;
+```
+
+**不要使用get函数返回值初始化另一个智能指针或为指针指针赋值：**
+
+智能指针的`get`函数返回一个内置指针，指向智能指针管理的对象。
+
+`get` 用来将指针的访问权限传递给代码，即只有在确保代码不会delete指针时，才能使用`get`
+
+```cpp
+shared_ptr<int> p(new int(42));
+int *q = p.get();
+{
+	shared_ptr<int>(q);
+} // 程序结束，q被销毁，指向的内存被释放，p为空悬指针
+int foo = *p;
+```
+
+**shared_ptr 其他操作：**
+
+`shared_ptr.reset()` 将新指针赋予原先智能指针
+
+`shared_ptr.unique()` 检查自己是不是当前对象仅有的用户，即计数器是1
+
+#### 使用智能指针优化程序异常
+
+异常发生后，析构函数可能不会正常运行，使用智能指针，即使程序块提前结束，也会将多余的内存释放。
+
+**智能指针使用规范：**
+
+* 不使用相同的内置指针初始化（或reset）多个智能指针
+* 不delete get() 返回的指针
+* 不使用get() 初始化或reset 另一个智能指针
+* 使用 get() 返回的指针，当最后一个智能指针销毁时，内置指针成为悬空指针
+* 当智能指针管理的不是new分配的内存，需要传递给一个删除器
+
+#### unique_ptr使用
+
+`unique_ptr` 与 给定对象一一对应， 因此不支持普通的拷贝和赋值操作
+
+通过绑定到一个`new`返回的指针初始化， 没有类似 make_shared 的方法
+
+可以通过调用`release` 或` reset` 将指针的所有权从 一个 `unique_ptr` 转移给另一个 `unique_ptr`
+
+```cpp
+unique_ptr<string> p1 (new string("Hello"));
+unique_ptr<string> p2(p1.release()); // 将所有权p1转向p2， release将 p1 置为空
+unique_ptr<string> p3(new string("world"))
+p2.reset(p3.release()) // reset 释放了原来 p2 指向的内存
+```
+
+`release`返回当前保存的指针并将其置为空。
+
+`reset`接受一个可选的指针参数，令`uniqeu_ptr`重新指向给定的指针。
+
+**可以拷贝或赋值一个将要被销毁的unique_ptr**. 例如从函数中返回一个`unique_ptr`
+
+```c++
+unique_ptr<int> clone(int p){
+  return unique_ptr<int>(new int(p))
+}
+```
+
+**向 unique_ptr 传递删除器**
+
+重载一个 unique_ptr 的删除器会影响到 unique_ptr类型并且决定如何构造该类型的对象，删除器必须在**尖括号中指向类型之后提供删除器类型**
+
+`unique_ptr<objT,delT p(new objT, fcn)>;`
+
+#### weak_ptr
 
 [未完待续...]							
 

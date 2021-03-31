@@ -196,5 +196,25 @@ unique_ptr<int> clone(int p){
 
 #### weak_ptr
 
+`weak_ptr` 不控制所指向对象生存期，指向一个`shared_ptr`管理的对象
+
+| API               | 说明                                                         |
+| ----------------- | ------------------------------------------------------------ |
+| weak_ptr<T> w     | 空 weak_ptr，指向类型为T的对象                               |
+| weak_ptr<T> w(sp) | 与shared_ptr sp指向相同对象的weak_ptr. T可以转换为sp指向的类型 |
+| w=p               | p可以是一个shared_ptr 或者 weak_ptr，w与p共享家对象          |
+| w.reset()         | 将w置为空                                                    |
+| w.use_count()     | 与w共享的shared_ptr 的计数器数量                             |
+| w.expired()       | 若 w.use_count() 为0， 返回true。反之返回 false              |
+| w.lock()          | 若 expired 为 true，返回一个空的shared_ptr,否则返回指向w的对象的 shared_ptr |
+
+weak_ptr 指向的对象可能不存在，所以必须在使用前使用`wp.lock()`判断 weak_ptr 指向的对象是否存在
+
+`if(shared_ptr<int> np = wp.lock()){}	// 如果np不为空则条件成立，wp对应了一个shared_ptr对象`
+
+
+
+
+
 [未完待续...]							
 

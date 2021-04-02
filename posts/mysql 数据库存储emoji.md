@@ -2,7 +2,7 @@
 title: mysql 数据库存储emoji
 date: 2021-03-04 20:40:51
 description: description
-tag: 
+tag: mysql
 ---
 
 mysql存储字符串时，如果字符串还有emoji，会存储失败，这是在保存之前要将emoji转码然后在api请求获取数据时重新解码返回带emoji的字符

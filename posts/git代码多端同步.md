@@ -9,7 +9,7 @@ tag: Git、Node、Webhook
 
    登录github导航到待监控的存储库，选中设置里面的webhook，添加新的webhook
 
-   * 在**payLoad URL**中，填写即将编写的Node.js服务器地址+端口
+   * 在**payLoad URL**中，填写即将编写的Node.js服务器地址+端
    * 将内容类型设为 `application/json`
    * 在Secret中，输入该webhook的密码，之后nodeJS会使用它验证hook
    * 选中触发事件的类型，通常选择推送事件，

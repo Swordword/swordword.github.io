@@ -212,6 +212,12 @@ weak_ptr 指向的对象可能不存在，所以必须在使用前使用`wp.lock
 
 `if(shared_ptr<int> np = wp.lock()){}	// 如果np不为空则条件成立，wp对应了一个shared_ptr对象`
 
+| a    | b    | c    |
+| ---- | ---- | ---- |
+|      |      |      |
+
+
+
 
 
 

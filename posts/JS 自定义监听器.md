@@ -1,5 +1,5 @@
 ---
-title: js中实现自定义监听器
+title: js实现自定义监听器
 date: 2020-12-23 14:03:56
 description: 在浏览器端与js端分别实现自定义监听器
 tag: JavaScript

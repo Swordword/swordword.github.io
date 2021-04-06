@@ -1,5 +1,5 @@
 ---
-title: react 高级组件
+title: React 高级组件
 date: 2021-03-17 11:22:02
 description: description
 tag: react

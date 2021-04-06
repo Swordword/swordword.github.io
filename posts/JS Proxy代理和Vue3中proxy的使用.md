@@ -1,5 +1,5 @@
 ---
-title: Proxy使用和Vue3中proxy的使用
+title: JS Proxy代理和Vue3中proxy的使用
 date: 2020-06-29 13:45:05
 description: Proxy
 tag: Vue,JavaScript

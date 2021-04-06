@@ -1,5 +1,5 @@
 ---
-title: 在vscode中运行C&C++
+title: VSCode 中运行C&C++
 date: 2020-06-28 18:44:32
 description: 在 vscode 中 运行与调试C&C++，未完结
 tag: VSCode、C、C++

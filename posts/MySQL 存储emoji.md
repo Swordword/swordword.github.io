@@ -1,5 +1,5 @@
 ---
-title: mysql 数据库存储emoji
+title: MySQL 存储emoji
 date: 2021-03-04 20:40:51
 description: description
 tag: mysql

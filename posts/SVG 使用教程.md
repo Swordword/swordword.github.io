@@ -1,5 +1,5 @@
 ---
-title: 学习笔记：SVG使用教程
+title: SVG 使用教程
 date: 2021-04-02 10:32:52
 description: description
 tag: svg

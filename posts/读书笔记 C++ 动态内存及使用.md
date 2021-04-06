@@ -196,7 +196,8 @@ unique_ptr<int> clone(int p){
 
 #### weak_ptr
 
-`weak_ptr` 不控制所指向对象生存期，指向一个`shared_ptr`管理的对象
+`weak_ptr` ：不控制所指向对象生存期的智能指针
+指向一个`shared_ptr`管理的对象，当其绑定到一个`shared_ptr` 上时，不会改变`shared_ptr`的引用计数.
 
 | API               | 说明                                                         |
 | ----------------- | ------------------------------------------------------------ |
@@ -208,19 +209,11 @@ unique_ptr<int> clone(int p){
 | w.expired()       | 若 w.use_count() 为0， 返回true。反之返回 false              |
 | w.lock()          | 若 expired 为 true，返回一个空的shared_ptr,否则返回指向w的对象的 shared_ptr |
 
-weak_ptr 指向的对象可能不存在，所以必须在使用前使用`wp.lock()`判断 weak_ptr 指向的对象是否存在
+由于`weak_ptr` 指向的对象可能不存在，所以必须在使用前使用`wp.lock()`判断 weak_ptr 指向的对象是否存在
 
 `if(shared_ptr<int> np = wp.lock()){}	// 如果np不为空则条件成立，wp对应了一个shared_ptr对象`
 
-| a    | b    | c    |
-| ---- | ---- | ---- |
-|      |      |      |
+`weak_ptr`可以用来解决循环队列 `shared_ptr` 循环引用的问题。
 
 
-
-
-
-
-
-[未完待续...]							
 

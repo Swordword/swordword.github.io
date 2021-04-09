@@ -5,7 +5,7 @@ description: description
 tag: svg
 ---
 
-SVG (Scalable Vector Graphics：可缩放矢量图) 是一种基于 XML格式的图像格式，全称, jpg等图形格式基于像素进行处理，而 SVG 基于矢量对二维图形进行描述，所以不管放大多少倍都不会失真
+SVG (Scalable Vector Graphics：可缩放矢量图) 是一种基于 XML格式的图像格式, 与常见的位图图像格式 jpg、png基于像素处理不同，SVG 基于矢量对二维图形进行描述，所以不管放大多少倍都不会失真
 
 ## 基本形状
 
@@ -325,7 +325,7 @@ CSS 在 SVG 中的使用方法有三种：
 
 从一中心点向外辐射的梯度进行渐变
 
-#### `radialGradient`
+#### `<radialGradient>`
 
 **渐变方向**
 
@@ -428,33 +428,105 @@ CSS 在 SVG 中的使用方法有三种：
  </pattern>
 ```
 
-两种方式各有千秋，但是由于定位当比例过小时，在某些浏览器会有bug
+两种方式各有千秋，但是当相对定位比例过小时，在某些浏览器会有bug()。
 
 ## 文本
 
+SVG 中，文本分为两类：普通的在图片中显示文字；像 iconfront 那样的 SVG fonts
 
+#### 将文字嵌入图片中
 
+##### `<text>`
 
+`<text x="10" y="10">Hello World</text>`
 
+`x`和`y`描述 文字显示的位置
 
+`text-anchor`：文本指向，可以是`start`、`end`、`middle`、`inherit`表示`x,y`点相对于文本的位置，默认为`start`，表明是从`x,y`开始绘制文本
 
+`<text x="100" y="100" text-anchor="start" > This is Hello World  </text>`
 
+![image-20210409141206123](http://img.massivejohn.com/image-20210409141206123.png)
 
+ `dominant-baseline`：表示垂直对齐方向（类似 css 中的 `vertical-align`）
 
+##### `<tspan>` 
 
+放在 `<text>` 和 `<tspan>`之中，用于内嵌文本
 
+```html
+<text>
+  This is <tspan font-weight="bold" fill="red">bold and red</tspan>
+</text>
+```
 
+`x,y` ：`tspan`中的绝对定位,会覆盖默认的位置
 
+`dx,dy`：`tspan`中文本相较于原位置进行偏移，类似相对于默认位置的相对定位
 
+`rotate`：文本中的每个字符 旋转某个角度
 
+`textLength`；当渲染器计算文本长度失真时，手动设置文本长度
 
+##### `<textPath>`
 
+元素通过`xlink:href`引入外部的`path`来处理文本
 
+```html
+<path id="my_path" d="M 20,20 C 80,60 100,40 120,20" fill="transparent" />
+<text>
+  <textPath xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#my_path">
+    A curve.
+  </textPath>
+</text>
+```
 
+## 基本转换
 
+### `<g>`
 
+`<g>`可以在元素上赋予属性，属性将生效于其中所有的元素。
 
+内部元素自有的属性会覆盖`g`上的属性
 
+```html
+  <g fill="red">
+        <rect x="0" y="0" width="10" height="10" />
+        <rect x="20" y="0" width="10" height="10" />
+    </g>
+```
+
+### 平移与旋转
+
+`transform="translate(30,40)"`
+
+`transform="rotate(45)"`
+
+联合转换使用**空格**隔离，不能使用逗号
+
+`transform="translate(30,40) rotate(45)"`  
+
+### 放大
+
+`transform = "scale(2)"`
+
+### 在SVG中嵌入SVG
+
+SVG 内部可以嵌套 SVG元素，可以在 SVG 设置 `viewBox`属性，指定给定的一组图形伸展以适应特定的容器元素
+
+`viewBox=min-x, min-y, width and height` 将内部 SVG 中的图形放大至外部 SVG 的大小
+
+```html
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100" height="100">
+  <svg width="100" height="100" viewBox="0 0 50 50">
+    <rect width="50" height="50" />
+  </svg>
+</svg>
+```
+
+`viweBox`内部的渲染方式受[`preserveAspectRatio`]([preserveAspectRatio - SVG: Scalable Vector Graphics | MDN (mozilla.org)](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/preserveAspectRatio))影响
+
+## 裁剪与遮罩
 
 
 

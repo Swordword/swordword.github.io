@@ -1,7 +1,7 @@
 ---
 title: 读书笔记 C++ 动态内存及使用
 date: 2021-03-25 13:39:08
-description: 即使在学C++之前，对它内存的double free和早泄也早有耳闻。。。
+description: C++通过new动态分配内存
 tag: Cpp
 ---
 

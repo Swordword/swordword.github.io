@@ -7,6 +7,30 @@ tag: svg
 
 SVG (Scalable Vector Graphics：可缩放矢量图) 是一种基于 XML格式的图像格式, 与常见的位图图像格式 jpg、png基于像素处理不同，SVG 基于矢量对二维图形进行描述，所以不管放大多少倍都不会失真
 
+## 基本使用
+
+**SVG 可以作为一个dom元素插入网页。**
+
+**作为一个独立的文件，作为`<img>`的 `src`**
+
+```html
+<div>
+  <svg>
+    // ...
+  </svg>
+</div>
+<img src="fooabr.svg">
+<style>
+  .foobar{
+    background:url(foobar.svg)
+	}
+</style>
+```
+
+**将SVG转为base64编码，成为Data URL**
+
+ `<img src="data:image/svg+xml;base64,[data]">` 
+
 ## 基本形状
 
 ### 矩形
@@ -402,15 +426,66 @@ CSS 在 SVG 中的使用方法有三种：
 
 ` <radialGradient id="Gradient" cx="60" cy="60" r="50" fx="35" fy="35" gradientUnits="userSpaceOnUse">`
 
-## Patterns 模式复用
+## 模式复用
 
-`pattern` 就像SVG中的组件，在`<defs>`中定义，可以在其中定义多个基本图形的集合并通过 `fill(#id)`在任意 SVG 基本形状中进行引用
+### `<g>`
+
+`<g>`可以在元素上赋予属性，属性将生效于其中所有的元素。
+
+内部元素自有的属性会覆盖`g`上的属性
+
+```html
+  <g fill="red">
+        <rect x="0" y="0" width="10" height="10" />
+        <rect x="20" y="0" width="10" height="10" />
+    </g>
+```
+
+### `<use>`
+
+`use`用于复制一个形状并可以自定义其属性，通过`xlink:href='#id'`复用之前定义的元素
+
+```html
+<svg viewBox="0 0 30 10" xmlns="http://www.w3.org/2000/svg">
+  <circle id="myCircle" cx="5" cy="5" r="4"/>
+  <use href="#myCircle" x="10" y="0" fill="blue" />
+  <use href="#myCircle" x="20" y="0" fill="white" stroke="yellow" />
+</svg>
+```
+
+![image-20210413110753233](http://img.massivejohn.com/image-20210413110753233.png)
+
+
+
+### `<defs>`
+
+`<defs>`标签用于自定义形状，它内部的代码不会显示，仅供引用。
+
+```html
+<svg width="300" height="100">
+  <defs>
+    <g id="myCircle">
+      <text x="25" y="20">圆形</text>
+      <circle cx="50" cy="50" r="20"/>
+    </g>
+  </defs>
+  <use href="#myCircle" x="0" y="0" />
+  <use href="#myCircle" x="100" y="0" fill="blue" />
+  <use href="#myCircle" x="200" y="0" fill="white" stroke="blue" />
+</svg>
+```
+
+![image-20210413111116359](http://img.massivejohn.com/image-20210413111116359.png)
+
+### `<Patterns>` 
+
+`pattern` 就像 SVG 中的组件，在`<defs>`中定义，可以在其中定义多个基本图形的集合并通过 `fill(#id)`在任意 SVG 基本形状中进行引用
 
 相对于`Gradient`中的`gradientUnits`, `Pattern`有两个与单位有关的参数：`patternUnits`和`patternContentUnits`
 
-`patternUnits` 控制 `pattern` 本身定位的方式，默认是 `objectBoundingBox`，采用相对定位进行处理。
+`patternUnits` 控制 `pattern` 本身定位的方式，默认是 `objectBoundingBox`，即采用相对定位进行处理。
 
-`patternContentUnits` 控制 `pattern`内部元素的定位方式，默认是`userSpaceOnUse`, 采用绝对定位的方式。
+`patternContentUnits` 控制 `pattern`内部元素的定位方式，默认是`userSpaceOnUse`, 即采用绝对定位的方式。
 
 ```html
 <!-- 都采用相对定位，pattern和内部的元素尺寸会随着 fill(#Pattern)的尺寸动态变化 -->
@@ -483,19 +558,6 @@ SVG 中，文本分为两类：普通的在图片中显示文字；像 iconfront
 
 ## 基本转换
 
-### `<g>`
-
-`<g>`可以在元素上赋予属性，属性将生效于其中所有的元素。
-
-内部元素自有的属性会覆盖`g`上的属性
-
-```html
-  <g fill="red">
-        <rect x="0" y="0" width="10" height="10" />
-        <rect x="20" y="0" width="10" height="10" />
-    </g>
-```
-
 ### 平移与旋转
 
 `transform="translate(30,40)"`
@@ -512,9 +574,9 @@ SVG 中，文本分为两类：普通的在图片中显示文字；像 iconfront
 
 ### 在SVG中嵌入SVG
 
-SVG 内部可以嵌套 SVG元素，可以在 SVG 设置 `viewBox`属性，指定给定的一组图形伸展以适应特定的容器元素
+SVG 内部可以嵌套 SVG元素，可以在 SVG 设置 `viewBox`属性，只展示SVG图像的一部分。
 
-`viewBox=min-x, min-y, width and height` 将内部 SVG 中的图形放大至外部 SVG 的大小
+`viewBox=x, y, width and height` 指定`viewBox`定义的图形填充外部容器元素，即将内部 SVG 中设定范围的图形放大至外部 SVG 的大小
 
 ```html
 <svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="100" height="100">
@@ -527,6 +589,100 @@ SVG 内部可以嵌套 SVG元素，可以在 SVG 设置 `viewBox`属性，指定
 `viweBox`内部的渲染方式受[`preserveAspectRatio`]([preserveAspectRatio - SVG: Scalable Vector Graphics | MDN (mozilla.org)](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/preserveAspectRatio))影响
 
 ## 裁剪与遮罩
+
+### 裁剪
+
+`<clipPath>` ：定义裁剪显示的范围，可以在 `<defs>`中定义设置id，在基本元素中通过`clip-path="url(#id)"`设置
+
+```html
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300">
+  <defs>
+    <clipPath id="cut-off-bottom">
+      <rect x='100' y='0' width="100" height="100" />
+    </clipPath>
+  </defs>
+  <!-- 只会显示右上角的四分之一圆 -->
+  <circle cx="100" cy="100" r="100" clip-path="url(#cut-off-bottom)" />
+</svg>
+```
+
+![image-20210412170117688](http://img.massivejohn.com/image-20210412170117688.png)
+
+### 遮罩
+
+**`<mask>`**
+
+通过创建一个带有 id 的遮罩层 `<mask>`设置基本图形 `mask='url(#id)'`赋予该基本图形遮罩层效果。
+
+这和直接使用`<linearGradient>`有什么区别呢？
+
+```html
+<svg xmlns="http://www.w3.org/2000/svg" width="400" height="300">
+  <defs>
+    <linearGradient id="Gradient">
+      <stop offset="0%" stop-color="black" />
+      <stop offset="100%" stop-color="white" />
+    </linearGradient>
+    <mask id="Mask">
+      <rect width="200" height="200" x='0' y='0' fill="url(#Gradient)" />
+    </mask>
+  </defs>
+  <rect x="0" y="0" width="200" height="200" fill="yellow" />
+  <rect x="0" y="0" width="200" height="200" fill='red' mask='url(#Mask)' />
+</svg>
+```
+
+![image-20210412171243507](http://img.massivejohn.com/image-20210412171243507.png)
+
+### fill 与 stroke 的透明度
+
+`fill`与`stroke`都具有各自的透明度设置`fill-opacity`与`stroke-opacity`
+
+设置透明度会与背景形状颜色进行交互。并且如果设置`stroke-opacity`，由于`stroke`是按照形状两侧等比扩张的，所以``stroke`的颜色会被形状的`fill`所影响
+
+```html
+<rect x="0" y="0" width="200" height="200" fill="blue" />
+<!-- stroke 外边20单位的颜色会被背景的 blue 影响，内部20单位的颜色会被球内的red影响 -->
+<circle cx="100" cy="100" r="50" stroke="yellow" stroke-width="40"  stroke-opacity=".5" fill="red" />
+```
+
+![image-20210412173330783](http://img.massivejohn.com/image-20210412173330783.png)
+
+## 在SVG中嵌入图片
+
+**`<image>`**
+
+SVG 中有`<image>`元素可以用来嵌入图片,可以使用SVG的masks等功能设置图片的样式
+
+```html
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="200"
+  height="200">
+  <image x="0" y="0" width="122" height="146"
+    xlink:href="https://developer.mozilla.org/static/img/favicon144.png" />
+</svg>
+```
+
+`<image>`元素允许 SVG 渲染光栅图片，例如jpg
+
+## 滤镜
+
+# SVG fonts
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

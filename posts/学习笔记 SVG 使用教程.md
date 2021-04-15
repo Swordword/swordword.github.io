@@ -9,9 +9,17 @@ SVG (Scalable Vector Graphics：可缩放矢量图) 是一种基于 XML格式的
 
 ## 基本使用
 
-**SVG 可以作为一个dom元素插入网页。**
+SVG 的使用类似一个 html 标签，通过在 `<svg></svg>`内部添加内置形状生成 svg 元素
 
-**作为一个独立的文件，作为`<img>`的 `src`**
+```html
+<svg xmlns="http://www.w3.org/2000/svg">
+  
+</svg>
+```
+
+
+
+#### SVG 可以作为一个dom元素插入网页。
 
 ```html
 <div>
@@ -19,6 +27,13 @@ SVG (Scalable Vector Graphics：可缩放矢量图) 是一种基于 XML格式的
     // ...
   </svg>
 </div>
+```
+
+
+
+#### 作为一个独立的文件，作为`<img>`的 `src`
+
+```html
 <img src="fooabr.svg">
 <style>
   .foobar{
@@ -27,9 +42,17 @@ SVG (Scalable Vector Graphics：可缩放矢量图) 是一种基于 XML格式的
 </style>
 ```
 
-**将SVG转为base64编码，成为Data URL**
+#### 将SVG转为data编码内联
 
- `<img src="data:image/svg+xml;base64,[data]">` 
+常见的有两种方式
+
+**将SVG 转为 base64 作为Data URL**
+
+`background: url(data:image/svg+xml;base64,[base64 data])`
+
+**注意** 浏览器为了安全，直接内联 SVG  时 SVG 元素需要转义才能作为data
+
+ `<img src="data:image/svg+xml;base64,encodeURIComponent(svgIcon)">` 
 
 ## 基本形状
 
@@ -119,7 +142,7 @@ SVG (Scalable Vector Graphics：可缩放矢量图) 是一种基于 XML格式的
 
 ### 路径 
 
-没有路径只靠前面几种基本图形，SVG还能干啥呢？SVG 可以用来创建线条，曲线，弧形等等
+没有路径只靠前面几种基本图形，SVG能干啥呢？SVG 的`<path>`可以用来创建线条，曲线，弧形等等
 
 ```html
 <path d="M20,230 Q40,205 50,230 T90,230" fill="none" stroke="blue" stroke-width="5" />
@@ -131,7 +154,7 @@ SVG (Scalable Vector Graphics：可缩放矢量图) 是一种基于 XML格式的
 
 ## 路径 ⭐️
 
-根据上面的例子，路径内部是由属性`d`生成的，`d`包含一系列命令和参数供我们画出想要的图形。
+根据上面的例子，路径是由内部属性`d`生成的，`d`包含一系列命令和参数供我们画出想要的图形。
 
 每个命令都通过特定的字母进行实例化，例如上面 的 `M 20,230`就是将点移至坐标系中的 (20,230) 点
 

@@ -38,12 +38,14 @@ export default function Home({
                   <Date dateString={date} />
                 </small>
               </div>
-
               <Link href={`/posts/${id}`}>
-                <a style={{
+                <h1 style={{
                   background: theme.background,
                   color: theme.foreground,
-                }}>{title}</a>
+                  fontSize: '26px',
+                  margin:0,
+                  cursor:'pointer'
+                }}>{title}</h1>
               </Link>
               {/* <div className={utilStyles.lightText}>
                 <small>{tag}</small>

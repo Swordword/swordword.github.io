@@ -1,9 +1,10 @@
 import React from 'react';
 import { AppProps } from "next/app";
+// 主题
+import { ThemeContext, themes } from '../config/theme'
 // 用于引入全局样式
 import "../styles/global.css";
 import "highlight.js/scss/vs2015.scss";
-import { ThemeContext, themes } from '../config/theme'
 
 
 function statistics() {

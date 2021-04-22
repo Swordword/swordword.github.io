@@ -42,9 +42,8 @@ const dateStripped = (obj: { data?: any }): { data?: any } => {
 // index page blog 列表
 export function getSortedPostsData() {
   const fileNames = fs.readdirSync(postsDirectory)
-  console.log('fileNames',fileNames)
   const allPostsData = fileNames.map((fileName) => {
-    const id = fileName.replace(/\.md$/, '')
+    const id = encodeURI(fileName.replace(/\.md$/, ''))
     const fullPath = path.join(postsDirectory, fileName)
     const fileContents = fs.readFileSync(fullPath, 'utf8')
     const matterResult = matter(fileContents)
@@ -85,7 +84,8 @@ export function getAllPostIds() {
   return fileNames.map((fileName) => {
     return {
       params: {
-        id: encodeURI(fileName.replace(/\.md$/, '')),
+        id: decodeURI(fileName.replace(/\.md$/, '')),
+        // id: fileName.replace(/\.md$/, ''),
       },
     }
   })
@@ -93,8 +93,7 @@ export function getAllPostIds() {
 
 // 获取单个博客的内容
 export async function getPostData(id) {
-  console.log('post id', id)
-  const fullPath = path.join(postsDirectory, `${id}.md`)
+  const fullPath = path.join(postsDirectory, `${decodeURI(id)}.md`)
   const fileContents = fs.readFileSync(fullPath, 'utf8')
   const matterResult = matter(fileContents)
   const processedContent = unified()

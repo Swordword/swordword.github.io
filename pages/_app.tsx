@@ -21,7 +21,6 @@ function statistics() {
 export default function App({ Component, pageProps }: AppProps) {
   const [theme, setTheme] = React.useState(themes.light)
   const toggleTheme = () => {
-    console.log('fn toggleTheme');
     setTheme((prev) => (prev === themes.light ? themes.dark : themes.light))
   }
   React.useEffect(() => {

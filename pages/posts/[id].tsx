@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 // import Link from "next/link";
 import Head from "next/head";
-import { GetStaticProps, GetStaticPaths } from "next";
+import { GetStaticProps, GetStaticPaths,GetServerSideProps } from "next";
 
 import Layout from "../../components/layout";
 import { getAllPostIds, getPostData } from "../../lib/posts";
@@ -13,6 +13,7 @@ import { ThemeContext } from '../../config/theme'
 
 export default function Post({
   postData,
+  data
 }: {
   postData: {
     title: string;
@@ -50,6 +51,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
   const postData = await getPostData(params.id as string)
+  console.log('postData',postData)
   return {
     props: {
       postData

@@ -11,7 +11,7 @@ import { GetStaticProps } from "next";
 import { ThemeContext, themes } from '../config/theme'
 
 export default function Home({
-  allPostsData,
+  allPostsData, pageSize
 }: {
   allPostsData: {
     date: string;
@@ -20,6 +20,7 @@ export default function Home({
     description: string;
     tag: string;
   }[];
+  pageSize: number
 }) {
   const { theme } = useContext(ThemeContext)
 
@@ -43,18 +44,19 @@ export default function Home({
                   background: theme.background,
                   color: theme.foreground,
                   fontSize: '26px',
-                  margin:0,
-                  cursor:'pointer'
+                  margin: 0,
+                  cursor: 'pointer'
                 }}>{title}</h1>
               </Link>
-              {/* <div className={utilStyles.lightText}>
+              <div className={utilStyles.lightText}>
                 <small>{tag}</small>
-              </div> */}
+              </div>
 
               <div className={utilStyles.headingBs}>{description}</div>
             </li>
           ))}
         </ul>
+        {/* <button onClick={()=>loadBlogList(pageSize+10)}>下一页</button> */}
       </section>
     </Layout>
 
@@ -62,10 +64,16 @@ export default function Home({
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const allPostsData = getSortedPostsData();
+  return loadBlogList();
+};
+
+const loadBlogList = (pageSize = 10) => {
+  const allPostsData = getSortedPostsData(pageSize);
   return {
     props: {
       allPostsData,
+      pageSize
     },
   };
-};
+
+}

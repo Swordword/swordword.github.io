@@ -40,8 +40,9 @@ const dateStripped = (obj: { data?: any }): { data?: any } => {
 }
 
 // index page blog 列表
-export function getSortedPostsData() {
+export function getSortedPostsData(pageSize = 10) {
   const fileNames = fs.readdirSync(postsDirectory)
+  // const pageFileNames = fileNames.splice(0,pageSize)
   const allPostsData = fileNames.map((fileName) => {
     const id = encodeURI(fileName.replace(/\.md$/, ''))
     const fullPath = path.join(postsDirectory, fileName)

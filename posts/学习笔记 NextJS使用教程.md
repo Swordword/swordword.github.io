@@ -230,7 +230,79 @@ ReturnObject包含以下属性：
 
 #### 全局样式
 
+创建文件`pages/_app.js`，在该文件中的样式会在所有页面和组件中生效
 
+```jsx
+// _app.js
+import '../styles.css'
+
+// This default export is required in a new `pages/_app.js` file.
+export default function MyApp({ Component, pageProps }) {
+  return <Component {...pageProps} />
+}
+```
+
+#### 范围样式
+
+Next.js 支持[CSS Modules](https://github.com/css-modules/css-modules) 为每个组件赋予独立的样式。命名为`[name].module.css`。会在每个`class`后添加一个 Hash 值
+
+#### Sass 支持
+
+`npm install sass`即可在项目中使用 sass 或 scss
+
+**自定义 Sass 配置**
+
+可以通过在`next.config.js`中的`sassOptions`对 sass 进行配置
+
+```js
+const path = require('path')
+
+module.exports = {
+  sassOptions: {
+    includePaths: [path.join(__dirname, 'styles')],
+  },
+}
+```
+
+#### CSS-in-JS
+
+基本上和create-react-app一样，Next.js 内置了[styled-jsx](https://github.com/vercel/styled-jsx)。实现[styled-component]([styled-components](https://styled-components.com/))和[emotion](https://emotion.sh/docs/introduction)的效果
+
+### 图形组件与优化
+
+Next.js 提供了与Gatsby一样优化很棒的图像组件`next/image`，`Image`支持常见的懒加载，resize，以现代格式显示图片等功能。
+
+#### 配置
+
+可以在`next.config.js`配置images获得最优化的效果
+
+**支持外部网站**
+
+加载一个外部网站托管的图片，在`next.config.js`中配置`images`的`domains`字段
+
+**自定义加载器**
+
+Next.js  可以自定义自己的图形加载器，通过配置`images`的`loader`字段
+
+**缓存**
+
+Next.js 默认会将访问过的图片缓存至`<distDir>/cache/images`文件夹。缓存时间有服务端的`Cache-Control`字段控制：`s-maxage||max-age||60s`
+
+```js
+module.exports = {
+  images: {
+    // 外部域名
+    domains: ['example.com'],
+    // 自定义加载器
+   	loader: 'imgix',
+    path: 'https://example.com/myaccount/',
+  },
+}
+```
+
+### 静态文件托管
+
+`public`文件夹下的文件会作为 Next.js 的静态文件夹。可以通过URL`/`进行访问
 
 ## 路由
 
@@ -321,7 +393,7 @@ const { pid } = router.query	// {pid:'aa', name:'bb'}
 
 #### 浅层路由
 
-浅层路由允许你在不加载具体页面内容的前提下，修改路由
+浅层路由允许你在不加载具体页面内容的前提下，修改路由。不知道有啥用
 
 ```jsx
 import { useEffect } from 'react'
@@ -336,12 +408,22 @@ useEffect(() => {
 
 ### TypeScript集成
 
-#### Use `GetStaticProps`
+创建`tsconfig.json`，`yarn add --dev typescript @types/react @types/node`即可在 Next.js 中使用 typescript
+
+#### 常见的渲染方法
 
 ```ts
-import { GetStaticProps } from 'next'
+import { GetStaticProps, GetStaticPaths, GetServerSideProps } from 'next'
 
 export const getStaticProps: GetStaticProps = async (context) => {
+  // ...
+}
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  // ...
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
   // ...
 }
 ```
@@ -373,6 +455,88 @@ function Blog({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
 
 export default Blog
 ```
+
+#### API 路由
+
+在`pages/api`中可以自定义一些接口
+
+```ts
+import type { NextApiRequest, NextApiResponse } from 'next'
+
+type Data = {
+  name: string
+}
+
+export default (req: NextApiRequest, res: NextApiResponse<Data>) => {
+  res.status(200).json({ name: 'John Doe' })
+}
+```
+
+#### Custom `App`
+
+比如在`_app.tsx`中自定义 App 组件
+
+```tsx
+// import App from "next/app";
+import type { AppProps /*, AppContext */ } from 'next/app'
+
+function MyApp({ Component, pageProps }: AppProps) {
+  return <Component {...pageProps} />
+}
+
+// Only uncomment this method if you have blocking data requirements for
+// every single page in your application. This disables the ability to
+// perform automatic static optimization, causing every page in your app to
+// be server-side rendered.
+//
+// MyApp.getInitialProps = async (appContext: AppContext) => {
+//   // calls page's `getInitialProps` and fills `appProps.pageProps`
+//   const appProps = await App.getInitialProps(appContext);
+
+//   return { ...appProps }
+// }
+
+export default MyApp
+```
+
+### 环境变量
+
+可以在项目根目录添加`.env/*`配置环境变量,其中`.env`和`.env.local`会作为默认配置，`.env.development`会作为开发环境的变量, `.env.production`会作为生产环境的变量设置
+
+环境变量中的变量可以通过`$`访问之前的变量
+
+环境变量只能被`node`环境使用,如果想在浏览器端使用环境变量，需要在变量名前添加`NEXT_PUBLIC_`前缀
+
+```bash
+# .env
+HOSTNAME=localhost
+PORT=8080
+HOST=http://$HOSTNAME:$PORT
+NEXT_PUBLIC_ANALYTICS_ID=abcdefghijk
+```
+
+### API 路由
+
+`pages/api/*`中的文件会作为 api 接口而不是作为页面使用
+
+```js
+// pages/api/hello
+export default function handler(req, res) {
+  res.status(200).json({ name: 'John Doe' })
+}
+```
+
+访问`/api/hello`会返回一个 json 字符串
+
+API 路由也支持像 `pages`那样的动态路由
+
+#### API 中间件
+
+目前没有在 Next 中使用过
+
+### 高级特性
+
+
 
 ### 注意事项
 

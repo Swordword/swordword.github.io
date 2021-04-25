@@ -33,32 +33,35 @@ export default function Home({
         {/* <h2 className={utilStyles.headingLg}>分类组件</h2> */}
         <ul className={utilStyles.list}>
           {allPostsData.map(({ id, date, title, description, tag }) => (
-            <li className={utilStyles.listItem} key={id}>
-              <div className={utilStyles.lightText}>
-                <small>
-                  <Date dateString={date} />
-                </small>
-              </div>
-              <Link href={`/posts/${id}`}>
+            <Link href={`/posts/${id}`} key={id}>
+              <li className={utilStyles.listItem} >
                 <h1 style={{
                   background: theme.background,
                   color: theme.foreground,
-                  fontSize: '26px',
+                  fontSize: '22px',
                   margin: 0,
                   cursor: 'pointer'
                 }}>{title}</h1>
-              </Link>
-              <div className={utilStyles.lightText}>
-                <small>{tag}</small>
-              </div>
 
-              <div className={utilStyles.headingBs}>{description}</div>
-            </li>
+                <div className={utilStyles.lightText}>
+                  <small>
+                    <Date dateString={date} />
+                  </small>
+                  <small style={{
+                    paddingLeft: '6px',
+                    paddingRight: '6px',
+                  }}>·</small>
+                  <small>{tag}</small>
+                </div>
+                <div className={utilStyles.headingBs}>{description}</div>
+              </li>
+            </Link>
+
           ))}
         </ul>
         {/* <button onClick={()=>loadBlogList(pageSize+10)}>下一页</button> */}
       </section>
-    </Layout>
+    </Layout >
 
   );
 }

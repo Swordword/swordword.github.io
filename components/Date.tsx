@@ -5,7 +5,7 @@ export default function Date({ dateString }: { dateString: string }) {
   const date = parseISO(dateString);
   return (
     <time dateTime={dateString}>
-      {format(date, "LLLL dd,yyyy", { locale: deLocale })}
+      {format(date, "LLLL dd", { locale: deLocale })}
     </time>
   );
 }

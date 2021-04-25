@@ -13,7 +13,6 @@ import { ThemeContext } from '../../config/theme'
 
 export default function Post({
   postData,
-  data
 }: {
   postData: {
     title: string;

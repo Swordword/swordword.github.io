@@ -228,13 +228,15 @@ ReturnObject包含以下属性：
 
 ### 样式集成
 
+#### 全局样式
+
 
 
 ## 路由
 
 正如上文所说，Next.js 在`pages`文件夹下的每个文件都是一个路由，路由名称与文件目录相同
 
-#### 动态路由
+#### 路由规则
 
 - `pages/index.js` → `/`
 - `pages/blog/index.js` → `/blog`
@@ -248,6 +250,23 @@ ReturnObject包含以下属性：
 - `pages/blog/[slug].js` → `/blog/:slug` (`/blog/hello-world`)
 - `pages/[username]/settings.js` → `/:username/settings` (`/foo/settings`)
 - `pages/post/[...all].js` → `/post/*` (`/post/2020/id/title`)
+
+### 动态路由
+
+在一些app中，比如博客系统，路由的路径很难预先定义，可以在pages文件夹下设置方括号定义动态路由，例如`pages/post/[id].js`, 会匹配任何类似`/post/1`,`/post/a`的路由
+
+```jsx
+import { useRouter } from 'next/router'
+
+const Post = () => {
+  const router = useRouter()
+  const { pid } = router.query
+
+  return <p>Post: {pid}</p>
+}
+
+export default Post
+```
 
 #### 路由跳转
 
@@ -278,11 +297,40 @@ function Home() {
 }
 ```
 
+#### 捕获所有路由
+
+可以在方括号中添加拓展运算符`...`捕获所有路由
+
+`pages/post/[...slug].js`匹配`/post/a`,`/post/a/b`。这种情况下, `router.query`的`slug`会是一个数组`['a','b']`
+
+**Optional 捕获所有路由**
+
+`pages`文件夹名称是双括号包裹的话，可以匹配根路由。`pages/post/[[...slug]].js`可以匹配`/post`,`/post/a`,`/post/a/b`
+
 #### 路由注入
 
-使用`useRouter` hook
+使用`useRouter` hook进行路由注入,命令式的跳转路由
 
+```jsx
+// post/aa&name=bb
+import { useRouter } from 'next/router'
+const router = useRouter()
+const { pid } = router.query	// {pid:'aa', name:'bb'}
+<span onClick={() => router.push('/about')}>Click here to read more</span>
+```
 
+#### 浅层路由
+
+浅层路由允许你在不加载具体页面内容的前提下，修改路由
+
+```jsx
+import { useEffect } from 'react'
+import { useRouter } from 'next/router'
+const router = useRouter()
+useEffect(() => {
+   router.push('/?counter=10', undefined, { shallow: true })
+}, [])
+```
 
 ### 打包部署
 

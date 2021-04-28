@@ -5,8 +5,7 @@ import FormGroup from '@material-ui/core/FormGroup';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch, { SwitchClassKey, SwitchProps } from '@material-ui/core/Switch';
 
-
-import { ThemeContext, themes } from '../config/theme'
+import { ThemeContext, themes } from 'config/theme'
 
 
 interface Styles extends Partial<Record<SwitchClassKey, string>> {

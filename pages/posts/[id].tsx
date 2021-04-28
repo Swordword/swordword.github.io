@@ -3,12 +3,12 @@ import React, { useContext } from 'react'
 import Head from "next/head";
 import { GetStaticProps, GetStaticPaths,GetServerSideProps } from "next";
 
-import Layout from "../../components/layout";
-import { getAllPostIds, getPostData } from "../../lib/posts";
-import Date from "../../components/Date";
-import utilStyles from "../../styles/utils.module.css";
+import Layout from "layout";
+import { getAllPostIds, getPostData } from "lib/posts";
+import Date from "components/Date";
+import utilStyles from "styles/utils.module.css";
 
-import { ThemeContext } from '../../config/theme'
+import { ThemeContext } from 'config/theme'
 
 
 export default function Post({

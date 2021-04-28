@@ -1,9 +1,18 @@
+// Packages
 import React, { useContext } from 'react'
 import Head from "next/head";
-import styles from "./layout.module.css";
-import utilStyles from "../styles/utils.module.css";
 import Link from "next/link";
-import Theme from './Theme'
+
+import { css } from '@emotion/react'
+
+// Local
+import Header from './Header'
+
+// Style
+
+const layoutStyle = css`
+  width:100vw;
+`
 
 
 const name = "Swordword";
@@ -14,7 +23,7 @@ import { ThemeContext } from '../config/theme'
 
 export default function Layout({
   children,
-  home,
+  home
 }: {
   children: React.ReactNode,
   home?: boolean,
@@ -25,8 +34,8 @@ export default function Layout({
     <div style={{
       background: theme.background,
       color: theme.foreground,
-    }} className={styles.themeContainer}>
-      <div className={styles.container}>
+    }}>
+      <div css={layoutStyle}>
         <Head>
           <link rel="icon" href="/favicon.ico" />
           <meta name="description"
@@ -41,27 +50,11 @@ export default function Layout({
           <meta name="og:title" content={siteTitle} />
           <meta name="twitter:card" content="summary_large_image" />
         </Head>
-        <Theme style={{ position: 'fixed', right: '40px', top: '80px' }} />
-        <header className={styles.header}>
-          {home ? (
-            <>
-              <h1 className={utilStyles.heading2Xl}>
-                <span>{name}</span>
-              </h1>
-            </>
-          ) : (
-            <>
-              <h2 className={utilStyles.headingLg}>
-                <Link href="/">
-                  <a className={utilStyles.colorInherit}>{name}</a>
-                </Link>
-              </h2>
-            </>
-          )}
-        </header>
+
+        <Header />
         <main>{children}</main>
         {!home && (
-          <div className={styles.backToHome}>
+          <div>
             <Link href="/">
               <a>← Back to home</a>
             </Link>

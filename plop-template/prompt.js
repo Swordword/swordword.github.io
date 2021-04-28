@@ -14,7 +14,7 @@ Date.prototype.Format = function (fmt) {
   return fmt;
 }
 const nowTime = new Date().Format("yyyy-MM-dd HH:mm:ss");
-console.log('nowTime', nowTime)
+
 module.exports = {
   description: "generate new blog",
   prompts: [

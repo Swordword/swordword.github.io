@@ -1,4 +1,4 @@
-import React from 'react'
+import { createContext } from 'react'
 
 const themes = {
   light: {
@@ -13,19 +13,7 @@ const themes = {
 // dafault theme
 const initialTheme = themes.light
 
-// // theme reducer
-// function themeReducer(state, action) {
-//   switch (action.type) {
-//     case 'light':
-//       return { theme: themes.light }
-//     case 'dark':
-//       return { theme: themes.dark }
-//     default:
-//       throw new Error('Unknown action')
-//   }
-// }
-
-const ThemeContext = React.createContext({
+const ThemeContext = createContext({
   theme: themes.light,
   toggleTheme: () => {},
 })

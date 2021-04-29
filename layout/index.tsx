@@ -6,7 +6,7 @@ import Link from "next/link";
 import { css } from '@emotion/react'
 
 // Local
-import Header from './Header'
+import Header from './header'
 
 // Style
 

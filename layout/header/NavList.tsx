@@ -13,17 +13,7 @@ type Itype = {
 }
 const navList: Itype[] = [
   {
-    icon: "#icon-home",
-    text: "首页",
-    path: "/",
-  },
-  {
-    icon: "#icon-home",
-    text: "首页",
-    path: "/",
-  },
-  {
-    icon: "#icon-wodedangxuan",
+    icon: "#icon-lianhe4",
     text: "关于",
     path: "/about",
   },
@@ -33,6 +23,23 @@ const navList: Itype[] = [
     path: "/rss",
   },
 ]
+const insideNavList: Itype[] = [
+  {
+    icon: "#icon-guidang",
+    text: "归档",
+    path: "/archive",
+  },
+  {
+    icon: "#icon-leimupinleifenleileibie2",
+    text: "分类",
+    path: "/archive",
+  },
+  {
+    icon: "#icon-tag1",
+    text: "标签",
+    path: "/tag",
+  }
+]
 
 const gridStyle = css`
   width:100px;
@@ -41,7 +48,8 @@ const gridStyle = css`
   align-items: center;
   cursor: pointer;
   &:hover {
-    color:#30A9DE
+    color:#30A9DE;
+    background-color: rgba(0,0,0,0.1);
   }
 `
 
@@ -68,8 +76,49 @@ const NavList = () => {
       align-items: center;
     `}
     >
+      {createNav({ icon: '#icon-home', text: '首页', path: '/' })}
+
+      <div css={css`
+       width:100px;
+  height:50px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+      position: relative;
+      &:hover{
+        .nav-list{
+          display:block;
+        }
+      }
+     `}>
+        <Icon src='#icon-list' />
+        <div css={css`
+        margin-left:10px;`
+        }
+        >
+          索引
+        </div>
+        <div className="nav-list" css={css`
+         transition: 3s ease-out;
+        display:none;
+          width: 100px;
+          position: absolute;
+          top: 50px;
+          left: 0;
+          background-color: rgba(47,65,84,0.7);
+          box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);`}>
+          {
+            insideNavList.map(nav => createNav(nav))
+          }
+        </div>
+      </div>
       {navList.map(nav => createNav(nav))}
-    </div>
+      <Icon src="#icon-OOjs_UI_icon_search-ltr" />
+      <div css={css`
+      margin-left:10px;`}>
+        <Icon src="#icon-sun" />
+      </div>
+    </div >
   )
 }
 

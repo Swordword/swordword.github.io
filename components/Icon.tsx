@@ -13,6 +13,7 @@ const Icon = ({ src }: IProps) => {
       <svg className="icon" aria-hidden="true" css={css`
         width:24px;
         height:24px;
+        margin-left:6px;
       `}>
         <use xlinkHref={src}></use>
       </svg>

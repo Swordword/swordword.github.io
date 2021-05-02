@@ -6,6 +6,13 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "17209712",
+      "name": "我的",
+      "font_class": "lianhe4",
+      "unicode": "e669",
+      "unicode_decimal": 58985
+    },
+    {
       "icon_id": "704791",
       "name": "tag",
       "font_class": "tag1",
@@ -53,13 +60,6 @@
       "font_class": "home",
       "unicode": "e89c",
       "unicode_decimal": 59548
-    },
-    {
-      "icon_id": "6997493",
-      "name": "我 的",
-      "font_class": "wodedangxuan",
-      "unicode": "e608",
-      "unicode_decimal": 58888
     },
     {
       "icon_id": "7141649",

@@ -8,7 +8,7 @@ const Index = () => {
       width: 100%;
       height: 300px;
       position: relative;`}>
-        <Image src="/images/banner.png" layout="fill"></Image>
+        <Image src="/images/banner.png" layout="fill" objectFit="cover"></Image>
       </div>
     </div>
   )

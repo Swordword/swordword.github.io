@@ -36,7 +36,6 @@ export default function Home({
             <Link href={`/posts/${id}`} key={id}>
               <li className={utilStyles.listItem} >
                 <h1 style={{
-                  background: theme.background,
                   color: theme.foreground,
                   fontSize: '22px',
                   margin: 0,

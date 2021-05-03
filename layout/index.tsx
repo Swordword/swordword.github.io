@@ -10,9 +10,6 @@ import Header from './header'
 import Banner from './banner'
 // Style
 
-const layoutStyle = css`
-  width:100vw;
-`
 
 
 const name = "Swordword";
@@ -35,7 +32,7 @@ export default function Layout({
       background: theme.background,
       color: theme.foreground,
     }}>
-      <div css={layoutStyle}>
+      <div >
         <Head>
           <link rel="icon" href="/favicon.ico" />
           <meta name="description"
@@ -56,9 +53,11 @@ export default function Layout({
         <Banner />
 
         <main css={css`
+        position:relative;
         width: 1100px;
+        background: #fff;
         padding: 50px 100px;
-        margin-top: -150px;`}>
+        margin: -150px auto;`}>
           {children}
         </main>
         {!home && (

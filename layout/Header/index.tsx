@@ -9,7 +9,6 @@ const bgColor = 'rgba(47,65,84,0.7)'
 const color = '#fff'
 
 const style = css`
-  width:100vw;
   height:50px;
   color:${color};
   background-color: ${bgColor};

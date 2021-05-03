@@ -55,7 +55,7 @@ const gridStyle = css`
 
 
 const createNav = ({ icon, text, path }: Itype) =>
-  <Link href={path}>
+  <Link href={path} key={text}>
     <div css={gridStyle}>
       <Icon src={icon} />
       <div css={css`
@@ -79,11 +79,11 @@ const NavList = () => {
       {createNav({ icon: '#icon-home', text: '首页', path: '/' })}
 
       <div css={css`
-       width:100px;
-  height:50px;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
+      width:100px;
+      height:50px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
       position: relative;
       &:hover{
         .nav-list{

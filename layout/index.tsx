@@ -7,7 +7,7 @@ import { css } from '@emotion/react'
 
 // Local
 import Header from './header'
-
+import Banner from './banner'
 // Style
 
 const layoutStyle = css`
@@ -52,7 +52,15 @@ export default function Layout({
         </Head>
 
         <Header />
-        <main>{children}</main>
+
+        <Banner />
+
+        <main css={css`
+        width: 1100px;
+        padding: 50px 100px;
+        margin-top: -150px;`}>
+          {children}
+        </main>
         {!home && (
           <div>
             <Link href="/">

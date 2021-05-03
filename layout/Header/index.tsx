@@ -16,7 +16,8 @@ const style = css`
   box-shadow:0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
   position: sticky;
   top:0;
-  left:0
+  left:0;
+  z-index:2;
 `
 const style2 = css`
   width: 1100px;

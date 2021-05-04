@@ -1,10 +1,11 @@
-import * as React from 'react'
-import { } from 'react'
+import React from 'react'
 
-export const Category = () => {
+const Category = () => {
   return (
     <div>
-
+      Category Page
     </div>
   )
 }
+
+export default Category

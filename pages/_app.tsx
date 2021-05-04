@@ -9,12 +9,12 @@ import "highlight.js/scss/vs2015.scss";
 
 
 function statistics() {
-  var _hmt = _hmt || [];
+  // var _hmt = _hmt || [];
   (function () {
     var hm = document.createElement("script");
     hm.src = "https://hm.baidu.com/hm.js?fd27152ccbcb848d9544f02148e9bddb";
     var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(hm, s);
+    s.parentNode!.insertBefore(hm, s);
   })();
 }
 

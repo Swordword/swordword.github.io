@@ -22,10 +22,10 @@ interface IPostData {
 }
 
 // 格式化gray-matter数据
-const dateStripped = (obj: { data?: any }): { data?: any } => {
-  let newObj = {}
+const dateStripped = (obj: { [s: string]: any }): { data?: any } => {
+  let newObj: { [s: string]: any } = {}
   Object.keys(obj).forEach((key) => {
-    let value = obj[key]
+    let value = obj[key] 
     if (value !== null) {
       // If array, loop...
       if (Array.isArray(value)) {
@@ -102,7 +102,7 @@ export function getAllPostIds() {
 }
 
 // 获取单个博客的内容
-export async function getPostData(id) {
+export async function getPostData(id: string) {
   const fullPath = path.join(postsDirectory, `${decodeURI(id)}.md`)
   const fileContents = fs.readFileSync(fullPath, 'utf8')
   const matterResult = matter(fileContents)

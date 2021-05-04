@@ -3,7 +3,7 @@ title: 学习笔记 Next.JS使用教程
 date: 2021-04-23 13:47:05
 tag: React, Next.js
 category: 程序人生
-cover: https://img.massivejohn.com/
+cover: 
 description: description
 ---
 

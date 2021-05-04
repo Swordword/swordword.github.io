@@ -6,7 +6,7 @@ const Index = () => {
     z-index:1;`}>
       <div css={css`
       width: 100%;
-      height: 300px;
+      height: 350px;
       position: relative;`}>
         <Image src="/images/banner.png" layout="fill" objectFit="cover"></Image>
       </div>

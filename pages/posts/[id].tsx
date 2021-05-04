@@ -1,24 +1,21 @@
 import React, { useContext } from 'react'
+// Package
 // import Link from "next/link";
 import Head from "next/head";
-import { GetStaticProps, GetStaticPaths,GetServerSideProps } from "next";
+import { GetStaticProps, GetStaticPaths, InferGetStaticPropsType } from "next";
+import { css } from '@emotion/react'
 
+// Local
 import Layout from "layout";
 import { getAllPostIds, getPostData } from "lib/posts";
-import Date from "components/Date";
 
 import { ThemeContext } from 'config/theme'
+import Label from 'components/Label'
 
 
 export default function Post({
   postData,
-}: {
-  postData: {
-    title: string;
-    date: string;
-    contentHtml: string;
-  };
-}) {
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   const { theme, toggleTheme } = useContext(ThemeContext)
   return (
     <Layout>
@@ -26,12 +23,28 @@ export default function Post({
         <title>{postData.title}</title>
       </Head>
       <article style={{
-        background: theme.background,
         color: theme.foreground,
       }}>
-        <h1>{postData.title}</h1>
-        <div>
-          <Date dateString={postData.date} />
+        <h1 css={css`
+        height:70px;
+        margin: 0;
+        line-height:70px;
+        text-align:center;
+        font-size: 40px;
+        `}>{postData.title}</h1>
+        <div css={css`
+          margin-left: 250px;
+          `}>
+          {/* Label Component */}
+          <Label category={postData.category} tag={postData.tag} date={postData.date} />
+        </div>
+        <div css={css`
+            border-bottom: 1px solid #30A9DE;
+            margin-top: 20px;
+            margin-bottom: 20px;`}
+        >
+
+          {/* line */}
         </div>
         <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
       </article>
@@ -48,7 +61,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const postData = await getPostData(params.id as string)
+  const postData = await getPostData(params?.id as string)
   return {
     props: {
       postData

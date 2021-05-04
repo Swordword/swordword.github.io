@@ -12,6 +12,15 @@ import highlight from 'remark-highlight.js'
 
 const postsDirectory = path.join(process.cwd(), 'posts')
 
+interface IPostData {
+  date: string
+  title: string
+  description: string
+  tag: string
+  category: string
+  cover: string
+}
+
 // 格式化gray-matter数据
 const dateStripped = (obj: { data?: any }): { data?: any } => {
   let newObj = {}
@@ -50,14 +59,7 @@ export function getSortedPostsData(pageSize = 10) {
     const matterResult = matter(fileContents)
     return {
       id,
-      ...(dateStripped(matterResult).data as {
-        date: string
-        title: string
-        description: string
-        tag: string
-        category: string
-        cover: string
-      }),
+      ...(dateStripped(matterResult).data as IPostData),
     }
   })
   // Sort posts by date
@@ -118,6 +120,6 @@ export async function getPostData(id) {
   return {
     id,
     contentHtml,
-    ...(dateStripped(matterResult).data as { date: string; title: string }),
+    ...(dateStripped(matterResult).data as IPostData),
   }
 }

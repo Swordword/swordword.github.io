@@ -7,13 +7,13 @@ const Test = () => {
     <div>
       <div css={css`
       width:100vw;
-      height:300px;
+      height:350px;
       position: relative;`}>
         <Image src="/images/banner.png" layout="fill" objectFit="cover"></Image>
       </div>
       <div css={css`
       width:100vw;
-      height:300px;
+      height:350px;
       background:red;
       `}>
         test page

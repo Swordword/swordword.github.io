@@ -31,6 +31,7 @@ export default function Layout({
     <div style={{
       background: theme.background,
       color: theme.foreground,
+      paddingBottom: '50px'
     }}>
       <div >
         <Head>
@@ -57,16 +58,10 @@ export default function Layout({
         width: 1100px;
         background: #fff;
         padding: 50px 100px;
-        margin: -150px auto;`}>
+        margin: -150px auto 50px;
+        border-radius: 8px;`}>
           {children}
         </main>
-        {!home && (
-          <div>
-            <Link href="/">
-              <a>← Back to home</a>
-            </Link>
-          </div>
-        )}
       </div>
 
     </div>

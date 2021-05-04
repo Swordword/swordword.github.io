@@ -1,11 +1,11 @@
 @font-face {
   font-family: "iconfont"; /* Project id 2520908 */
-  src: url('iconfont.eot?t=1619927325703'); /* IE9 */
-  src: url('iconfont.eot?t=1619927325703#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('iconfont.woff2?t=1619927325703') format('woff2'),
-       url('iconfont.woff?t=1619927325703') format('woff'),
-       url('iconfont.ttf?t=1619927325703') format('truetype'),
-       url('iconfont.svg?t=1619927325703#iconfont') format('svg');
+  src: url('iconfont.eot?t=1620094249252'); /* IE9 */
+  src: url('iconfont.eot?t=1620094249252#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('iconfont.woff2?t=1620094249252') format('woff2'),
+       url('iconfont.woff?t=1620094249252') format('woff'),
+       url('iconfont.ttf?t=1620094249252') format('truetype'),
+       url('iconfont.svg?t=1620094249252#iconfont') format('svg');
 }
 
 .iconfont {
@@ -14,6 +14,10 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-time:before {
+  content: "\e6be";
 }
 
 .icon-lianhe4:before {

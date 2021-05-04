@@ -10,11 +10,13 @@ import SingleBlog from 'components/SingleBlog'
 
 
 export type IPostData = {
+  id: string;
   date: string;
   title: string;
-  id: string;
   description: string;
   tag: string;
+  category: string
+  cover: string
 }
 
 export default function Home({
@@ -34,7 +36,7 @@ export default function Home({
         `}>
           {allPostsData.map((postData) => (
             <SingleBlog id={postData.id} title={postData.title} tag={postData.tag} description={postData.description}
-              date={postData.date} />
+              date={postData.date} category={postData.category} cover={postData.cover} key={postData.id} />
           ))}
         </ul>
       </section>

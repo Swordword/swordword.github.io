@@ -10,7 +10,7 @@ import { ThemeContext } from 'config/theme'
 import Icon from 'components/Icon'
 
 const SingleBlog = (postData: IPostData) => {
-  const { id, title, date, tag, description } = postData
+  const { id, title, date, tag, description, category, cover } = postData
   const { theme } = useContext(ThemeContext)
 
   const liStyle = css`
@@ -34,7 +34,7 @@ const SingleBlog = (postData: IPostData) => {
         overflow: hidden;
         cursor: pointer;
         `}>
-          <Image src='/images/banner.png' layout="fill" objectFit="cover" />
+          <Image src={cover || '/images/banner.png'} layout="fill" objectFit="cover" />
         </div>
       </Link>
       <div css={css`
@@ -92,8 +92,11 @@ const SingleBlog = (postData: IPostData) => {
             </small>
             <small css={css`
             margin-left: 10px;
-            margin-right: 20px;`}>
-              <span>Category</span>
+            margin-right: 20px;
+            cursor: pointer;`}>
+              <Link href={`/category/${category || ''}`}>
+                <span>{category || '前往分类'}</span>
+              </Link>
             </small>
           </div>
           <div css={css`
@@ -108,8 +111,17 @@ const SingleBlog = (postData: IPostData) => {
             </small>
             <small css={css`
             margin-left: 10px;
-            margin-right: 20px;`}>
-              <small>{tag}</small>
+            margin-right: 20px;
+            cursor: pointer;`}>
+              {
+                tag ? tag.split(',').map(t => (
+                  <Link href={`/tag/${t}`}>
+                    <span>{t}&nbsp;</span>
+                  </Link>
+                )) : <Link href={`/tag`}>
+                  <span>前往标签</span>
+                </Link>
+              }
             </small>
           </div>
         </div>

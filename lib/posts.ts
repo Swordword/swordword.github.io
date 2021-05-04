@@ -50,7 +50,14 @@ export function getSortedPostsData(pageSize = 10) {
     const matterResult = matter(fileContents)
     return {
       id,
-      ...(dateStripped(matterResult).data as { date: string; title: string }),
+      ...(dateStripped(matterResult).data as {
+        date: string
+        title: string
+        description: string
+        tag: string
+        category: string
+        cover: string
+      }),
     }
   })
   // Sort posts by date

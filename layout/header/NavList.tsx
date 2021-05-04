@@ -32,7 +32,7 @@ const insideNavList: Itype[] = [
   {
     icon: "#icon-leimupinleifenleileibie2",
     text: "分类",
-    path: "/archive",
+    path: "/category",
   },
   {
     icon: "#icon-tag1",

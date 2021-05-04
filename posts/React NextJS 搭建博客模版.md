@@ -1,8 +1,10 @@
 ---
 title: React NextJS 搭建博客模版
 date: 2021-04-22 13:34:36
+category: 实例展示
 description: 本文尝试使用NextJS搭建一个具有基本功能的博客并部署于后端
 tag: React,Next.js,Nginx
+cover: http://img.massivejohn.com/O1CN01fcBiFB1SWNJZYWpCK_!!0-item_pic.jpg_540x540Q50s50.jpg
 ---
 
 ### Next.js 博客初始化

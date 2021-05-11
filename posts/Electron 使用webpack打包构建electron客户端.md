@@ -3,12 +3,15 @@ title: 使用webpack打包构建electron客户端
 date: 2021-01-19 16:42:36
 category: 软件开发
 tag: electron,webpack,typescript,react
-description: description
+cover: 
+description: 使用webpack构建打包electron客户端，渲染进程使用React和Typescript
 ---
 
-### 
+### 前导
 
-使用`electron` 可以方便打包跨平台的客户端软件，尝试将 electron 和 webpack 联合起来使用呢？
+使用`electron` 可以方便打包跨平台的客户端软件，但是如何将前端工程化的优势与electron联系起来呢？
+
+[github electron-webpack-react-ts](https://github.com/Swordword/electron-webpack-react-ts)
 
 ### 目录结构
 

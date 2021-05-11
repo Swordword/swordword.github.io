@@ -33,8 +33,11 @@ const Label = (props: IProps) => {
         </small>
         <small css={css`
             margin-left: 10px;
-            margin-right: 20px;`}>
-          <Date dateString={date} />
+            margin-right: 20px;
+            cursor: pointer;`}>
+          <Link href={`/archive`}>
+            <span><Date dateString={date} /></span>
+          </Link>
         </small>
       </div>
       <div css={css`

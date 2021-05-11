@@ -2,7 +2,7 @@ import { createContext } from 'react'
 
 const themes = {
   light: {
-    foreground: '#000000',
+    foreground: '#3c4858',
     background: '#eee',
   },
   dark: {

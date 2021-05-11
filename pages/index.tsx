@@ -1,10 +1,10 @@
 // Package
 import Head from "next/head";
-import { GetStaticProps } from "next";
+import { InferGetStaticPropsType } from "next";
 import { css } from "@emotion/react"
 // Local
-import Layout, { siteTitle } from "../layout";
-import { getSortedPostsData } from "../lib/posts";
+import Layout, { siteTitle } from "layout";
+import { getSortedPostsData } from "lib/posts";
 import SingleBlog from 'components/SingleBlog'
 
 
@@ -21,10 +21,7 @@ export type IPostData = {
 
 export default function Home({
   allPostsData, pageSize
-}: {
-  allPostsData: IPostData[];
-  pageSize: number
-}) {
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <Layout home>
       <Head>
@@ -45,7 +42,7 @@ export default function Home({
   );
 }
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps = async () => {
   return loadBlogList();
 };
 

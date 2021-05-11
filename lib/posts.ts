@@ -50,9 +50,9 @@ const dateStripped = (obj: { [s: string]: any }): { data?: any } => {
 
 /**
  * @description 过滤写完的blog
- * @returns 
+ * @returns
  */
-const getFinishedFiles = ()=>{
+const getFinishedFiles = () => {
   const fileNames = fs.readdirSync(postsDirectory)
   const unfinishedTag = '[未完待续...]'
   return fileNames.filter((fileName) => {
@@ -64,11 +64,10 @@ const getFinishedFiles = ()=>{
 
 // index page blog 列表
 export function getSortedPostsData(pageSize = 10) {
-
   const finishFileNames = getFinishedFiles()
 
   const allPostsData = finishFileNames.map((fileName) => {
-    const id = encodeURI(fileName.replace(/\.md$/, ''))
+    const id = encodeURI(fileName.replace(/\.mdx?$/, ''))
     const fullPath = path.join(postsDirectory, fileName)
     const fileContents = fs.readFileSync(fullPath, 'utf8')
     const matterResult = matter(fileContents)
@@ -95,11 +94,6 @@ export function getSortedPostsData(pageSize = 10) {
       params: {
         id: 'ssg-ssr'
       }
-    },
-    {
-      params: {
-        id: 'pre-rendering'
-      }
     }
   ]
 */
@@ -109,8 +103,7 @@ export function getAllPostIds() {
   return finishFileNames.map((fileName) => {
     return {
       params: {
-        id: decodeURI(fileName.replace(/\.md$/, '')),
-        // id: fileName.replace(/\.md$/, ''),
+        id: decodeURI(fileName.replace(/\.mdx?$/, '')),
       },
     }
   })
@@ -137,4 +130,78 @@ export async function getPostData(id: string) {
     contentHtml,
     ...(dateStripped(matterResult).data as IPostData),
   }
+}
+
+// 归档
+
+export type IAchive = {
+  year: number
+  blogList: {
+    title: string
+    id: string
+    date: string
+  }[]
+}
+
+// 归档数据结构 TODO: 待优化
+const unifyAchive = (
+  result: IAchive[],
+  date: string,
+  year: number,
+  id: string,
+  title: string
+) => {
+  const sameYear = result.find((r) => r.year == year)
+  if (!sameYear) {
+    const newYear = {
+      year,
+      blogList: [
+        {
+          id,
+          title,
+          date,
+        },
+      ],
+    }
+    result.push(newYear)
+    return
+  }
+  sameYear.blogList.push({
+    id,
+    title,
+    date,
+  })
+}
+
+export const getActiveData = () => {
+  const finishFileNames = getFinishedFiles()
+  let achiveList: IAchive[] = []
+  finishFileNames.map((fileName) => {
+    const filePath = path.join(postsDirectory, fileName)
+    const fileContents = fs.readFileSync(filePath, 'utf8')
+    const matterResult = matter(fileContents)
+    const title = matterResult.data.title
+    const id = encodeURI(fileName.replace(/\.mdx?$/, ''))
+    const date = matterResult.data.date
+    const year = date.getFullYear()
+    const month = date.getMonth() + 1
+    unifyAchive(achiveList, date, year, id, title)
+  })
+  // 日期排序
+  achiveList.forEach((r) => {
+    r.blogList.sort((a, b) => {
+      if (a.date < b.date) {
+        return 1
+      } else {
+        return -1
+      }
+    })
+  })
+  achiveList.sort((a, b) => b.year - a.year)
+  let res = {
+    length: finishFileNames.length,
+    achiveList,
+  }
+  // 嵌套对象使用 getStaticProps 需要序列化
+  return JSON.stringify(res)
 }

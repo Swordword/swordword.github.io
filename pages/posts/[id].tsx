@@ -1,8 +1,7 @@
-import React, { useContext } from 'react'
 // Package
-// import Link from "next/link";
+import { useContext } from 'react'
 import Head from "next/head";
-import { GetStaticProps, GetStaticPaths, InferGetStaticPropsType } from "next";
+import { GetStaticPaths, InferGetStaticPropsType, GetStaticPropsContext } from "next";
 import { css } from '@emotion/react'
 
 // Local
@@ -13,9 +12,7 @@ import { ThemeContext } from 'config/theme'
 import Label from 'components/Label'
 
 
-export default function Post({
-  postData,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
+const Post = ({postData}: InferGetStaticPropsType<typeof getStaticProps>) => {
   const { theme, toggleTheme } = useContext(ThemeContext)
   return (
     <Layout>
@@ -60,11 +57,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 }
 
-export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const postData = await getPostData(params?.id as string)
+export const getStaticProps = async ({ params }: GetStaticPropsContext<any>) => {
+  const postData = await getPostData(params.id as string)
   return {
     props: {
       postData
     }
   }
 }
+
+export default Post

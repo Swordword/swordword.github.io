@@ -18,6 +18,7 @@ export const siteTitle = "Swordword's blog";
 import { ThemeContext } from '../config/theme'
 
 
+
 export default function Layout({
   children,
   home
@@ -27,42 +28,44 @@ export default function Layout({
 }) {
   const { theme } = useContext(ThemeContext)
 
+  const LayoutStyle = css`
+  width: 100vw;
+  height: 100vh;
+  overflow-y: scroll;
+  background: ${theme.background};         
+  color: ${theme.foreground};
+  padding-bottom: 50px
+`
+
   return (
-    <div style={{
-      background: theme.background,
-      color: theme.foreground,
-      paddingBottom: '50px'
-    }}>
-      <div >
-        <Head>
-          <link rel="icon" href="/favicon.ico" />
-          <meta name="description"
-            content="Learn how to build a personal website using Next.js"
-          />
-          <meta
-            property="og:image"
-            content={`https://og-image.now.sh/${encodeURI(
-              siteTitle
-            )}.png?theme=light&md=0&fontSize=75px&images=https%3A%2F%2Fassets.vercel.com%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fnextjs-black-logo.svg`}
-          />
-          <meta name="og:title" content={siteTitle} />
-          <meta name="twitter:card" content="summary_large_image" />
-        </Head>
+    <div css={LayoutStyle}>
+      <Head>
+        <link rel="icon" href="/favicon.ico" />
+        <meta name="description"
+          content="Learn how to build a personal website using Next.js"
+        />
+        <meta
+          property="og:image"
+          content={`https://og-image.now.sh/${encodeURI(
+            siteTitle
+          )}.png?theme=light&md=0&fontSize=75px&images=https%3A%2F%2Fassets.vercel.com%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fnextjs-black-logo.svg`}
+        />
+        <meta name="og:title" content={siteTitle} />
+      </Head>
 
-        <Header />
+      <Header />
 
-        <Banner />
+      <Banner />
 
-        <main css={css`
+      <main css={css`
         position:relative;
         width: 1100px;
         background: #fff;
         padding: 50px 100px;
         margin: -150px auto 50px;
         border-radius: 8px;`}>
-          {children}
-        </main>
-      </div>
+        {children}
+      </main>
 
     </div>
 

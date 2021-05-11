@@ -25,7 +25,7 @@ interface IPostData {
 const dateStripped = (obj: { [s: string]: any }): { data?: any } => {
   let newObj: { [s: string]: any } = {}
   Object.keys(obj).forEach((key) => {
-    let value = obj[key] 
+    let value = obj[key]
     if (value !== null) {
       // If array, loop...
       if (Array.isArray(value)) {
@@ -48,11 +48,26 @@ const dateStripped = (obj: { [s: string]: any }): { data?: any } => {
   return newObj
 }
 
+/**
+ * @description 过滤写完的blog
+ * @returns 
+ */
+const getFinishedFiles = ()=>{
+  const fileNames = fs.readdirSync(postsDirectory)
+  const unfinishedTag = '[未完待续...]'
+  return fileNames.filter((fileName) => {
+    const filePath = path.resolve(postsDirectory, fileName)
+    const content = fs.readFileSync(filePath, 'utf-8')
+    return !content.trim().endsWith(unfinishedTag)
+  })
+}
+
 // index page blog 列表
 export function getSortedPostsData(pageSize = 10) {
-  const fileNames = fs.readdirSync(postsDirectory)
-  // const pageFileNames = fileNames.splice(0,pageSize)
-  const allPostsData = fileNames.map((fileName) => {
+
+  const finishFileNames = getFinishedFiles()
+
+  const allPostsData = finishFileNames.map((fileName) => {
     const id = encodeURI(fileName.replace(/\.md$/, ''))
     const fullPath = path.join(postsDirectory, fileName)
     const fileContents = fs.readFileSync(fullPath, 'utf8')
@@ -89,9 +104,9 @@ export function getSortedPostsData(pageSize = 10) {
   ]
 */
 export function getAllPostIds() {
-  const fileNames = fs.readdirSync(postsDirectory)
+  const finishFileNames = getFinishedFiles()
 
-  return fileNames.map((fileName) => {
+  return finishFileNames.map((fileName) => {
     return {
       params: {
         id: decodeURI(fileName.replace(/\.md$/, '')),

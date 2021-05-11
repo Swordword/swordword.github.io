@@ -9,3 +9,4 @@ vue2.x的监听绑定使用的是`Object.defineProperty`,不能对数组和特�
 
 
 
+[未完待续...]

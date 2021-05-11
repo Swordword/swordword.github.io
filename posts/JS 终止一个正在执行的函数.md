@@ -5,3 +5,4 @@ description: 如何终止一个正在执行的js函数
 tag: JavaScript
 ---
 
+[未完待续...]

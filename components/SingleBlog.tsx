@@ -21,6 +21,7 @@ const SingleBlog = (postData: IPostData) => {
    justify-content: flex-start;
    align-items: flex-start;
   `
+  const defaultImage = `https://placeimg.com/350/160/technics/${id}`
 
   return (
     <li css={liStyle}>
@@ -33,7 +34,7 @@ const SingleBlog = (postData: IPostData) => {
         overflow: hidden;
         cursor: pointer;
         `}>
-          <Image src={cover || '/images/banner.png'} layout="fill" objectFit="cover" />
+          <Image src={cover || defaultImage} layout="fill" objectFit="cover" />
         </div>
       </Link>
       <div css={css`

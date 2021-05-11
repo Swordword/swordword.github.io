@@ -440,6 +440,7 @@ type Post = {
   content: string
 }
 
+// 这种情况就不需要使用 GetStaticProps，InferGetStaticPropsType 会自动生成 props 类型
 export const getStaticProps = async () => {
   const res = await fetch('https://.../posts')
   const posts: Post[] = await res.json()

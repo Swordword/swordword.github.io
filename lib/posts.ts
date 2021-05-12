@@ -132,18 +132,22 @@ export async function getPostData(id: string) {
   }
 }
 
-// 归档
+/**
+ * 归档
+ */
+
+type TSimpleBlog = {
+  title: string
+  id: string
+  date: string
+}
 
 export type IAchive = {
   year: number
-  blogList: {
-    title: string
-    id: string
-    date: string
-  }[]
+  blogList: TSimpleBlog[]
 }
 
-// 归档数据结构 TODO: 待优化
+// 归档数据结构
 const unifyAchive = (
   result: IAchive[],
   date: string,
@@ -173,6 +177,7 @@ const unifyAchive = (
   })
 }
 
+// 获取归档数据
 export const getActiveData = () => {
   const finishFileNames = getFinishedFiles()
   let achiveList: IAchive[] = []
@@ -204,4 +209,33 @@ export const getActiveData = () => {
   }
   // 嵌套对象使用 getStaticProps 需要序列化
   return JSON.stringify(res)
+}
+
+/**
+ * 分类
+ */
+
+type ICategory = {
+  cate: string
+  blogList: TSimpleBlog[]
+}
+
+export const getCategoryData = () => {
+  const finishFileNames = getFinishedFiles()
+  let categoryList: ICategory[] = []
+  finishFileNames.map((fileName) => {
+    const filePath = path.join(postsDirectory, fileName)
+    const fileContents = fs.readFileSync(filePath, 'utf8')
+    const matterResult = matter(fileContents)
+    const title = matterResult.data.title
+    const category = matterResult.data.category
+    const id = encodeURI(fileName.replace(/\.mdx?$/, ''))
+    const date = matterResult.data.date
+    let sameCategory = categoryList.find((c) => c.cate === category)
+    if (!sameCategory) {
+      
+      return
+    }
+    sameCategory.blogList.push({ title, id, date })
+  })
 }

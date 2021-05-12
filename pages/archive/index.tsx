@@ -1,5 +1,4 @@
 // Package
-import React from 'react'
 import { css } from '@emotion/react'
 import { InferGetStaticPropsType } from 'next'
 import Link from 'next/link'

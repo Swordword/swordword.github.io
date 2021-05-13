@@ -18,7 +18,11 @@ export const siteTitle = "Swordword's blog";
 import { ThemeContext } from '../config/theme'
 
 
-
+/**
+ * Layout 全局层
+ * @param param0 
+ * @returns 
+ */
 export default function Layout({
   children,
   home

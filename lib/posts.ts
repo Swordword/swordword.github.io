@@ -147,7 +147,7 @@ export type IAchive = {
   blogList: TSimpleBlog[]
 }
 
-// 归档数据结构
+// 归档 数据结构整合
 const unifyAchive = (
   result: IAchive[],
   date: string,
@@ -215,8 +215,9 @@ export const getActiveData = () => {
  * 分类
  */
 
-type ICategory = {
+export type ICategory = {
   cate: string
+  shrink: boolean
   blogList: TSimpleBlog[]
 }
 
@@ -233,9 +234,19 @@ export const getCategoryData = () => {
     const date = matterResult.data.date
     let sameCategory = categoryList.find((c) => c.cate === category)
     if (!sameCategory) {
-      
+      categoryList.push({
+        cate: category,
+        blogList: [
+          {
+            title,
+            id,
+            date,
+          },
+        ],
+      })
       return
     }
     sameCategory.blogList.push({ title, id, date })
   })
+  return JSON.stringify(categoryList)
 }

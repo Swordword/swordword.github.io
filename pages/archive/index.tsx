@@ -7,16 +7,16 @@ import Layout from "layout";
 import Date from "components/Date";
 import { getActiveData, IAchive } from 'lib/posts'
 
-const HeaderStyle = css`
+export const HeaderStyle = css`
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 20px;
 `
-const yearStyle = css`
+export const YearStyle = css`
   font-size: 20px;
   margin: 8px 0;
 `
-const blogStyle = css`
+export const BlogStyle = css`
     display:flex;
     flex-direction:row;
     justify-content: space-between;
@@ -37,12 +37,12 @@ const Index = ({ achiveList, length }: InferGetStaticPropsType<typeof getStaticP
       </div>
       {achiveList.map(achive => (
         <div key={achive.year}>
-          <div css={yearStyle}>
+          <div css={YearStyle}>
             {achive.year}
           </div>
           {achive.blogList.map((blog => (
             <Link href={`/posts/${blog.id}`} key={blog.id}>
-              <div css={blogStyle}>
+              <div css={BlogStyle}>
                 <div>{blog.title}</div>
                 <div> <Date dateString={blog.date} option="LL-dd" />
                 </div>

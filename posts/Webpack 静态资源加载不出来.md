@@ -7,4 +7,13 @@ cover:
 description: description
 ---
 
+webpack5 单纯使用静态资源是可以加载的。
+
+
+
+
+
+
+
 [未完待续...]
+

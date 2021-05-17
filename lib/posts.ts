@@ -236,6 +236,7 @@ export const getCategoryData = () => {
     if (!sameCategory) {
       categoryList.push({
         cate: category,
+        shrink: false,
         blogList: [
           {
             title,

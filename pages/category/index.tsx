@@ -74,7 +74,7 @@ const Index = ({ categoryList }: InferGetStaticPropsType<typeof getStaticProps>)
 
 export const getStaticProps = async () => {
   const categoryList: ICategory[] = JSON.parse(getCategoryData())
-  categoryList.forEach(category => category.shrink = false)
+  // categoryList.forEach(category => category.shrink = false)
   return {
     props: {
       categoryList

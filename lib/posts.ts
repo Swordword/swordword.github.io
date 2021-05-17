@@ -10,6 +10,7 @@ import html from 'remark-html'
 import guide from 'remark-preset-lint-markdown-style-guide'
 import highlight from 'remark-highlight.js'
 
+/** post 所在文件夹 */
 const postsDirectory = path.join(process.cwd(), 'posts')
 
 interface IPostData {
@@ -189,7 +190,6 @@ export const getActiveData = () => {
     const id = encodeURI(fileName.replace(/\.mdx?$/, ''))
     const date = matterResult.data.date
     const year = date.getFullYear()
-    const month = date.getMonth() + 1
     unifyAchive(achiveList, date, year, id, title)
   })
   // 日期排序
@@ -250,4 +250,56 @@ export const getCategoryData = () => {
     sameCategory.blogList.push({ title, id, date })
   })
   return JSON.stringify(categoryList)
+}
+
+export const getAllPostCates = () => {
+  const finishFileNames = getFinishedFiles()
+  return finishFileNames.map((fileName) => {
+    const filePath = path.join(postsDirectory, fileName)
+    const fileContents = fs.readFileSync(filePath, 'utf8')
+    const matterResult = matter(fileContents)
+    const category = matterResult.data.category
+    return {
+      params: {
+        cate: category || '其他分类',
+      },
+    }
+  })
+}
+
+export const getPostListByCate = (cate: string) => {
+  const cateList: IAchive[] = []
+  let sum = 0
+  const finishFileNames = getFinishedFiles()
+  finishFileNames.forEach((fileName) => {
+    const filePath = path.join(postsDirectory, fileName)
+    const fileContents = fs.readFileSync(filePath, 'utf8')
+    const matterResult = matter(fileContents)
+    const title = matterResult.data.title
+    const id = encodeURI(fileName.replace(/\.mdx?$/, ''))
+    const date = matterResult.data.date
+    const category = matterResult.data.category || '其他分类'
+    const year = date.getFullYear()
+    if (category === cate) {
+      unifyAchive(cateList, date, year, id, title)
+      sum++
+    }
+  })
+  // 日期排序
+  cateList.forEach((r) => {
+    r.blogList.sort((a, b) => {
+      if (a.date < b.date) {
+        return 1
+      } else {
+        return -1
+      }
+    })
+  })
+  cateList.sort((a, b) => b.year - a.year)
+  let res = {
+    length: sum,
+    cateList,
+  }
+  // 嵌套对象使用 getStaticProps 需要序列化
+  return JSON.stringify(res)
 }

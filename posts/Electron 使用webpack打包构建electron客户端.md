@@ -3,8 +3,8 @@ title: 使用webpack打包构建electron客户端
 date: 2021-01-19 16:42:36
 category: 软件开发
 tag: electron,webpack,typescript,react
-cover: 
-description: 使用webpack构建打包electron客户端，渲染进程使用React和Typescript
+cover: http://img.massivejohn.com/electron-cover%201.png
+description: 使用webpack构建打包electron客户端，渲染进程使用React和Typescript.
 ---
 
 ### 前导

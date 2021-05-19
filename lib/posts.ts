@@ -24,20 +24,22 @@ interface IPostData {
 
 // 格式化gray-matter数据
 const dateStripped = (obj: { [s: string]: any }): { data?: any } => {
-  let newObj: { [s: string]: any } = {}
+  const newObj: { [s: string]: any } = {}
   Object.keys(obj).forEach((key) => {
     let value = obj[key]
     if (value !== null) {
       // If array, loop...
       if (Array.isArray(value)) {
         value = value.map((item) => dateStripped(item))
+      // eslint-disable-next-line brace-style
       }
       // ...if property is date/time, stringify/parse...
       else if (
-        typeof value === 'object' &&
-        typeof value.getMonth === 'function'
+        typeof value === 'object'
+        && typeof value.getMonth === 'function'
       ) {
         value = JSON.parse(JSON.stringify(value))
+      // eslint-disable-next-line brace-style
       }
       // ...and if a deep object, loop.
       else if (typeof value === 'object') {
@@ -64,7 +66,7 @@ const getFinishedFiles = () => {
 }
 
 // index page blog 列表
-export function getSortedPostsData(pageSize = 10) {
+export function getSortedPostsData() {
   const finishFileNames = getFinishedFiles()
 
   const allPostsData = finishFileNames.map((fileName) => {
@@ -81,13 +83,12 @@ export function getSortedPostsData(pageSize = 10) {
   return allPostsData.sort((a, b) => {
     if (a.date < b.date) {
       return 1
-    } else {
-      return -1
     }
+    return -1
   })
 }
 
-/** 
+/**
  * 返回动态路由id
  * Returns an array that looks like this:
    [
@@ -101,13 +102,11 @@ export function getSortedPostsData(pageSize = 10) {
 export function getAllPostIds() {
   const finishFileNames = getFinishedFiles()
 
-  return finishFileNames.map((fileName) => {
-    return {
-      params: {
-        id: decodeURI(fileName.replace(/\.mdx?$/, '')),
-      },
-    }
-  })
+  return finishFileNames.map((fileName) => ({
+    params: {
+      id: decodeURI(fileName.replace(/\.mdx?$/, '')),
+    },
+  }))
 }
 
 // 获取单个博客的内容
@@ -154,9 +153,9 @@ const unifyAchive = (
   date: string,
   year: number,
   id: string,
-  title: string
+  title: string,
 ) => {
-  const sameYear = result.find((r) => r.year == year)
+  const sameYear = result.find((r) => r.year === year)
   if (!sameYear) {
     const newYear = {
       year,
@@ -181,14 +180,14 @@ const unifyAchive = (
 // 获取归档数据
 export const getActiveData = () => {
   const finishFileNames = getFinishedFiles()
-  let achiveList: IAchive[] = []
-  finishFileNames.map((fileName) => {
+  const achiveList: IAchive[] = []
+  finishFileNames.forEach((fileName) => {
     const filePath = path.join(postsDirectory, fileName)
     const fileContents = fs.readFileSync(filePath, 'utf8')
     const matterResult = matter(fileContents)
-    const title = matterResult.data.title
+    const { title } = matterResult.data
     const id = encodeURI(fileName.replace(/\.mdx?$/, ''))
-    const date = matterResult.data.date
+    const { date } = matterResult.data
     const year = date.getFullYear()
     unifyAchive(achiveList, date, year, id, title)
   })
@@ -197,13 +196,12 @@ export const getActiveData = () => {
     r.blogList.sort((a, b) => {
       if (a.date < b.date) {
         return 1
-      } else {
-        return -1
       }
+      return -1
     })
   })
   achiveList.sort((a, b) => b.year - a.year)
-  let res = {
+  const res = {
     length: finishFileNames.length,
     achiveList,
   }
@@ -223,16 +221,16 @@ export type ICategory = {
 
 export const getCategoryData = () => {
   const finishFileNames = getFinishedFiles()
-  let categoryList: ICategory[] = []
-  finishFileNames.map((fileName) => {
+  const categoryList: ICategory[] = []
+  finishFileNames.forEach((fileName) => {
     const filePath = path.join(postsDirectory, fileName)
     const fileContents = fs.readFileSync(filePath, 'utf8')
     const matterResult = matter(fileContents)
-    const title = matterResult.data.title
-    const category = matterResult.data.category
+    const { title } = matterResult.data
+    const { category } = matterResult.data
     const id = encodeURI(fileName.replace(/\.mdx?$/, ''))
-    const date = matterResult.data.date
-    let sameCategory = categoryList.find((c) => c.cate === category)
+    const { date } = matterResult.data
+    const sameCategory = categoryList.find((c) => c.cate === category)
     if (!sameCategory) {
       categoryList.push({
         cate: category,
@@ -258,7 +256,7 @@ export const getAllPostCates = () => {
     const filePath = path.join(postsDirectory, fileName)
     const fileContents = fs.readFileSync(filePath, 'utf8')
     const matterResult = matter(fileContents)
-    const category = matterResult.data.category
+    const { category } = matterResult.data
     return {
       params: {
         cate: category || '其他分类',
@@ -275,9 +273,9 @@ export const getPostListByCate = (cate: string) => {
     const filePath = path.join(postsDirectory, fileName)
     const fileContents = fs.readFileSync(filePath, 'utf8')
     const matterResult = matter(fileContents)
-    const title = matterResult.data.title
+    const { title } = matterResult.data
     const id = encodeURI(fileName.replace(/\.mdx?$/, ''))
-    const date = matterResult.data.date
+    const { date } = matterResult.data
     const category = matterResult.data.category || '其他分类'
     const year = date.getFullYear()
     if (category === cate) {
@@ -290,13 +288,12 @@ export const getPostListByCate = (cate: string) => {
     r.blogList.sort((a, b) => {
       if (a.date < b.date) {
         return 1
-      } else {
-        return -1
       }
+      return -1
     })
   })
   cateList.sort((a, b) => b.year - a.year)
-  let res = {
+  const res = {
     length: sum,
     cateList,
   }

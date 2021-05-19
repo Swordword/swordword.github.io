@@ -6,25 +6,12 @@
     "dev": "next dev",
     "start": "next start --port 8001",
     "build": "next build && next export",
-    "new": "plop blog"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
+    "new": "plop blog",
+    "prepare": "husky install"
   },
   "lint-staged": {
-    "pages/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
-      "eslint --fix",
-      "git add"
-    ],
-    "components/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
-      "eslint --fix",
-      "git add"
-    ],
-    "posts/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
-      "eslint --fix",
-      "git add"
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --cache --fix"
     ]
   },
   "dependencies": {
@@ -51,6 +38,16 @@
     "@emotion/babel-plugin": "^11.3.0",
     "@types/node": "^14.11.2",
     "@types/react": "^16.9.49",
+    "@typescript-eslint/eslint-plugin": "^4.24.0",
+    "@typescript-eslint/parser": "^4.24.0",
+    "eslint": "^7.26.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-plugin-import": "^2.23.2",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-react": "^7.23.2",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "husky": ">=6",
+    "lint-staged": ">=10",
     "typescript": "^4.0.3"
   }
 }

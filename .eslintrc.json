@@ -28,6 +28,8 @@
         "no-console":"off",
         "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx",".ts",".tsx"] }],
         "no-plusplus":"off",
-        "no-use-before-define": "off"
+        "no-use-before-define": "off",
+        "jsx-a11y/no-static-element-interactions":"off",
+        "jsx-a11y/click-events-have-key-events":"off"
     }
 }

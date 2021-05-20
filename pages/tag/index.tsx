@@ -1,11 +1,9 @@
 import * as React from 'react'
 
-const Index = () => {
-  return (
-    <div>
-      Tag Page
-    </div>
-  )
-}
+const Index = () => (
+  <div>
+    Tag Page
+  </div>
+)
 
 export default Index

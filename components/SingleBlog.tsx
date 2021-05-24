@@ -1,5 +1,5 @@
 // Image
-import Link from "next/link";
+import Link from 'next/link';
 import { useContext } from 'react'
 import { css } from '@emotion/react'
 import Image from 'next/image'
@@ -9,7 +9,9 @@ import { ThemeContext } from 'config/theme'
 import Label from 'components/Label'
 
 const SingleBlog = (postData: IPostData) => {
-  const { id, title, date, tag, description, category, cover } = postData
+  const {
+    id, title, date, tag, description, category, cover,
+  } = postData
   const { theme } = useContext(ThemeContext)
 
   const liStyle = css`
@@ -33,7 +35,8 @@ const SingleBlog = (postData: IPostData) => {
         border-radius: 6px;
         overflow: hidden;
         cursor: pointer;
-        `}>
+        `}
+        >
           <Image src={cover || defaultImage} layout="fill" objectFit="cover" />
         </div>
       </Link>
@@ -43,7 +46,8 @@ const SingleBlog = (postData: IPostData) => {
         padding: 0 50px;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;`}>
+        justify-content: space-between;`}
+      >
         <Link href={`/posts/${id}`} key={id}>
           <h1 css={css`
             color: ${theme.foreground};
@@ -54,7 +58,9 @@ const SingleBlog = (postData: IPostData) => {
             cursor: pointer;
             overflow: hidden;
             text-overflow: ellipsis;
-            white-space: nowrap;`}>{title}
+            white-space: nowrap;`}
+          >
+            {title}
           </h1>
         </Link>
         <div>{description}</div>

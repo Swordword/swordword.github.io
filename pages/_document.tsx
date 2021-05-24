@@ -1,13 +1,16 @@
-import Document, { Html, Head, Main, NextScript } from 'next/document'
+import Document, {
+  Html, Head, Main, NextScript,
+} from 'next/document'
 
 class MyDocument extends Document {
   static async getInitialProps(ctx: any) {
     const initialProps = await Document.getInitialProps(ctx)
     return { ...initialProps }
   }
+
   render() {
     return (
-      <Html lang='zh-Hans'  >
+      <Html lang="zh-Hans">
         <Head />
         <body>
           <Main />

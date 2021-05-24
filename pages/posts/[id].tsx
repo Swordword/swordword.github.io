@@ -1,19 +1,18 @@
 // Package
 import { useContext } from 'react'
-import Head from "next/head";
-import { GetStaticPaths, InferGetStaticPropsType, GetStaticPropsContext } from "next";
+import Head from 'next/head';
+import { GetStaticPaths, InferGetStaticPropsType, GetStaticPropsContext } from 'next';
 import { css } from '@emotion/react'
 
 // Local
-import Layout from "layout";
-import { getAllPostIds, getPostData } from "lib/posts";
+import Layout from 'layout';
+import { getAllPostIds, getPostData } from 'lib/posts';
 
 import { ThemeContext } from 'config/theme'
 import Label from 'components/Label'
 
-
-const Post = ({postData}: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const { theme, toggleTheme } = useContext(ThemeContext)
+const Post = ({ postData }: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const { theme } = useContext(ThemeContext)
   return (
     <Layout>
       <Head>
@@ -21,17 +20,22 @@ const Post = ({postData}: InferGetStaticPropsType<typeof getStaticProps>) => {
       </Head>
       <article style={{
         color: theme.foreground,
-      }}>
+      }}
+      >
         <h1 css={css`
         height:70px;
         margin: 0;
         line-height:70px;
         text-align:center;
         font-size: 40px;
-        `}>{postData.title}</h1>
+        `}
+        >
+          {postData.title}
+        </h1>
         <div css={css`
           margin-left: 250px;
-          `}>
+          `}
+        >
           {/* Label Component */}
           <Label category={postData.category} tag={postData.tag} date={postData.date} />
         </div>
@@ -53,7 +57,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const paths = getAllPostIds()
   return {
     paths,
-    fallback: false
+    fallback: false,
   }
 }
 
@@ -61,8 +65,8 @@ export const getStaticProps = async ({ params }: GetStaticPropsContext<any>) => 
   const postData = await getPostData(params.id as string)
   return {
     props: {
-      postData
-    }
+      postData,
+    },
   }
 }
 

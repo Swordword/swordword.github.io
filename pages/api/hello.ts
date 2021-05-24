@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
 
 export default (_: NextApiRequest, res: NextApiResponse) => {
-  res.status(200).json({ text: `Welcome to Swordword's blog` })
+  res.status(200).json({ text: 'Welcome to Swordword\'s blog' })
 }

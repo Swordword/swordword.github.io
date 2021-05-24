@@ -1,23 +1,21 @@
-import React from 'react';
-import { AppProps } from "next/app";
+import React from 'react'
+import { AppProps } from 'next/app'
 // 主题
 import { ThemeContext, themes } from '../config/theme'
 // 用于引入全局样式
 // import ''
-import "styles/global.css";
-import "highlight.js/scss/vs2015.scss";
-
+import 'styles/global.css'
+import 'highlight.js/scss/vs2015.scss'
 
 function statistics() {
   // var _hmt = _hmt || [];
-  (function () {
-    var hm = document.createElement("script");
-    hm.src = "https://hm.baidu.com/hm.js?fd27152ccbcb848d9544f02148e9bddb";
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode!.insertBefore(hm, s);
-  })();
+  (function stat() {
+    const hm = document.createElement('script')
+    hm.src = 'https://hm.baidu.com/hm.js?fd27152ccbcb848d9544f02148e9bddb'
+    const s = document.getElementsByTagName('script')[0]
+    s.parentNode!.insertBefore(hm, s)
+  }())
 }
-
 
 export default function App({ Component, pageProps }: AppProps) {
   const [theme, setTheme] = React.useState(themes.light)
@@ -26,10 +24,15 @@ export default function App({ Component, pageProps }: AppProps) {
   }
   React.useEffect(() => {
     statistics()
-    if(typeof window !== 'undefined'){
-      require('images/iconfonts/iconfont');
+    if (typeof window !== 'undefined') {
+      // eslint-disable-next-line global-require
+      require('images/iconfonts/iconfont')
     }
-  
   })
-  return <ThemeContext.Provider value={{ theme, toggleTheme }}><Component {...pageProps} /></ThemeContext.Provider>
+  return (
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
+      {/* eslint-disable-next-line react/jsx-props-no-spreading */}
+      <Component {...pageProps} />
+    </ThemeContext.Provider>
+  )
 }

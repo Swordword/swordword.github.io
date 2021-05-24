@@ -3,7 +3,7 @@ import Link from 'next/link'
 
 // Local
 import Icon from 'components/Icon'
-import Date from "components/Date";
+import Date from 'components/Date';
 
 // Type
 interface IProps {
@@ -20,22 +20,26 @@ const Label = (props: IProps) => {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    align-items: center;`}>
+    align-items: center;`}
+    >
       <div css={css`
           display: flex;
           flex-direction: row;
           justify-content: flex-start;
           align-items: center;
-          `}>
+          `}
+      >
         <small css={css`
-          color: #30A9DE`}>
-          <Icon src="#icon-time"></Icon>
+          color: #30A9DE`}
+        >
+          <Icon src="#icon-time" />
         </small>
         <small css={css`
             margin-left: 10px;
             margin-right: 20px;
-            cursor: pointer;`}>
-          <Link href={`/archive`}>
+            cursor: pointer;`}
+        >
+          <Link href="/archive">
             <span><Date dateString={date} /></span>
           </Link>
         </small>
@@ -45,15 +49,18 @@ const Label = (props: IProps) => {
           flex-direction: row;
           justify-content: flex-start;
           align-items: center;
-          `}>
+          `}
+      >
         <small css={css`
-          color: #30A9DE`}>
-          <Icon src="#icon-leimupinleifenleileibie2"></Icon>
+          color: #30A9DE`}
+        >
+          <Icon src="#icon-leimupinleifenleileibie2" />
         </small>
         <small css={css`
             margin-left: 10px;
             margin-right: 20px;
-            cursor: pointer;`}>
+            cursor: pointer;`}
+        >
           <Link href={`/category/${category || ''}`}>
             <span>{category || '前往分类'}</span>
           </Link>
@@ -64,23 +71,31 @@ const Label = (props: IProps) => {
           flex-direction: row;
           justify-content: flex-start;
           align-items: center;
-          `}>
+          `}
+      >
         <small css={css`
-          color: #30A9DE`}>
-          <Icon src="#icon-tag1"></Icon>
+          color: #30A9DE`}
+        >
+          <Icon src="#icon-tag1" />
         </small>
         <small css={css`
             margin-left: 10px;
             margin-right: 20px;
-            cursor: pointer;`}>
+            cursor: pointer;`}
+        >
           {
-            tag ? tag.split(',').map(t => (
+            tag ? tag.split(',').map((t) => (
               <Link key={t} href={`/tag/${t}`}>
-                <span>{t}&nbsp;</span>
+                <span>
+                  {t}
+&nbsp;
+                </span>
               </Link>
-            )) : <Link href={`/tag`}>
-              <span>前往标签</span>
-            </Link>
+            )) : (
+              <Link href="/tag">
+                <span>前往标签</span>
+              </Link>
+            )
           }
         </small>
       </div>

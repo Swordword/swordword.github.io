@@ -1,13 +1,11 @@
 // Package
-import Head from "next/head";
-import { InferGetStaticPropsType } from "next";
-import { css } from "@emotion/react"
+import Head from 'next/head';
+import { InferGetStaticPropsType } from 'next';
+import { css } from '@emotion/react'
 // Local
-import Layout, { siteTitle } from "layout";
-import { getSortedPostsData } from "lib/posts";
+import Layout, { siteTitle } from 'layout';
+import { getSortedPostsData } from 'lib/posts';
 import SingleBlog from 'components/SingleBlog'
-
-
 
 export type IPostData = {
   id: string;
@@ -20,7 +18,7 @@ export type IPostData = {
 }
 
 export default function Home({
-  allPostsData, pageSize
+  allPostsData,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <Layout home>
@@ -30,29 +28,35 @@ export default function Home({
       <section>
         <ul css={css`
         padding:0;
-        `}>
+        `}
+        >
           {allPostsData.map((postData) => (
-            <SingleBlog id={postData.id} title={postData.title} tag={postData.tag} description={postData.description}
-              date={postData.date} category={postData.category} cover={postData.cover} key={postData.id} />
+            <SingleBlog
+              id={postData.id}
+              title={postData.title}
+              tag={postData.tag}
+              description={postData.description}
+              date={postData.date}
+              category={postData.category}
+              cover={postData.cover}
+              key={postData.id}
+            />
           ))}
         </ul>
       </section>
-    </Layout >
+    </Layout>
 
   );
 }
 
-export const getStaticProps = async () => {
-  return loadBlogList();
-};
+export const getStaticProps = async () => loadBlogList();
 
 const loadBlogList = (pageSize = 10) => {
-  const allPostsData = getSortedPostsData(pageSize);
+  const allPostsData = getSortedPostsData();
   return {
     props: {
       allPostsData,
-      pageSize
+      pageSize,
     },
   };
-
 }

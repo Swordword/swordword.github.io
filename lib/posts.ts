@@ -31,7 +31,7 @@ const dateStripped = (obj: { [s: string]: any }): { data?: any } => {
       // If array, loop...
       if (Array.isArray(value)) {
         value = value.map((item) => dateStripped(item))
-      // eslint-disable-next-line brace-style
+        // eslint-disable-next-line brace-style
       }
       // ...if property is date/time, stringify/parse...
       else if (
@@ -39,7 +39,7 @@ const dateStripped = (obj: { [s: string]: any }): { data?: any } => {
         && typeof value.getMonth === 'function'
       ) {
         value = JSON.parse(JSON.stringify(value))
-      // eslint-disable-next-line brace-style
+        // eslint-disable-next-line brace-style
       }
       // ...and if a deep object, loop.
       else if (typeof value === 'object') {
@@ -133,7 +133,9 @@ export async function getPostData(id: string) {
 }
 
 /**
+ * ************
  * 归档
+ * ************
  */
 
 type TSimpleBlog = {
@@ -210,9 +212,10 @@ export const getActiveData = () => {
 }
 
 /**
+ * ************
  * 分类
+ * ************
  */
-
 export type ICategory = {
   cate: string
   shrink: boolean
@@ -299,4 +302,41 @@ export const getPostListByCate = (cate: string) => {
   }
   // 嵌套对象使用 getStaticProps 需要序列化
   return JSON.stringify(res)
+}
+
+/**
+ * ************
+ * 标签
+ * ************
+ */
+type TTag = {
+  tag: string
+  length: number
+}
+
+export const getTagData = () => {
+  const finishFileNames = getFinishedFiles()
+  const res:TTag[] = []
+  finishFileNames.forEach((fileName) => {
+    const filePath = path.join(postsDirectory, fileName)
+    const fileContents = fs.readFileSync(filePath, 'utf8')
+    const matterResult = matter(fileContents)
+    console.log('matterResult', matterResult.data)
+    const tags = matterResult.data.tag
+    if (!tags) return
+    const tagList: string[] = tags.split(/[,|，|、]/)
+    tagList.forEach((b) => {
+      const foundedTag = res.find((r) => r.tag === b.toLowerCase())
+      if (foundedTag) {
+        foundedTag.length++
+      } else {
+        res.push({
+          tag: b.toLowerCase(),
+          length: 1,
+        })
+      }
+    })
+  })
+  console.log('res', res)
+  return res
 }

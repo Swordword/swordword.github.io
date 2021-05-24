@@ -84,8 +84,8 @@ const Label = (props: IProps) => {
             cursor: pointer;`}
         >
           {
-            tag ? tag.split(',').map((t) => (
-              <Link key={t} href={`/tag/${t}`}>
+            tag ? tag.split(/[,|，|、]/).map((t) => (
+              <Link key={t} href={`/tag/${t.toLowerCase()}`}>
                 <span>
                   {t}
 &nbsp;

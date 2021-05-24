@@ -316,7 +316,7 @@ type TTag = {
 
 export const getTagData = () => {
   const finishFileNames = getFinishedFiles()
-  const res:TTag[] = []
+  const res: TTag[] = []
   finishFileNames.forEach((fileName) => {
     const filePath = path.join(postsDirectory, fileName)
     const fileContents = fs.readFileSync(filePath, 'utf8')
@@ -339,4 +339,67 @@ export const getTagData = () => {
   })
   console.log('res', res)
   return res
+}
+
+export const getAllPostTags = () => {
+  const finishFileNames = getFinishedFiles()
+  const res: { params: { tag: string } }[] = []
+  finishFileNames.forEach((fileName) => {
+    const filePath = path.join(postsDirectory, fileName)
+    const fileContents = fs.readFileSync(filePath, 'utf8')
+    const matterResult = matter(fileContents)
+    const tags = matterResult.data.tag
+    if (!tags) return
+    const tagList: string[] = tags.split(/[,|，|、]/)
+    tagList.forEach((tag) => {
+      if (!res.find((r) => r.params.tag === tag.toLowerCase())) {
+        res.push({
+          params: {
+            tag: tag.toLowerCase(),
+          },
+        })
+      }
+    })
+  })
+  return res
+}
+
+export const getPostListByTag = (tag: string) => {
+  console.log('fn getPostListByTag', tag)
+  const tagList: IAchive[] = []
+  let sum = 0
+  const finishFileNames = getFinishedFiles()
+  finishFileNames.forEach((fileName) => {
+    const filePath = path.join(postsDirectory, fileName)
+    const fileContents = fs.readFileSync(filePath, 'utf8')
+    const matterResult = matter(fileContents)
+    const { title } = matterResult.data
+    const id = encodeURI(fileName.replace(/\.mdx?$/, ''))
+    const { date } = matterResult.data
+    const year = date.getFullYear()
+    const tags = matterResult.data.tag
+    if (!tags) return
+    const tagStrList: string[] = tags.split(/[,|，|、]/)
+    if (tagStrList.map((n) => n.toLowerCase()).includes(tag)) {
+      unifyAchive(tagList, date, year, id, title)
+      sum++
+    }
+  })
+  // 日期排序
+  tagList.forEach((r) => {
+    r.blogList.sort((a, b) => {
+      if (a.date < b.date) {
+        return 1
+      }
+      return -1
+    })
+  })
+  tagList.sort((a, b) => b.year - a.year)
+  const res = {
+    length: sum,
+    tagList,
+  }
+  console.log('res', res)
+  // 嵌套对象使用 getStaticProps 需要序列化
+  return JSON.stringify(res)
 }

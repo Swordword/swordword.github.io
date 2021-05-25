@@ -1,5 +1,5 @@
 ---
-title: WebGL 学习
+title: WebGL 基础
 date: 2020-06-8 7:21:32
 description: WebGL（Web图形库）是一个JavaScript API，可Web浏览器中渲染高性能的交互式3D和2D图形。。
 tag: JavaScript,webGL

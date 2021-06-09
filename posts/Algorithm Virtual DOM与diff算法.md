@@ -1,11 +1,43 @@
 ---
-title: virtual-dom 一览
+title: Virtual DOM 与 diff 算法
 date: 2021-05-28 17:39:31
 category: category
 tag: algorithm
 cover: 
-description: 现代前端框架使用的virtual-dom与diff算法概述
+description: 现代前端框架使用的Virtual DOM与diff算法概述
 ---
+
+## 背景
+
+## 虚拟DOM
+
+dom的操作成本是非常高的
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -13,11 +13,17 @@ description: 现代前端框架使用的Virtual DOM与diff算法概述
 
 dom的操作成本是非常高的
 
+### 虚拟DOM 转为 真实DOM
+
+### 真实DOM 转为 虚拟DOM
+
+## diff 算法
+
+### 捕获actions
 
 
 
-
-
+### patch 将actions 应用到 真实DOM中
 
 
 

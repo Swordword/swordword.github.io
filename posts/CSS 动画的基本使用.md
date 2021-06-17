@@ -69,7 +69,9 @@ CSS transition 结束时会触发该事件
 
 ## CSS动画 animation
 
-transition 虽然可以实现基础的动画效果，但是我们不能具体控制具体某个时间节点的显示状态， CSS `animation `却可以做到。 CSS 动画 也可以叫做关键帧动画。因为它的实现效果基本上是由关键帧实现的。
+transition 虽然可以实现基础的动画效果，但是我们不能具体控制具体某个时间节点的显示状态， CSS `animation `却可以做到。 
+
+CSS 动画 也可以叫做关键帧动画。因为它的实现效果基本上是由关键帧实现的。
 
 我们知道计算机上所有运动的东西其实都是由一段段连续的图片播放形成的，这些图片就叫做帧，设置关键帧使得计算机可以根我们定义的帧计算出其余的帧从而形成流畅动画
 
@@ -90,9 +92,7 @@ CSS animation 的属性比 transition更多，有8个属性。也可以简写为
 
 `animation: name duration timing-function delay iteration-count direction fill-mode;`
 
-其中，`animation-duration`、`animation-delay`、`animation-timing-function`
-
-与 `transition`属性相同
+其中，`animation-duration`、`animation-delay`、`animation-timing-function`与 `transition`属性相同
 
 ### `animation-name`
 

@@ -15,6 +15,25 @@ vue的响应式更新是vue的一大特点
 * 依赖收集：收集视图用来了哪些数据
 * 发布订阅模式：当数据发生变化时，自动通知需要更新的视图，进行更新
 
+## 准备
+
+```js
+class Vue {
+  constructor(options) {
+    let data = (this._data = options.data)
+    observe(data)
+	}
+}
+let vue = new Vue({
+  data: {
+    name: 'Bob',
+  },
+})
+setTimeout(() => {
+  vue._data.name = 'Alice'
+}, 1000)
+```
+
 ## 数据劫持
 
 vue2.x的数据劫持使用的是`Object.defineProperty`,其不能对数组和特殊对象进行监听，因此Vue3.x使用的`Proxy`则解决了这个问题
@@ -51,6 +70,27 @@ function defineReactive(obj,key,val){
 * proxy对于数组的变化也能监听到
 
 * 不需要想defineProperty进行深度遍历监听
+
+```js
+class Vue {
+  constructor(options) {
+    this._data = options.data
+    this._data = observe(options.data)
+  }
+}
+function observe(obj) {
+  let dep = new Dep()
+  return new Proxy(obj, {
+    get(obj, prop) {
+      return obj[prop]
+    },
+    set(obj, props, newVal) {
+      if (obj[props] === newVal) return
+      obj[props] = newVal
+    },
+  })
+}
+```
 
 ## 依赖收集
 
@@ -123,6 +163,8 @@ function defineReactive(obj,key,val){
 	})
 }
 ```
+
+使用 proxy与法 与上述相同
 
 ## 总结
 
@@ -216,4 +258,6 @@ setTimeout(() => {
 [剖析 Vue.js 内部运行机制 - 染陌同学 - 掘金小册 (juejin.cn)](https://juejin.cn/book/6844733705089449991/section/6844733705228025869)
 
 [响应式对象 | Vue.js 技术揭秘 (ustbhuangyi.github.io)](https://ustbhuangyi.github.io/vue-analysis/v2/reactive/reactive-object.html)
+
+[Proxy - JavaScript | MDN (mozilla.org)](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Proxy)
 

@@ -9,9 +9,9 @@ description: 现代前端框架使用的Virtual DOM与diff算法概述
 
 ## 背景
 
-## 虚拟DOM
-
 dom的操作成本是非常高的
+
+## 虚拟DOM
 
 ### 虚拟DOM 转为 真实DOM
 
@@ -27,7 +27,9 @@ dom的操作成本是非常高的
 
 
 
+## 参考
 
+[深度剖析：如何实现一个 Virtual DOM 算法 · Issue #13 · livoras/blog (github.com)](https://github.com/livoras/blog/issues/13)
 
 
 

@@ -209,6 +209,8 @@ setTimeout(() => {
 
 ## 参考
 
+[深入响应式原理 — Vue.js (vuejs.org)](https://cn.vuejs.org/v2/guide/reactivity.html)
+
 [不好意思！耽误你的十分钟，让MVVM原理还给你 (juejin.cn)](https://juejin.cn/post/6844903586103558158)
 
 [剖析 Vue.js 内部运行机制 - 染陌同学 - 掘金小册 (juejin.cn)](https://juejin.cn/book/6844733705089449991/section/6844733705228025869)

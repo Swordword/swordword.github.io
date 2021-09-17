@@ -4,7 +4,7 @@ date: 2021-09-08 10:42:19
 category: category
 tag:
 cover:
-description: description
+description: 简单熟悉go语法
 ---
 
 #### 基础用法

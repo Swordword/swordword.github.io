@@ -64,7 +64,11 @@ fmt.Println(message)
 
 初始化map类型：`make(map[*key-type*]*value-type*)`
 
+`go build`将当前的go包打包未为二进制执行文件
 
+`go list -f '{{.Target}}'`获取 `go install` 的安装路径
 
-[未完待续...]
+`export PATH=$PATH:/path/to/your/install/directory` 将 go 安装路径设置设置为系统变量
+
+`go install`：安装打包的二进制包
 

@@ -62,7 +62,7 @@ eslint 寻找配置文件 会从同一文件目录开始找，逐级往上直至
 
 #### 通过拓展（extend）添加配置文件
 
-.eslintrc.* 如果配置 extend 属性，会继承额外配置文件的所有属性
+.eslintrc.* 如果配置 extend 属性，会继承额外配置文件的所有属性，默认的有 "eslint:recommended"、"eslint:all"
 
 ```json
 {

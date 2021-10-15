@@ -7,6 +7,14 @@ cover:
 description: description
 ---
 
+### 背景
+
+团队的前端项目在运维那里经常部署失败，想尝试了解一下docker怎么部署项目的
+
+### 在docker中开发项目
+
+### 在docker中部署项目
+
 `docker pull node`
 
 

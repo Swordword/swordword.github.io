@@ -1,5 +1,6 @@
 import React from 'react'
 import { AppProps } from 'next/app'
+import { css } from '@emotion/react'
 // 主题
 import { ThemeContext, themes } from '../config/theme'
 // 用于引入全局样式
@@ -33,6 +34,16 @@ export default function App({ Component, pageProps }: AppProps) {
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
       {/* eslint-disable-next-line react/jsx-props-no-spreading */}
       <Component {...pageProps} />
+      <div
+        css={css`
+          text-align: center;
+          height: 30px;
+          line-height: 30px;
+          color: #333;
+        `}
+      >
+        <a href="https://beian.miit.gov.cn/" target="_blank" rel="noreferrer">京ICP备19054504号-2</a>
+      </div>
     </ThemeContext.Provider>
   )
 }

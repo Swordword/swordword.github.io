@@ -548,37 +548,3 @@ API 路由也支持像 `pages`那样的动态路由
 Next.js编译代码是在一个独立的文件夹，所以不能使用`__dirname`获取文件夹目录,`process.cwd()`返回 Next.js 执行的目录
 
 #### `getStaticPaths` 和 `getServerSideProps`不能同时使用
-
-
-
-### 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-[未完待续...]

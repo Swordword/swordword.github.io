@@ -67,6 +67,12 @@ CSS提供了几条内置的贝塞尔曲线 `linear`、`ease`、`ease-in`、`ease
 
 CSS transition 结束时会触发该事件
 
+### 动画与`display:none` 冲突的解决办法
+
+如果css 中对一个设置`display:none`的元素切换至`display:block`，该元素会直接展示在动画结束的位置，元素上的动画并不会生效。
+
+css在设置`display:none`和 `display:block`时浏览器会重绘，这个是一个异步事件，在此期间浏览器无法
+
 ## CSS动画 animation
 
 transition 虽然可以实现基础的动画效果，但是我们不能具体控制具体某个时间节点的显示状态， CSS `animation `却可以做到。 

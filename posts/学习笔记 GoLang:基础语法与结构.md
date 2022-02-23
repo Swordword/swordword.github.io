@@ -1,5 +1,5 @@
 ---
-title: 学习笔记:Golang01
+title: 学习笔记 Golang:基础语法与结构
 date: 2021-09-08 10:42:19
 category: category
 tag:

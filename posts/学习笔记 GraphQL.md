@@ -2,9 +2,9 @@
 title: GraphQl探秘
 date: 2022-01-10 23:46:37
 category: category
-tag:
+tag: sql,
 cover:
-description: description
+description: Facebook 推出的新一代查询接口
 ---
 
 操作类型 Operation Type：

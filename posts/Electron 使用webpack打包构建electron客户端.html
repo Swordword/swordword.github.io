@@ -1,0 +1,397 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><link rel="icon" href="/favicon.ico"/><meta name="description" content="Learn how to build a personal website using Next.js"/><meta property="og:image" content="https://og-image.now.sh/Swordword&#x27;s%20blog.png?theme=light&amp;md=0&amp;fontSize=75px&amp;images=https%3A%2F%2Fassets.vercel.com%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fnextjs-black-logo.svg"/><meta name="og:title" content="Swordword&#x27;s blog"/><title>使用webpack打包构建electron客户端</title><meta name="next-head-count" content="7"/><link rel="preload" href="/_next/static/css/876d048b5dab7c28.css" as="style"/><link rel="stylesheet" href="/_next/static/css/876d048b5dab7c28.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills-c67a75d1b6f99dc8.js"></script><script src="/_next/static/chunks/webpack-a03f34702f60fafc.js" defer=""></script><script src="/_next/static/chunks/framework-2c79e2a64abdb08b.js" defer=""></script><script src="/_next/static/chunks/main-7c48f75ce2db1491.js" defer=""></script><script src="/_next/static/chunks/pages/_app-e272e05dd28ef959.js" defer=""></script><script src="/_next/static/chunks/130-b952c5d507d712ac.js" defer=""></script><script src="/_next/static/chunks/749-555cb8054e68346e.js" defer=""></script><script src="/_next/static/chunks/241-e8e3e8578555aa77.js" defer=""></script><script src="/_next/static/chunks/783-464c81cbfd42177e.js" defer=""></script><script src="/_next/static/chunks/pages/posts/%5Bid%5D-4108770bd2d21ccc.js" defer=""></script><script src="/_next/static/yk5Zpotj4p9R4XPv5qhw8/_buildManifest.js" defer=""></script><script src="/_next/static/yk5Zpotj4p9R4XPv5qhw8/_ssgManifest.js" defer=""></script></head><body><div id="__next"><style data-emotion="css dbbey5">.css-dbbey5{width:100vw;height:100vh;overflow-y:scroll;background:#eee;color:#3c4858;padding-bottom:50px;}</style><div class="css-dbbey5"><style data-emotion="css gpj3uu">.css-gpj3uu{width:100%;height:50px;color:#fff;background-color:rgba(47,65,84,0.7);box-shadow:0 2px 5px 0 rgb(0 0 0 / 16%),0 2px 10px 0 rgb(0 0 0 / 12%);position:fixed;top:0;left:0;z-index:2;}</style><div class="css-gpj3uu"><style data-emotion="css qjodyr">.css-qjodyr{width:1100px;height:100%;margin:auto;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:justify;-webkit-justify-content:space-between;justify-content:space-between;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;}</style><div class="css-qjodyr"><a href="/"><style data-emotion="css 19m5m0c">.css-19m5m0c{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:start;-ms-flex-pack:start;-webkit-justify-content:flex-start;justify-content:flex-start;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;cursor:pointer;}</style><div class="css-19m5m0c"><style data-emotion="css l2tq7e">.css-l2tq7e{width:30px;height:30px;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;}</style><div class="css-l2tq7e"><style data-emotion="css brme6v">.css-brme6v{width:24px;height:24px;margin-left:6px;}</style><svg class="icon css-brme6v" aria-hidden="true"><use xlink:href="#icon-sword"></use></svg></div><style data-emotion="css 879ic9">.css-879ic9{margin-left:20px;}</style><div class="css-879ic9">Swordword</div></div></a><style data-emotion="css fhxb3m">.css-fhxb3m{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;}</style><div class="css-fhxb3m"><a href="/"><style data-emotion="css kfc5ms">.css-kfc5ms{width:100px;height:50px;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;cursor:pointer;}.css-kfc5ms:hover{color:#30A9DE;background-color:rgba(0,0,0,0.1);}</style><div class="css-kfc5ms"><div class="css-l2tq7e"><svg class="icon css-brme6v" aria-hidden="true"><use xlink:href="#icon-home"></use></svg></div><style data-emotion="css 1a2afmv">.css-1a2afmv{margin-left:10px;}</style><div class="css-1a2afmv">首页</div></div></a><style data-emotion="css 1lwiia1">.css-1lwiia1{width:100px;height:50px;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;cursor:pointer;position:relative;}.css-1lwiia1:hover .nav-list{display:block;}</style><div class="css-1lwiia1"><div class="css-l2tq7e"><svg class="icon css-brme6v" aria-hidden="true"><use xlink:href="#icon-list"></use></svg></div><div class="css-1a2afmv">索引</div><style data-emotion="css su4vv2">.css-su4vv2{-webkit-transition:3s ease-out;transition:3s ease-out;display:none;width:100px;position:absolute;top:50px;left:0;background-color:rgba(47,65,84,0.7);box-shadow:0 2px 5px 0 rgb(0 0 0 / 16%),0 2px 10px 0 rgb(0 0 0 / 12%);}</style><div class="nav-list css-su4vv2"><a href="/archive"><div class="css-kfc5ms"><div class="css-l2tq7e"><svg class="icon css-brme6v" aria-hidden="true"><use xlink:href="#icon-guidang"></use></svg></div><div class="css-1a2afmv">归档</div></div></a><a href="/category"><div class="css-kfc5ms"><div class="css-l2tq7e"><svg class="icon css-brme6v" aria-hidden="true"><use xlink:href="#icon-leimupinleifenleileibie2"></use></svg></div><div class="css-1a2afmv">分类</div></div></a><a href="/tag"><div class="css-kfc5ms"><div class="css-l2tq7e"><svg class="icon css-brme6v" aria-hidden="true"><use xlink:href="#icon-tag1"></use></svg></div><div class="css-1a2afmv">标签</div></div></a></div></div><a href="/about"><div class="css-kfc5ms"><div class="css-l2tq7e"><svg class="icon css-brme6v" aria-hidden="true"><use xlink:href="#icon-lianhe4"></use></svg></div><div class="css-1a2afmv">关于</div></div></a><a href="/rss"><div class="css-kfc5ms"><div class="css-l2tq7e"><svg class="icon css-brme6v" aria-hidden="true"><use xlink:href="#icon-rss"></use></svg></div><div class="css-1a2afmv">RSS</div></div></a><div class="css-l2tq7e"><svg class="icon css-brme6v" aria-hidden="true"><use xlink:href="#icon-OOjs_UI_icon_search-ltr"></use></svg></div><div class="css-1a2afmv"><div class="css-l2tq7e"><svg class="icon css-brme6v" aria-hidden="true"><use xlink:href="#icon-sun"></use></svg></div></div></div></div></div><style data-emotion="css 1739oy8">.css-1739oy8{z-index:1;}</style><div class="css-1739oy8"><style data-emotion="css z6d19t">.css-z6d19t{width:100%;height:350px;position:relative;background:url(/_next/static/media/banner.eb35a883.jpg) center;}</style><div class="css-z6d19t"></div></div><style data-emotion="css 3vwp2t">.css-3vwp2t{position:relative;width:1100px;background:#fff;padding:50px 100px;margin:-150px auto 50px;border-radius:8px;}</style><main class="css-3vwp2t"><article style="color:#3c4858"><style data-emotion="css yrjjfw">.css-yrjjfw{height:70px;margin:0;line-height:70px;text-align:center;font-size:40px;}</style><h1 class="css-yrjjfw">使用webpack打包构建electron客户端</h1><style data-emotion="css faxeo3">.css-faxeo3{margin-left:250px;}</style><div class="css-faxeo3"><style data-emotion="css hc4w4d">.css-hc4w4d{height:40px;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:start;-ms-flex-pack:start;-webkit-justify-content:flex-start;justify-content:flex-start;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;}</style><div class="css-hc4w4d"><style data-emotion="css 12qt3ml">.css-12qt3ml{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:start;-ms-flex-pack:start;-webkit-justify-content:flex-start;justify-content:flex-start;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;}</style><div class="css-12qt3ml"><style data-emotion="css 2ldgmb">.css-2ldgmb{color:#30a9de;}</style><small class="css-2ldgmb"><div class="css-l2tq7e"><svg class="icon css-brme6v" aria-hidden="true"><use xlink:href="#icon-time"></use></svg></div></small><style data-emotion="css qq1p72">.css-qq1p72{margin-left:10px;margin-right:20px;cursor:pointer;}</style><small class="css-qq1p72"><a href="/archive"><span><time dateTime="2021-01-19T16:42:36.000Z">21-01-19</time></span></a></small></div><div class="css-12qt3ml"><small class="css-2ldgmb"><div class="css-l2tq7e"><svg class="icon css-brme6v" aria-hidden="true"><use xlink:href="#icon-leimupinleifenleileibie2"></use></svg></div></small><small class="css-qq1p72"><a href="/category/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91"><span>软件开发</span></a></small></div><div class="css-12qt3ml"><small class="css-2ldgmb"><div class="css-l2tq7e"><svg class="icon css-brme6v" aria-hidden="true"><use xlink:href="#icon-tag1"></use></svg></div></small><small class="css-qq1p72"><a href="/tag/electron"><span>electron<!-- --> </span></a><a href="/tag/webpack"><span>webpack<!-- --> </span></a><a href="/tag/typescript"><span>typescript<!-- --> </span></a><a href="/tag/react"><span>react<!-- --> </span></a></small></div></div></div><style data-emotion="css h25mx1">.css-h25mx1{border-bottom:1px solid #30a9de;margin-top:20px;margin-bottom:20px;}</style><div class="css-h25mx1"></div><div><h3 id="user-content-前导"><a href="#%E5%89%8D%E5%AF%BC" aria-hidden="true" tabindex="-1"><span></span></a>前导</h3>
+<p>使用<code>electron</code> 可以方便打包跨平台的客户端软件，但是如何将前端工程化的优势与electron联系起来呢？</p>
+<p><a href="https://github.com/Swordword/electron-webpack-react-ts">github electron-webpack-react-ts</a></p>
+<h3 id="user-content-目录结构"><a href="#%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84" aria-hidden="true" tabindex="-1"><span></span></a>目录结构</h3>
+<p>创建空文件夹作为根目录，在根目录创建文件夹 app 和 .cli_build, 并在 app 中创建 main 和 renderer 文件夹分别存放 electron 主进程和渲染进程的代码, 文件夹 .cli_build 用于存放打包配置文件</p>
+<h2 id="user-content-脚手架搭建"><a href="#%E8%84%9A%E6%89%8B%E6%9E%B6%E6%90%AD%E5%BB%BA" aria-hidden="true" tabindex="-1"><span></span></a>脚手架搭建</h2>
+<p>初始化项目<code>npm init -y</code> 或者<code>yarn init -y</code>，这里使用<code>yarn</code></p>
+<p>安装依赖项：注意，这里的 webpack 版本为5，</p>
+<p><code>yarn add webpack webpack-cli electron html-webpack-plugin webpack-dev-server  --dev</code></p>
+<h3 id="user-content-打包-main-主进程"><a href="#%E6%89%93%E5%8C%85-main-%E4%B8%BB%E8%BF%9B%E7%A8%8B" aria-hidden="true" tabindex="-1"><span></span></a>打包 main 主进程</h3>
+<p>app/main 文件夹下创建 index.js 作为 main 进程文件</p>
+<pre><code><span>// 目录：app/main/index.js</span>
+
+<span>import</span> { app, <span>BrowserWindow</span>, <span>Menu</span> } <span>from</span> <span>'electron'</span>
+
+<span>let</span> mainWindow
+
+<span>function</span> <span>createWindow</span>(<span></span>) {
+  <span>let</span> mainWindow = <span>new</span> <span>BrowserWindow</span>({
+    <span>width</span>: <span>1200</span>,
+    <span>height</span>: <span>800</span>,
+    <span>webPreferences</span>: {
+      <span>enableRemoteModule</span>: <span>true</span>,
+      <span>nodeIntegration</span>: <span>true</span>,
+    },
+  })
+
+  <span>const</span> isDev = process.<span>env</span>.<span>NODE_ENV</span> === <span>'development'</span>
+
+  <span>const</span> winURL = isDev
+  	<span>//	待会渲染进程打包时运行的端口</span>
+    ? <span>`http://localhost:8765`</span>
+    : <span>`file://<span>${__dirname}</span>/index.html`</span>
+
+  mainWindow.<span>loadURL</span>(winURL)
+  <span>if</span> (isDev) {
+    mainWindow.<span>webContents</span>.<span>openDevTools</span>()
+  }
+}
+app.<span>on</span>(<span>'window-all-closed'</span>, <span>() =></span> {
+  <span>if</span> (process.<span>platform</span> !== <span>'darwin'</span>) {
+    app.<span>quit</span>()
+  }
+})
+app.<span>on</span>(<span>'activate'</span>, <span>() =></span> {
+  <span>if</span> (mainWindow === <span>null</span>) {
+    <span>createWindow</span>()
+  }
+})
+app.<span>on</span>(<span>'ready'</span>, createWindow)</code></pre>
+<p><code>.cli_build</code>文件夹下创建<code>webpack.main.js</code>用于打包主进程文件。</p>
+<pre><code><span>// 目录：.cli_build/webpack.main.js</span>
+<span>// Native</span>
+<span>const</span> path = <span>require</span>(<span>'path'</span>)
+
+<span>const</span> <span>WebpackMainConfig</span> = {
+  <span>mode</span>: <span>'development'</span>,
+  <span>// mode: 'production',</span>
+  <span>entry</span>: {
+    <span>main</span>: path.<span>resolve</span>(process.<span>cwd</span>(), <span>'app/main/index.js'</span>),
+  },
+  <span>output</span>: {
+    <span>path</span>: path.<span>resolve</span>(process.<span>cwd</span>(), <span>'dist'</span>),
+    <span>filename</span>: <span>'main.js'</span>,
+  },
+  <span>target</span>: <span>'electron-main'</span>,
+}
+
+<span>module</span>.<span>exports</span> = <span>WebpackMainConfig</span>
+</code></pre>
+<p><code>package.json</code> 添加 <code>script</code>：<code>"main": "webpack --config ./.cli_build/webpack.main.js"</code></p>
+<p>执行 <code>yarn main</code> 会在<code>dist</code>文件夹下打包出一个<code>main.js</code>文件, 供之后使用</p>
+<h3 id="user-content-打包-renderer-渲染进程"><a href="#%E6%89%93%E5%8C%85-renderer-%E6%B8%B2%E6%9F%93%E8%BF%9B%E7%A8%8B" aria-hidden="true" tabindex="-1"><span></span></a>打包 renderer 渲染进程</h3>
+<p>类似的，在<code>app/renderer</code>文件夹下创建<code>index.js</code>和<code>index.html</code>作为渲染窗口</p>
+<pre><code><span>&#x3C;!-- 目录：app/renderer/index.js --></span>
+console.log('hello world')
+<span>&#x3C;!-- 目录：app/renderer/index.html --></span>
+<span>&#x3C;!DOCTYPE <span>html</span>></span>
+<span>&#x3C;<span>html</span> <span>lang</span>=<span>"en"</span>></span>
+  <span>&#x3C;<span>head</span>></span>
+    <span>&#x3C;<span>meta</span> <span>charset</span>=<span>"UTF-8"</span> /></span>
+    <span>&#x3C;<span>meta</span> <span>http-equiv</span>=<span>"X-UA-Compatible"</span> <span>content</span>=<span>"IE=edge"</span> /></span>
+    <span>&#x3C;<span>meta</span> <span>name</span>=<span>"viewport"</span> <span>content</span>=<span>"width=device-width, initial-scale=1.0"</span> /></span>
+    <span>&#x3C;<span>title</span>></span>Welcome to Electron<span>&#x3C;/<span>title</span>></span>
+  <span>&#x3C;/<span>head</span>></span>
+  <span>&#x3C;<span>body</span>></span>
+    <span>&#x3C;<span>p</span>></span>Hello World<span>&#x3C;/<span>p</span>></span>
+  <span>&#x3C;/<span>body</span>></span>
+<span>&#x3C;/<span>html</span>></span></code></pre>
+<p>在<code>.cli_build</code>文件夹创建<code>webpack.renderer.js</code>对渲染进程进行打包</p>
+<pre><code><span>// Native</span>
+<span>const</span> path = <span>require</span>(<span>'path'</span>)
+<span>// Package</span>
+<span>const</span> htmlWebpackPlugin = <span>require</span>(<span>'html-webpack-plugin'</span>)
+
+<span>const</span> <span>WebpackMainConfig</span> = {
+  <span>mode</span>: <span>'development'</span>,
+  <span>// mode: 'production',</span>
+  <span>entry</span>: {
+    <span>main</span>: path.<span>resolve</span>(process.<span>cwd</span>(), <span>'app/renderer/index.js'</span>),
+  },
+  <span>output</span>: {
+    <span>path</span>: path.<span>resolve</span>(process.<span>cwd</span>(), <span>'dist'</span>),
+    <span>filename</span>: <span>'[hash:name].js'</span>,
+  },
+  <span>devServer</span>: {
+    <span>contentBase</span>: path.<span>resolve</span>(process.<span>cwd</span>(), <span>'dist'</span>),
+    <span>compress</span>: <span>true</span>,
+    <span>port</span>: <span>8765</span>,
+  },
+  <span>plugins</span>: [
+    <span>new</span> <span>htmlWebpackPlugin</span>({
+      <span>template</span>: path.<span>resolve</span>(process.<span>cwd</span>(), <span>'app/renderer/index.html'</span>),
+    }),
+  ],
+}
+
+<span>module</span>.<span>exports</span> = <span>WebpackMainConfig</span>
+</code></pre>
+<p><code>package.json</code> 添加 <code>script</code>：<code>"renderer": "webpack serve --config ./.cli_build/webpack.renderer.js"</code>和 <code>"start":"electron ./dist/main.js"</code></p>
+<p>执行<code>yarn renderer</code>并新建控制台执行<code>yarn strat</code>可以看到运行出来的demo</p>
+<p>但是每次都得开两个控制台运行三次脚本，实在不方便。可以将其做到一个脚本文件中执行。</p>
+<p>在 <code>.cli_build</code>文件夹下创建<code>dev.js</code>，通过 Node 打包主进程与渲染进程并启动 electron</p>
+<pre><code><span>// 目录：.cli_build/dev.js</span>
+<span>// Native</span>
+<span>const</span> path = <span>require</span>(<span>'path'</span>)
+<span>const</span> { spawn } = <span>require</span>(<span>'child_process'</span>)
+
+<span>// Package</span>
+<span>const</span> electron = <span>require</span>(<span>'electron'</span>)
+<span>const</span> <span>Webpack</span> = <span>require</span>(<span>'webpack'</span>)
+<span>const</span> <span>WebpackDevServer</span> = <span>require</span>(<span>'webpack-dev-server'</span>)
+
+<span>const</span> mainConfig = <span>require</span>(<span>'./webpack.main'</span>)
+<span>const</span> rendererConfig = <span>require</span>(<span>'./webpack.renderer'</span>)
+
+<span>const</span> env = process.<span>env</span>.<span>NODE_ENV</span>
+<span>console</span>.<span>log</span>(<span>'env'</span>, env)
+
+<span>/**
+ * main function
+ *
+ */</span>
+<span>function</span> <span>main</span>(<span></span>) {
+  <span>buildRenderer</span>()
+  <span>buildMain</span>().<span>then</span>(<span>() =></span> {
+    <span>launch</span>()
+  })
+}
+
+<span>/**
+ * build main process
+ */</span>
+<span>function</span> <span>buildMain</span>(<span></span>) {
+  <span>console</span>.<span>log</span>(<span>'fn buildMain'</span>)
+  <span>return</span> <span>new</span> <span>Promise</span>(<span>(<span>resolve</span>) =></span> {
+    mainConfig.<span>mode</span> = <span>'development'</span>
+    <span>const</span> compiler = <span>Webpack</span>(mainConfig)
+    compiler.<span>close</span>(<span>() =></span> {
+      <span>console</span>.<span>log</span>(<span>'buildMain resolve'</span>)
+      <span>resolve</span>()
+    })
+    compiler.<span>watch</span>({}, <span>(<span>err, stats</span>) =></span> {
+      <span>if</span> (err) {
+        <span>console</span>.<span>error</span>(err)
+        <span>return</span>
+      }
+    })
+  })
+}
+
+<span>/**
+ * build renderer process
+ */</span>
+<span>function</span> <span>buildRenderer</span>(<span></span>) {
+  <span>console</span>.<span>log</span>(<span>'fn buildRenderer'</span>)
+  rendererConfig.<span>mode</span> = <span>'development'</span>
+  <span>const</span> compiler = <span>Webpack</span>(rendererConfig)
+  <span>const</span> devServerOptions = <span>Object</span>.<span>assign</span>({}, rendererConfig.<span>devServer</span>, {
+    <span>contentBase</span>: path.<span>resolve</span>(__dirname, <span>'../dist'</span>),
+    <span>// open: true,</span>
+  })
+  <span>const</span> server = <span>new</span> <span>WebpackDevServer</span>(compiler, devServerOptions)
+  server.<span>listen</span>(<span>8765</span>, <span>() =></span> {
+    <span>console</span>.<span>log</span>(<span>'Starting server on http://localhost:8765'</span>)
+  })
+}
+
+<span>function</span> <span>launch</span>(<span></span>) {
+  <span>const</span> args = [path.<span>resolve</span>(process.<span>cwd</span>(), <span>'dist/main.js'</span>)]
+  <span>let</span> mainProcess = <span>spawn</span>(electron, args)
+  mainProcess.<span>on</span>(<span>'close'</span>, <span>() =></span> {
+    <span>// exit console</span>
+    process.<span>exit</span>()
+  })
+}
+
+<span>main</span>()
+</code></pre>
+<p><code>package.json</code> 添加 <code>script</code>：<code>"dev": "node .cli_build/dev.js</code>，控制台执行<code>yarn dev</code></p>
+<h2 id="user-content-使用-react-和-typescript"><a href="#%E4%BD%BF%E7%94%A8-react-%E5%92%8C-typescript" aria-hidden="true" tabindex="-1"><span></span></a>使用 React 和 Typescript</h2>
+<p>我们的<code>renderer</code>文件夹目前只是一个空落落的<code>hello world</code>，接下来将其替换为 React+Typescript示例</p>
+<h3 id="user-content-安装所需依赖"><a href="#%E5%AE%89%E8%A3%85%E6%89%80%E9%9C%80%E4%BE%9D%E8%B5%96" aria-hidden="true" tabindex="-1"><span></span></a>安装所需依赖</h3>
+<p><code>yarn add react react-dom @types/react @types/react-dom typescript ts-loader --dev</code></p>
+<h3 id="user-content-升级主进程"><a href="#%E5%8D%87%E7%BA%A7%E4%B8%BB%E8%BF%9B%E7%A8%8B" aria-hidden="true" tabindex="-1"><span></span></a>升级主进程</h3>
+<p><code>app/main/index.js</code>=><code>app/main/index.ts</code></p>
+<pre><code><span>// 目录：app/main/index.ts</span>
+<span>// 添加一个类型说明就行</span>
+<span>let</span> <span>mainWindow</span>: <span>BrowserWindow</span></code></pre>
+<p>为<code>webpack.main.js</code>添加处理typescript文件的<code>module</code></p>
+<pre><code><span>// 目录 .cli_build/webpack.main.js</span>
+<span>entry</span>: {
+    <span>main</span>: path.<span>resolve</span>(process.<span>cwd</span>(), <span>'app/main/index.ts'</span>),
+  },
+<span>output</span>:...
+<span>module</span>: {
+    <span>rules</span>: [
+      {
+        <span>test</span>: <span>/\/tsx?$/</span>,
+        <span>use</span>: <span>'ts-loader'</span>,
+        <span>exclude</span>: <span>/node_modules/</span>,
+      },
+    ],
+  },
+<span>plugins</span>:[...]</code></pre>
+<p>在项目根目录创建<code>tsconfig.json</code></p>
+<pre><code><span>{</span>
+  <span>"compilerOptions"</span><span>:</span> <span>{</span>
+    <span>"baseUrl"</span><span>:</span> <span>"."</span><span>,</span>
+    <span>"sourceMap"</span><span>:</span> <span><span>true</span></span><span>,</span>
+    <span>"target"</span><span>:</span> <span>"ES5"</span><span>,</span>
+    <span>"module"</span><span>:</span> <span>"CommonJS"</span><span>,</span>
+    <span>"outDir"</span><span>:</span> <span>"./dist/ "</span><span>,</span>
+    <span>// 设置jsx支持，待会渲染进程会使用到</span>
+    <span>"jsx"</span><span>:</span> <span>"react"</span><span>,</span>
+    <span>// 允许使用 import React from "react";</span>
+    <span>"allowSyntheticDefaultImports"</span><span>:</span> <span><span>true</span></span><span>,</span>
+    <span>// any类型警告</span>
+    <span>"noImplicitAny"</span><span>:</span> <span><span>true</span></span><span>,</span>
+    <span>"noImplicitThis"</span><span>:</span> <span><span>true</span></span><span>,</span>
+    <span>"noImplicitReturns"</span><span>:</span> <span><span>true</span></span><span>,</span>
+    <span>// 阻止 const enum 语法，babel 好像解析不了？</span>
+    <span>"preserveConstEnums"</span><span>:</span> <span><span>true</span></span><span>,</span>
+    <span>"removeComments"</span><span>:</span> <span><span>true</span></span>
+  <span>}</span><span>,</span>
+  <span>"exclude"</span><span>:</span> <span>[</span><span>"node_modules"</span><span>]</span>
+<span>}</span></code></pre>
+<h3 id="user-content-升级渲染进程"><a href="#%E5%8D%87%E7%BA%A7%E6%B8%B2%E6%9F%93%E8%BF%9B%E7%A8%8B" aria-hidden="true" tabindex="-1"><span></span></a>升级渲染进程</h3>
+<p>修改<code>renderer/index.js</code>为<code>renderer/index.tsx</code></p>
+<pre><code><span>// 目录 app/renderer/index.tsx</span>
+<span>import</span> * <span>as</span> <span>React</span> <span>from</span> <span>'react'</span>
+<span>import</span> * <span>as</span> <span>ReactDOM</span> <span>from</span> <span>'react-dom'</span>
+
+<span>const</span> <span>App</span> = (<span></span>) => {
+  <span>return</span> (
+    <span><span>&#x3C;<span>div</span>></span>
+      Hello World1122
+    <span>&#x3C;/<span>div</span>></span></span>
+  )
+}
+
+<span>ReactDOM</span>.<span>render</span>(<span><span>&#x3C;<span>App</span> /></span></span>, <span>document</span>.<span>getElementById</span>(<span>'app'</span>))</code></pre>
+<p><code>renderer/index.html</code>添加一个<code>&#x3C;div id='app' /></code>以供挂载</p>
+<p>更新 <code>.cli_build/webpack.renderer.js</code></p>
+<pre><code>  entry<span>:</span> <span>{</span>
+    main<span>:</span> path.resolve(__dirname<span>,</span> '../app/renderer/index.tsx')<span>,</span>
+  <span>}</span><span>,</span>
+  module<span>:</span> <span>{</span>
+    <span>// 如果觉得和webpack.main.js重复的话，可以使用 webpack-merge 合并一下</span>
+    rules<span>:</span> <span>[</span>
+      <span>{</span>
+        test<span>:</span> /\.tsx?$/<span>,</span>
+        use<span>:</span> 'ts-loader'<span>,</span>
+        exclude<span>:</span> /node_modules/<span>,</span>
+      <span>}</span><span>,</span>
+      <span>// webpack5 静态资源新的处理方法</span>
+       <span>{</span>
+        test<span>:</span> /\.(png|jpg|jpeg)$/<span>,</span>
+        type<span>:</span> 'asset/resource'<span>,</span>
+      <span>}</span><span>,</span>
+    <span>]</span><span>,</span>
+  <span>}</span><span>,</span>
+	plugins<span>:</span> <span>[</span>...<span>]</span><span>,</span>
+	resolve<span>:</span> <span>{</span>
+		<span>// 支持无后缀引入ts文件 </span>
+    extensions<span>:</span> <span>[</span>'.ts'<span>,</span> '.tsx'<span>,</span> '.js'<span>]</span><span>,</span>
+		<span>// 路径别名</span>
+    <span>// alias: {</span>
+    <span>//   '@': path.resolve(__dirname, '../src/renderer/'),</span>
+    <span>// },</span>
+  <span>}</span><span>,</span>
+</code></pre>
+<p>重新执行<code>yarn dev</code>,依然显示打包成功，剩下的单元测试，样式loader等配置就跟普通的React项目一样了</p>
+<h3 id="user-content-打包部署"><a href="#%E6%89%93%E5%8C%85%E9%83%A8%E7%BD%B2" aria-hidden="true" tabindex="-1"><span></span></a>打包部署</h3>
+<p>使用 electron-builder 进行打包</p>
+<p><code>yarn add electron-builder --dev</code></p>
+<blockquote>
+<p>tips：如果在安装 electron 和 electron-builder 失败或者龟速，可以尝试使用淘宝镜像，在 baserc 或者 zshrc中添加</p>
+<p>export ELECTRON_MIRROR=https://npm.taobao.org/mirrors/electron/</p>
+<p>export ELECTRON_BUILDER_BINARIES_MIRROR=https://npm.taobao.org/mirrors/electron-builder-binaries/</p>
+<p>再进行安装</p>
+</blockquote>
+<p>在 .cli_build 文件夹中创建 build.js 打包两个进程</p>
+<pre><code><span>const</span> <span>Webpack</span> = <span>require</span>(<span>'webpack'</span>)
+
+<span>const</span> mainConfig = <span>require</span>(<span>'./webpack.main'</span>)
+<span>const</span> rendererConfig = <span>require</span>(<span>'./webpack.renderer'</span>)
+
+<span>const</span> env = <span>'production'</span>
+
+<span>function</span> <span>main</span>(<span></span>) {
+  <span>console</span>.<span>log</span>(<span>'fn main'</span>)
+  <span>Promise</span>.<span>all</span>([<span>buildMain</span>(), <span>buildRenderer</span>()]).<span>then</span>(<span>() =></span> {
+    <span>buildApp</span>()
+  })
+}
+
+<span>function</span> <span>buildMain</span>(<span></span>) {
+  <span>console</span>.<span>log</span>(<span>'fn buildMain'</span>)
+  mainConfig.<span>mode</span> = env
+  <span>return</span> <span>new</span> <span>Promise</span>(<span>(<span>resolve</span>) =></span> {
+    <span>const</span> compiler = <span>Webpack</span>(mainConfig)
+    compiler.<span>watch</span>({}, <span>(<span>err</span>) =></span> {
+      <span>if</span> (err) {
+        <span>console</span>.<span>error</span>(err)
+        <span>return</span>
+      }
+      <span>resolve</span>()
+    })
+  })
+}
+<span>function</span> <span>buildRenderer</span>(<span></span>) {
+  <span>console</span>.<span>log</span>(<span>'fn buildRenderer'</span>)
+  rendererConfig.<span>mode</span> = env
+  <span>return</span> <span>new</span> <span>Promise</span>(<span>(<span>resolve</span>) =></span> {
+    <span>const</span> compiler = <span>Webpack</span>(rendererConfig)
+    compiler.<span>watch</span>({}, <span>(<span>err</span>) =></span> {
+      <span>if</span> (err) {
+        <span>console</span>.<span>error</span>(err)
+        <span>return</span>
+      }
+      <span>resolve</span>()
+    })
+  })
+}
+<span>function</span> <span>buildApp</span>(<span></span>) {
+  <span>console</span>.<span>log</span>(<span>'starting build your app'</span>)
+  process.<span>exit</span>()
+}
+
+<span>main</span>()
+</code></pre>
+<p><code>package.json</code> 添加 <code>script</code>：<code>"build": "node ./.cli_build/build.js &#x26;&#x26; electron-builder"</code></p>
+<p>并添加用于 electron-builder 打包的配置</p>
+<pre><code><span>"scripts"</span><span>:</span> <span>{</span>
+    <span>"dev"</span><span>:</span> <span>"node ./.cli_build/dev.js"</span><span>,</span>
+    <span>"build"</span><span>:</span> <span>"node ./.cli_build/build.js &#x26;&#x26; electron-builder"</span><span>,</span>
+  	<span>// 在mac中 打包windows项目</span>
+    <span>"build:windows"</span><span>:</span> <span>"node ./.cli_build/build.js &#x26;&#x26; electron-builder --win --x64"</span>
+  <span>}</span><span>,</span>
+  <span>"build"</span><span>:</span> <span>{</span>
+    <span>"productName"</span><span>:</span> <span>"Your App Name"</span><span>,</span>
+    <span>"appId"</span><span>:</span> <span>"com.example.yourapp"</span><span>,</span>
+    <span>"directories"</span><span>:</span> <span>{</span>
+      <span>"output"</span><span>:</span> <span>"build"</span>
+    <span>}</span><span>,</span>
+    <span>"files"</span><span>:</span> <span>[</span>
+      <span>"dist/**/*"</span>
+    <span>]</span><span>,</span>
+    <span>"dmg"</span><span>:</span> <span>{</span>
+      <span>"contents"</span><span>:</span> <span>[</span>
+        <span>{</span>
+          <span>"x"</span><span>:</span> <span>410</span><span>,</span>
+          <span>"y"</span><span>:</span> <span>150</span><span>,</span>
+          <span>"type"</span><span>:</span> <span>"link"</span><span>,</span>
+          <span>"path"</span><span>:</span> <span>"/Applications"</span>
+        <span>}</span><span>,</span>
+        <span>{</span>
+          <span>"x"</span><span>:</span> <span>130</span><span>,</span>
+          <span>"y"</span><span>:</span> <span>150</span><span>,</span>
+          <span>"type"</span><span>:</span> <span>"file"</span>
+        <span>}</span>
+      <span>]</span>
+    <span>}</span><span>,</span>
+    <span>// 可以在根目录添加 static 文件夹，里面放置各个端的icon</span>
+    <span>"mac"</span><span>:</span> <span>{</span>
+      <span>"icon"</span><span>:</span> <span>"static/icon.icns"</span>
+    <span>}</span><span>,</span>
+    <span>"win"</span><span>:</span> <span>{</span>
+      <span>"icon"</span><span>:</span> <span>"static/icon.ico"</span>
+    <span>}</span><span>,</span>
+    <span>"linux"</span><span>:</span> <span>{</span>
+      <span>"icon"</span><span>:</span> <span>"static/icons"</span>
+    <span>}</span>
+  <span>}</span><span>,</span></code></pre>
+<p>运行 <code>yarn build</code>会在<code>build</code>文件夹中查看打包后的软件</p>
+</div></article></main></div><style data-emotion="css 1st94pw">.css-1st94pw{text-align:center;height:30px;line-height:30px;color:#333;}</style><div class="css-1st94pw"><a href="https://beian.miit.gov.cn/" target="_blank" rel="noreferrer">京ICP备19054504号-2</a></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"postData":{"id":"Electron 使用webpack打包构建electron客户端","contentHtml":"\u003ch3 id=\"user-content-前导\"\u003e\u003ca href=\"#%E5%89%8D%E5%AF%BC\" aria-hidden=\"true\" tabindex=\"-1\"\u003e\u003cspan\u003e\u003c/span\u003e\u003c/a\u003e前导\u003c/h3\u003e\n\u003cp\u003e使用\u003ccode\u003eelectron\u003c/code\u003e 可以方便打包跨平台的客户端软件，但是如何将前端工程化的优势与electron联系起来呢？\u003c/p\u003e\n\u003cp\u003e\u003ca href=\"https://github.com/Swordword/electron-webpack-react-ts\"\u003egithub electron-webpack-react-ts\u003c/a\u003e\u003c/p\u003e\n\u003ch3 id=\"user-content-目录结构\"\u003e\u003ca href=\"#%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84\" aria-hidden=\"true\" tabindex=\"-1\"\u003e\u003cspan\u003e\u003c/span\u003e\u003c/a\u003e目录结构\u003c/h3\u003e\n\u003cp\u003e创建空文件夹作为根目录，在根目录创建文件夹 app 和 .cli_build, 并在 app 中创建 main 和 renderer 文件夹分别存放 electron 主进程和渲染进程的代码, 文件夹 .cli_build 用于存放打包配置文件\u003c/p\u003e\n\u003ch2 id=\"user-content-脚手架搭建\"\u003e\u003ca href=\"#%E8%84%9A%E6%89%8B%E6%9E%B6%E6%90%AD%E5%BB%BA\" aria-hidden=\"true\" tabindex=\"-1\"\u003e\u003cspan\u003e\u003c/span\u003e\u003c/a\u003e脚手架搭建\u003c/h2\u003e\n\u003cp\u003e初始化项目\u003ccode\u003enpm init -y\u003c/code\u003e 或者\u003ccode\u003eyarn init -y\u003c/code\u003e，这里使用\u003ccode\u003eyarn\u003c/code\u003e\u003c/p\u003e\n\u003cp\u003e安装依赖项：注意，这里的 webpack 版本为5，\u003c/p\u003e\n\u003cp\u003e\u003ccode\u003eyarn add webpack webpack-cli electron html-webpack-plugin webpack-dev-server  --dev\u003c/code\u003e\u003c/p\u003e\n\u003ch3 id=\"user-content-打包-main-主进程\"\u003e\u003ca href=\"#%E6%89%93%E5%8C%85-main-%E4%B8%BB%E8%BF%9B%E7%A8%8B\" aria-hidden=\"true\" tabindex=\"-1\"\u003e\u003cspan\u003e\u003c/span\u003e\u003c/a\u003e打包 main 主进程\u003c/h3\u003e\n\u003cp\u003eapp/main 文件夹下创建 index.js 作为 main 进程文件\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003e\u003cspan\u003e// 目录：app/main/index.js\u003c/span\u003e\n\n\u003cspan\u003eimport\u003c/span\u003e { app, \u003cspan\u003eBrowserWindow\u003c/span\u003e, \u003cspan\u003eMenu\u003c/span\u003e } \u003cspan\u003efrom\u003c/span\u003e \u003cspan\u003e'electron'\u003c/span\u003e\n\n\u003cspan\u003elet\u003c/span\u003e mainWindow\n\n\u003cspan\u003efunction\u003c/span\u003e \u003cspan\u003ecreateWindow\u003c/span\u003e(\u003cspan\u003e\u003c/span\u003e) {\n  \u003cspan\u003elet\u003c/span\u003e mainWindow = \u003cspan\u003enew\u003c/span\u003e \u003cspan\u003eBrowserWindow\u003c/span\u003e({\n    \u003cspan\u003ewidth\u003c/span\u003e: \u003cspan\u003e1200\u003c/span\u003e,\n    \u003cspan\u003eheight\u003c/span\u003e: \u003cspan\u003e800\u003c/span\u003e,\n    \u003cspan\u003ewebPreferences\u003c/span\u003e: {\n      \u003cspan\u003eenableRemoteModule\u003c/span\u003e: \u003cspan\u003etrue\u003c/span\u003e,\n      \u003cspan\u003enodeIntegration\u003c/span\u003e: \u003cspan\u003etrue\u003c/span\u003e,\n    },\n  })\n\n  \u003cspan\u003econst\u003c/span\u003e isDev = process.\u003cspan\u003eenv\u003c/span\u003e.\u003cspan\u003eNODE_ENV\u003c/span\u003e === \u003cspan\u003e'development'\u003c/span\u003e\n\n  \u003cspan\u003econst\u003c/span\u003e winURL = isDev\n  \t\u003cspan\u003e//\t待会渲染进程打包时运行的端口\u003c/span\u003e\n    ? \u003cspan\u003e`http://localhost:8765`\u003c/span\u003e\n    : \u003cspan\u003e`file://\u003cspan\u003e${__dirname}\u003c/span\u003e/index.html`\u003c/span\u003e\n\n  mainWindow.\u003cspan\u003eloadURL\u003c/span\u003e(winURL)\n  \u003cspan\u003eif\u003c/span\u003e (isDev) {\n    mainWindow.\u003cspan\u003ewebContents\u003c/span\u003e.\u003cspan\u003eopenDevTools\u003c/span\u003e()\n  }\n}\napp.\u003cspan\u003eon\u003c/span\u003e(\u003cspan\u003e'window-all-closed'\u003c/span\u003e, \u003cspan\u003e() =\u003e\u003c/span\u003e {\n  \u003cspan\u003eif\u003c/span\u003e (process.\u003cspan\u003eplatform\u003c/span\u003e !== \u003cspan\u003e'darwin'\u003c/span\u003e) {\n    app.\u003cspan\u003equit\u003c/span\u003e()\n  }\n})\napp.\u003cspan\u003eon\u003c/span\u003e(\u003cspan\u003e'activate'\u003c/span\u003e, \u003cspan\u003e() =\u003e\u003c/span\u003e {\n  \u003cspan\u003eif\u003c/span\u003e (mainWindow === \u003cspan\u003enull\u003c/span\u003e) {\n    \u003cspan\u003ecreateWindow\u003c/span\u003e()\n  }\n})\napp.\u003cspan\u003eon\u003c/span\u003e(\u003cspan\u003e'ready'\u003c/span\u003e, createWindow)\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e\u003ccode\u003e.cli_build\u003c/code\u003e文件夹下创建\u003ccode\u003ewebpack.main.js\u003c/code\u003e用于打包主进程文件。\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003e\u003cspan\u003e// 目录：.cli_build/webpack.main.js\u003c/span\u003e\n\u003cspan\u003e// Native\u003c/span\u003e\n\u003cspan\u003econst\u003c/span\u003e path = \u003cspan\u003erequire\u003c/span\u003e(\u003cspan\u003e'path'\u003c/span\u003e)\n\n\u003cspan\u003econst\u003c/span\u003e \u003cspan\u003eWebpackMainConfig\u003c/span\u003e = {\n  \u003cspan\u003emode\u003c/span\u003e: \u003cspan\u003e'development'\u003c/span\u003e,\n  \u003cspan\u003e// mode: 'production',\u003c/span\u003e\n  \u003cspan\u003eentry\u003c/span\u003e: {\n    \u003cspan\u003emain\u003c/span\u003e: path.\u003cspan\u003eresolve\u003c/span\u003e(process.\u003cspan\u003ecwd\u003c/span\u003e(), \u003cspan\u003e'app/main/index.js'\u003c/span\u003e),\n  },\n  \u003cspan\u003eoutput\u003c/span\u003e: {\n    \u003cspan\u003epath\u003c/span\u003e: path.\u003cspan\u003eresolve\u003c/span\u003e(process.\u003cspan\u003ecwd\u003c/span\u003e(), \u003cspan\u003e'dist'\u003c/span\u003e),\n    \u003cspan\u003efilename\u003c/span\u003e: \u003cspan\u003e'main.js'\u003c/span\u003e,\n  },\n  \u003cspan\u003etarget\u003c/span\u003e: \u003cspan\u003e'electron-main'\u003c/span\u003e,\n}\n\n\u003cspan\u003emodule\u003c/span\u003e.\u003cspan\u003eexports\u003c/span\u003e = \u003cspan\u003eWebpackMainConfig\u003c/span\u003e\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e\u003ccode\u003epackage.json\u003c/code\u003e 添加 \u003ccode\u003escript\u003c/code\u003e：\u003ccode\u003e\"main\": \"webpack --config ./.cli_build/webpack.main.js\"\u003c/code\u003e\u003c/p\u003e\n\u003cp\u003e执行 \u003ccode\u003eyarn main\u003c/code\u003e 会在\u003ccode\u003edist\u003c/code\u003e文件夹下打包出一个\u003ccode\u003emain.js\u003c/code\u003e文件, 供之后使用\u003c/p\u003e\n\u003ch3 id=\"user-content-打包-renderer-渲染进程\"\u003e\u003ca href=\"#%E6%89%93%E5%8C%85-renderer-%E6%B8%B2%E6%9F%93%E8%BF%9B%E7%A8%8B\" aria-hidden=\"true\" tabindex=\"-1\"\u003e\u003cspan\u003e\u003c/span\u003e\u003c/a\u003e打包 renderer 渲染进程\u003c/h3\u003e\n\u003cp\u003e类似的，在\u003ccode\u003eapp/renderer\u003c/code\u003e文件夹下创建\u003ccode\u003eindex.js\u003c/code\u003e和\u003ccode\u003eindex.html\u003c/code\u003e作为渲染窗口\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003e\u003cspan\u003e\u0026#x3C;!-- 目录：app/renderer/index.js --\u003e\u003c/span\u003e\nconsole.log('hello world')\n\u003cspan\u003e\u0026#x3C;!-- 目录：app/renderer/index.html --\u003e\u003c/span\u003e\n\u003cspan\u003e\u0026#x3C;!DOCTYPE \u003cspan\u003ehtml\u003c/span\u003e\u003e\u003c/span\u003e\n\u003cspan\u003e\u0026#x3C;\u003cspan\u003ehtml\u003c/span\u003e \u003cspan\u003elang\u003c/span\u003e=\u003cspan\u003e\"en\"\u003c/span\u003e\u003e\u003c/span\u003e\n  \u003cspan\u003e\u0026#x3C;\u003cspan\u003ehead\u003c/span\u003e\u003e\u003c/span\u003e\n    \u003cspan\u003e\u0026#x3C;\u003cspan\u003emeta\u003c/span\u003e \u003cspan\u003echarset\u003c/span\u003e=\u003cspan\u003e\"UTF-8\"\u003c/span\u003e /\u003e\u003c/span\u003e\n    \u003cspan\u003e\u0026#x3C;\u003cspan\u003emeta\u003c/span\u003e \u003cspan\u003ehttp-equiv\u003c/span\u003e=\u003cspan\u003e\"X-UA-Compatible\"\u003c/span\u003e \u003cspan\u003econtent\u003c/span\u003e=\u003cspan\u003e\"IE=edge\"\u003c/span\u003e /\u003e\u003c/span\u003e\n    \u003cspan\u003e\u0026#x3C;\u003cspan\u003emeta\u003c/span\u003e \u003cspan\u003ename\u003c/span\u003e=\u003cspan\u003e\"viewport\"\u003c/span\u003e \u003cspan\u003econtent\u003c/span\u003e=\u003cspan\u003e\"width=device-width, initial-scale=1.0\"\u003c/span\u003e /\u003e\u003c/span\u003e\n    \u003cspan\u003e\u0026#x3C;\u003cspan\u003etitle\u003c/span\u003e\u003e\u003c/span\u003eWelcome to Electron\u003cspan\u003e\u0026#x3C;/\u003cspan\u003etitle\u003c/span\u003e\u003e\u003c/span\u003e\n  \u003cspan\u003e\u0026#x3C;/\u003cspan\u003ehead\u003c/span\u003e\u003e\u003c/span\u003e\n  \u003cspan\u003e\u0026#x3C;\u003cspan\u003ebody\u003c/span\u003e\u003e\u003c/span\u003e\n    \u003cspan\u003e\u0026#x3C;\u003cspan\u003ep\u003c/span\u003e\u003e\u003c/span\u003eHello World\u003cspan\u003e\u0026#x3C;/\u003cspan\u003ep\u003c/span\u003e\u003e\u003c/span\u003e\n  \u003cspan\u003e\u0026#x3C;/\u003cspan\u003ebody\u003c/span\u003e\u003e\u003c/span\u003e\n\u003cspan\u003e\u0026#x3C;/\u003cspan\u003ehtml\u003c/span\u003e\u003e\u003c/span\u003e\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e在\u003ccode\u003e.cli_build\u003c/code\u003e文件夹创建\u003ccode\u003ewebpack.renderer.js\u003c/code\u003e对渲染进程进行打包\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003e\u003cspan\u003e// Native\u003c/span\u003e\n\u003cspan\u003econst\u003c/span\u003e path = \u003cspan\u003erequire\u003c/span\u003e(\u003cspan\u003e'path'\u003c/span\u003e)\n\u003cspan\u003e// Package\u003c/span\u003e\n\u003cspan\u003econst\u003c/span\u003e htmlWebpackPlugin = \u003cspan\u003erequire\u003c/span\u003e(\u003cspan\u003e'html-webpack-plugin'\u003c/span\u003e)\n\n\u003cspan\u003econst\u003c/span\u003e \u003cspan\u003eWebpackMainConfig\u003c/span\u003e = {\n  \u003cspan\u003emode\u003c/span\u003e: \u003cspan\u003e'development'\u003c/span\u003e,\n  \u003cspan\u003e// mode: 'production',\u003c/span\u003e\n  \u003cspan\u003eentry\u003c/span\u003e: {\n    \u003cspan\u003emain\u003c/span\u003e: path.\u003cspan\u003eresolve\u003c/span\u003e(process.\u003cspan\u003ecwd\u003c/span\u003e(), \u003cspan\u003e'app/renderer/index.js'\u003c/span\u003e),\n  },\n  \u003cspan\u003eoutput\u003c/span\u003e: {\n    \u003cspan\u003epath\u003c/span\u003e: path.\u003cspan\u003eresolve\u003c/span\u003e(process.\u003cspan\u003ecwd\u003c/span\u003e(), \u003cspan\u003e'dist'\u003c/span\u003e),\n    \u003cspan\u003efilename\u003c/span\u003e: \u003cspan\u003e'[hash:name].js'\u003c/span\u003e,\n  },\n  \u003cspan\u003edevServer\u003c/span\u003e: {\n    \u003cspan\u003econtentBase\u003c/span\u003e: path.\u003cspan\u003eresolve\u003c/span\u003e(process.\u003cspan\u003ecwd\u003c/span\u003e(), \u003cspan\u003e'dist'\u003c/span\u003e),\n    \u003cspan\u003ecompress\u003c/span\u003e: \u003cspan\u003etrue\u003c/span\u003e,\n    \u003cspan\u003eport\u003c/span\u003e: \u003cspan\u003e8765\u003c/span\u003e,\n  },\n  \u003cspan\u003eplugins\u003c/span\u003e: [\n    \u003cspan\u003enew\u003c/span\u003e \u003cspan\u003ehtmlWebpackPlugin\u003c/span\u003e({\n      \u003cspan\u003etemplate\u003c/span\u003e: path.\u003cspan\u003eresolve\u003c/span\u003e(process.\u003cspan\u003ecwd\u003c/span\u003e(), \u003cspan\u003e'app/renderer/index.html'\u003c/span\u003e),\n    }),\n  ],\n}\n\n\u003cspan\u003emodule\u003c/span\u003e.\u003cspan\u003eexports\u003c/span\u003e = \u003cspan\u003eWebpackMainConfig\u003c/span\u003e\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e\u003ccode\u003epackage.json\u003c/code\u003e 添加 \u003ccode\u003escript\u003c/code\u003e：\u003ccode\u003e\"renderer\": \"webpack serve --config ./.cli_build/webpack.renderer.js\"\u003c/code\u003e和 \u003ccode\u003e\"start\":\"electron ./dist/main.js\"\u003c/code\u003e\u003c/p\u003e\n\u003cp\u003e执行\u003ccode\u003eyarn renderer\u003c/code\u003e并新建控制台执行\u003ccode\u003eyarn strat\u003c/code\u003e可以看到运行出来的demo\u003c/p\u003e\n\u003cp\u003e但是每次都得开两个控制台运行三次脚本，实在不方便。可以将其做到一个脚本文件中执行。\u003c/p\u003e\n\u003cp\u003e在 \u003ccode\u003e.cli_build\u003c/code\u003e文件夹下创建\u003ccode\u003edev.js\u003c/code\u003e，通过 Node 打包主进程与渲染进程并启动 electron\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003e\u003cspan\u003e// 目录：.cli_build/dev.js\u003c/span\u003e\n\u003cspan\u003e// Native\u003c/span\u003e\n\u003cspan\u003econst\u003c/span\u003e path = \u003cspan\u003erequire\u003c/span\u003e(\u003cspan\u003e'path'\u003c/span\u003e)\n\u003cspan\u003econst\u003c/span\u003e { spawn } = \u003cspan\u003erequire\u003c/span\u003e(\u003cspan\u003e'child_process'\u003c/span\u003e)\n\n\u003cspan\u003e// Package\u003c/span\u003e\n\u003cspan\u003econst\u003c/span\u003e electron = \u003cspan\u003erequire\u003c/span\u003e(\u003cspan\u003e'electron'\u003c/span\u003e)\n\u003cspan\u003econst\u003c/span\u003e \u003cspan\u003eWebpack\u003c/span\u003e = \u003cspan\u003erequire\u003c/span\u003e(\u003cspan\u003e'webpack'\u003c/span\u003e)\n\u003cspan\u003econst\u003c/span\u003e \u003cspan\u003eWebpackDevServer\u003c/span\u003e = \u003cspan\u003erequire\u003c/span\u003e(\u003cspan\u003e'webpack-dev-server'\u003c/span\u003e)\n\n\u003cspan\u003econst\u003c/span\u003e mainConfig = \u003cspan\u003erequire\u003c/span\u003e(\u003cspan\u003e'./webpack.main'\u003c/span\u003e)\n\u003cspan\u003econst\u003c/span\u003e rendererConfig = \u003cspan\u003erequire\u003c/span\u003e(\u003cspan\u003e'./webpack.renderer'\u003c/span\u003e)\n\n\u003cspan\u003econst\u003c/span\u003e env = process.\u003cspan\u003eenv\u003c/span\u003e.\u003cspan\u003eNODE_ENV\u003c/span\u003e\n\u003cspan\u003econsole\u003c/span\u003e.\u003cspan\u003elog\u003c/span\u003e(\u003cspan\u003e'env'\u003c/span\u003e, env)\n\n\u003cspan\u003e/**\n * main function\n *\n */\u003c/span\u003e\n\u003cspan\u003efunction\u003c/span\u003e \u003cspan\u003emain\u003c/span\u003e(\u003cspan\u003e\u003c/span\u003e) {\n  \u003cspan\u003ebuildRenderer\u003c/span\u003e()\n  \u003cspan\u003ebuildMain\u003c/span\u003e().\u003cspan\u003ethen\u003c/span\u003e(\u003cspan\u003e() =\u003e\u003c/span\u003e {\n    \u003cspan\u003elaunch\u003c/span\u003e()\n  })\n}\n\n\u003cspan\u003e/**\n * build main process\n */\u003c/span\u003e\n\u003cspan\u003efunction\u003c/span\u003e \u003cspan\u003ebuildMain\u003c/span\u003e(\u003cspan\u003e\u003c/span\u003e) {\n  \u003cspan\u003econsole\u003c/span\u003e.\u003cspan\u003elog\u003c/span\u003e(\u003cspan\u003e'fn buildMain'\u003c/span\u003e)\n  \u003cspan\u003ereturn\u003c/span\u003e \u003cspan\u003enew\u003c/span\u003e \u003cspan\u003ePromise\u003c/span\u003e(\u003cspan\u003e(\u003cspan\u003eresolve\u003c/span\u003e) =\u003e\u003c/span\u003e {\n    mainConfig.\u003cspan\u003emode\u003c/span\u003e = \u003cspan\u003e'development'\u003c/span\u003e\n    \u003cspan\u003econst\u003c/span\u003e compiler = \u003cspan\u003eWebpack\u003c/span\u003e(mainConfig)\n    compiler.\u003cspan\u003eclose\u003c/span\u003e(\u003cspan\u003e() =\u003e\u003c/span\u003e {\n      \u003cspan\u003econsole\u003c/span\u003e.\u003cspan\u003elog\u003c/span\u003e(\u003cspan\u003e'buildMain resolve'\u003c/span\u003e)\n      \u003cspan\u003eresolve\u003c/span\u003e()\n    })\n    compiler.\u003cspan\u003ewatch\u003c/span\u003e({}, \u003cspan\u003e(\u003cspan\u003eerr, stats\u003c/span\u003e) =\u003e\u003c/span\u003e {\n      \u003cspan\u003eif\u003c/span\u003e (err) {\n        \u003cspan\u003econsole\u003c/span\u003e.\u003cspan\u003eerror\u003c/span\u003e(err)\n        \u003cspan\u003ereturn\u003c/span\u003e\n      }\n    })\n  })\n}\n\n\u003cspan\u003e/**\n * build renderer process\n */\u003c/span\u003e\n\u003cspan\u003efunction\u003c/span\u003e \u003cspan\u003ebuildRenderer\u003c/span\u003e(\u003cspan\u003e\u003c/span\u003e) {\n  \u003cspan\u003econsole\u003c/span\u003e.\u003cspan\u003elog\u003c/span\u003e(\u003cspan\u003e'fn buildRenderer'\u003c/span\u003e)\n  rendererConfig.\u003cspan\u003emode\u003c/span\u003e = \u003cspan\u003e'development'\u003c/span\u003e\n  \u003cspan\u003econst\u003c/span\u003e compiler = \u003cspan\u003eWebpack\u003c/span\u003e(rendererConfig)\n  \u003cspan\u003econst\u003c/span\u003e devServerOptions = \u003cspan\u003eObject\u003c/span\u003e.\u003cspan\u003eassign\u003c/span\u003e({}, rendererConfig.\u003cspan\u003edevServer\u003c/span\u003e, {\n    \u003cspan\u003econtentBase\u003c/span\u003e: path.\u003cspan\u003eresolve\u003c/span\u003e(__dirname, \u003cspan\u003e'../dist'\u003c/span\u003e),\n    \u003cspan\u003e// open: true,\u003c/span\u003e\n  })\n  \u003cspan\u003econst\u003c/span\u003e server = \u003cspan\u003enew\u003c/span\u003e \u003cspan\u003eWebpackDevServer\u003c/span\u003e(compiler, devServerOptions)\n  server.\u003cspan\u003elisten\u003c/span\u003e(\u003cspan\u003e8765\u003c/span\u003e, \u003cspan\u003e() =\u003e\u003c/span\u003e {\n    \u003cspan\u003econsole\u003c/span\u003e.\u003cspan\u003elog\u003c/span\u003e(\u003cspan\u003e'Starting server on http://localhost:8765'\u003c/span\u003e)\n  })\n}\n\n\u003cspan\u003efunction\u003c/span\u003e \u003cspan\u003elaunch\u003c/span\u003e(\u003cspan\u003e\u003c/span\u003e) {\n  \u003cspan\u003econst\u003c/span\u003e args = [path.\u003cspan\u003eresolve\u003c/span\u003e(process.\u003cspan\u003ecwd\u003c/span\u003e(), \u003cspan\u003e'dist/main.js'\u003c/span\u003e)]\n  \u003cspan\u003elet\u003c/span\u003e mainProcess = \u003cspan\u003espawn\u003c/span\u003e(electron, args)\n  mainProcess.\u003cspan\u003eon\u003c/span\u003e(\u003cspan\u003e'close'\u003c/span\u003e, \u003cspan\u003e() =\u003e\u003c/span\u003e {\n    \u003cspan\u003e// exit console\u003c/span\u003e\n    process.\u003cspan\u003eexit\u003c/span\u003e()\n  })\n}\n\n\u003cspan\u003emain\u003c/span\u003e()\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e\u003ccode\u003epackage.json\u003c/code\u003e 添加 \u003ccode\u003escript\u003c/code\u003e：\u003ccode\u003e\"dev\": \"node .cli_build/dev.js\u003c/code\u003e，控制台执行\u003ccode\u003eyarn dev\u003c/code\u003e\u003c/p\u003e\n\u003ch2 id=\"user-content-使用-react-和-typescript\"\u003e\u003ca href=\"#%E4%BD%BF%E7%94%A8-react-%E5%92%8C-typescript\" aria-hidden=\"true\" tabindex=\"-1\"\u003e\u003cspan\u003e\u003c/span\u003e\u003c/a\u003e使用 React 和 Typescript\u003c/h2\u003e\n\u003cp\u003e我们的\u003ccode\u003erenderer\u003c/code\u003e文件夹目前只是一个空落落的\u003ccode\u003ehello world\u003c/code\u003e，接下来将其替换为 React+Typescript示例\u003c/p\u003e\n\u003ch3 id=\"user-content-安装所需依赖\"\u003e\u003ca href=\"#%E5%AE%89%E8%A3%85%E6%89%80%E9%9C%80%E4%BE%9D%E8%B5%96\" aria-hidden=\"true\" tabindex=\"-1\"\u003e\u003cspan\u003e\u003c/span\u003e\u003c/a\u003e安装所需依赖\u003c/h3\u003e\n\u003cp\u003e\u003ccode\u003eyarn add react react-dom @types/react @types/react-dom typescript ts-loader --dev\u003c/code\u003e\u003c/p\u003e\n\u003ch3 id=\"user-content-升级主进程\"\u003e\u003ca href=\"#%E5%8D%87%E7%BA%A7%E4%B8%BB%E8%BF%9B%E7%A8%8B\" aria-hidden=\"true\" tabindex=\"-1\"\u003e\u003cspan\u003e\u003c/span\u003e\u003c/a\u003e升级主进程\u003c/h3\u003e\n\u003cp\u003e\u003ccode\u003eapp/main/index.js\u003c/code\u003e=\u003e\u003ccode\u003eapp/main/index.ts\u003c/code\u003e\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003e\u003cspan\u003e// 目录：app/main/index.ts\u003c/span\u003e\n\u003cspan\u003e// 添加一个类型说明就行\u003c/span\u003e\n\u003cspan\u003elet\u003c/span\u003e \u003cspan\u003emainWindow\u003c/span\u003e: \u003cspan\u003eBrowserWindow\u003c/span\u003e\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e为\u003ccode\u003ewebpack.main.js\u003c/code\u003e添加处理typescript文件的\u003ccode\u003emodule\u003c/code\u003e\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003e\u003cspan\u003e// 目录 .cli_build/webpack.main.js\u003c/span\u003e\n\u003cspan\u003eentry\u003c/span\u003e: {\n    \u003cspan\u003emain\u003c/span\u003e: path.\u003cspan\u003eresolve\u003c/span\u003e(process.\u003cspan\u003ecwd\u003c/span\u003e(), \u003cspan\u003e'app/main/index.ts'\u003c/span\u003e),\n  },\n\u003cspan\u003eoutput\u003c/span\u003e:...\n\u003cspan\u003emodule\u003c/span\u003e: {\n    \u003cspan\u003erules\u003c/span\u003e: [\n      {\n        \u003cspan\u003etest\u003c/span\u003e: \u003cspan\u003e/\\/tsx?$/\u003c/span\u003e,\n        \u003cspan\u003euse\u003c/span\u003e: \u003cspan\u003e'ts-loader'\u003c/span\u003e,\n        \u003cspan\u003eexclude\u003c/span\u003e: \u003cspan\u003e/node_modules/\u003c/span\u003e,\n      },\n    ],\n  },\n\u003cspan\u003eplugins\u003c/span\u003e:[...]\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e在项目根目录创建\u003ccode\u003etsconfig.json\u003c/code\u003e\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003e\u003cspan\u003e{\u003c/span\u003e\n  \u003cspan\u003e\"compilerOptions\"\u003c/span\u003e\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e{\u003c/span\u003e\n    \u003cspan\u003e\"baseUrl\"\u003c/span\u003e\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e\".\"\u003c/span\u003e\u003cspan\u003e,\u003c/span\u003e\n    \u003cspan\u003e\"sourceMap\"\u003c/span\u003e\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e\u003cspan\u003etrue\u003c/span\u003e\u003c/span\u003e\u003cspan\u003e,\u003c/span\u003e\n    \u003cspan\u003e\"target\"\u003c/span\u003e\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e\"ES5\"\u003c/span\u003e\u003cspan\u003e,\u003c/span\u003e\n    \u003cspan\u003e\"module\"\u003c/span\u003e\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e\"CommonJS\"\u003c/span\u003e\u003cspan\u003e,\u003c/span\u003e\n    \u003cspan\u003e\"outDir\"\u003c/span\u003e\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e\"./dist/ \"\u003c/span\u003e\u003cspan\u003e,\u003c/span\u003e\n    \u003cspan\u003e// 设置jsx支持，待会渲染进程会使用到\u003c/span\u003e\n    \u003cspan\u003e\"jsx\"\u003c/span\u003e\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e\"react\"\u003c/span\u003e\u003cspan\u003e,\u003c/span\u003e\n    \u003cspan\u003e// 允许使用 import React from \"react\";\u003c/span\u003e\n    \u003cspan\u003e\"allowSyntheticDefaultImports\"\u003c/span\u003e\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e\u003cspan\u003etrue\u003c/span\u003e\u003c/span\u003e\u003cspan\u003e,\u003c/span\u003e\n    \u003cspan\u003e// any类型警告\u003c/span\u003e\n    \u003cspan\u003e\"noImplicitAny\"\u003c/span\u003e\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e\u003cspan\u003etrue\u003c/span\u003e\u003c/span\u003e\u003cspan\u003e,\u003c/span\u003e\n    \u003cspan\u003e\"noImplicitThis\"\u003c/span\u003e\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e\u003cspan\u003etrue\u003c/span\u003e\u003c/span\u003e\u003cspan\u003e,\u003c/span\u003e\n    \u003cspan\u003e\"noImplicitReturns\"\u003c/span\u003e\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e\u003cspan\u003etrue\u003c/span\u003e\u003c/span\u003e\u003cspan\u003e,\u003c/span\u003e\n    \u003cspan\u003e// 阻止 const enum 语法，babel 好像解析不了？\u003c/span\u003e\n    \u003cspan\u003e\"preserveConstEnums\"\u003c/span\u003e\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e\u003cspan\u003etrue\u003c/span\u003e\u003c/span\u003e\u003cspan\u003e,\u003c/span\u003e\n    \u003cspan\u003e\"removeComments\"\u003c/span\u003e\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e\u003cspan\u003etrue\u003c/span\u003e\u003c/span\u003e\n  \u003cspan\u003e}\u003c/span\u003e\u003cspan\u003e,\u003c/span\u003e\n  \u003cspan\u003e\"exclude\"\u003c/span\u003e\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e[\u003c/span\u003e\u003cspan\u003e\"node_modules\"\u003c/span\u003e\u003cspan\u003e]\u003c/span\u003e\n\u003cspan\u003e}\u003c/span\u003e\u003c/code\u003e\u003c/pre\u003e\n\u003ch3 id=\"user-content-升级渲染进程\"\u003e\u003ca href=\"#%E5%8D%87%E7%BA%A7%E6%B8%B2%E6%9F%93%E8%BF%9B%E7%A8%8B\" aria-hidden=\"true\" tabindex=\"-1\"\u003e\u003cspan\u003e\u003c/span\u003e\u003c/a\u003e升级渲染进程\u003c/h3\u003e\n\u003cp\u003e修改\u003ccode\u003erenderer/index.js\u003c/code\u003e为\u003ccode\u003erenderer/index.tsx\u003c/code\u003e\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003e\u003cspan\u003e// 目录 app/renderer/index.tsx\u003c/span\u003e\n\u003cspan\u003eimport\u003c/span\u003e * \u003cspan\u003eas\u003c/span\u003e \u003cspan\u003eReact\u003c/span\u003e \u003cspan\u003efrom\u003c/span\u003e \u003cspan\u003e'react'\u003c/span\u003e\n\u003cspan\u003eimport\u003c/span\u003e * \u003cspan\u003eas\u003c/span\u003e \u003cspan\u003eReactDOM\u003c/span\u003e \u003cspan\u003efrom\u003c/span\u003e \u003cspan\u003e'react-dom'\u003c/span\u003e\n\n\u003cspan\u003econst\u003c/span\u003e \u003cspan\u003eApp\u003c/span\u003e = (\u003cspan\u003e\u003c/span\u003e) =\u003e {\n  \u003cspan\u003ereturn\u003c/span\u003e (\n    \u003cspan\u003e\u003cspan\u003e\u0026#x3C;\u003cspan\u003ediv\u003c/span\u003e\u003e\u003c/span\u003e\n      Hello World1122\n    \u003cspan\u003e\u0026#x3C;/\u003cspan\u003ediv\u003c/span\u003e\u003e\u003c/span\u003e\u003c/span\u003e\n  )\n}\n\n\u003cspan\u003eReactDOM\u003c/span\u003e.\u003cspan\u003erender\u003c/span\u003e(\u003cspan\u003e\u003cspan\u003e\u0026#x3C;\u003cspan\u003eApp\u003c/span\u003e /\u003e\u003c/span\u003e\u003c/span\u003e, \u003cspan\u003edocument\u003c/span\u003e.\u003cspan\u003egetElementById\u003c/span\u003e(\u003cspan\u003e'app'\u003c/span\u003e))\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e\u003ccode\u003erenderer/index.html\u003c/code\u003e添加一个\u003ccode\u003e\u0026#x3C;div id='app' /\u003e\u003c/code\u003e以供挂载\u003c/p\u003e\n\u003cp\u003e更新 \u003ccode\u003e.cli_build/webpack.renderer.js\u003c/code\u003e\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003e  entry\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e{\u003c/span\u003e\n    main\u003cspan\u003e:\u003c/span\u003e path.resolve(__dirname\u003cspan\u003e,\u003c/span\u003e '../app/renderer/index.tsx')\u003cspan\u003e,\u003c/span\u003e\n  \u003cspan\u003e}\u003c/span\u003e\u003cspan\u003e,\u003c/span\u003e\n  module\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e{\u003c/span\u003e\n    \u003cspan\u003e// 如果觉得和webpack.main.js重复的话，可以使用 webpack-merge 合并一下\u003c/span\u003e\n    rules\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e[\u003c/span\u003e\n      \u003cspan\u003e{\u003c/span\u003e\n        test\u003cspan\u003e:\u003c/span\u003e /\\.tsx?$/\u003cspan\u003e,\u003c/span\u003e\n        use\u003cspan\u003e:\u003c/span\u003e 'ts-loader'\u003cspan\u003e,\u003c/span\u003e\n        exclude\u003cspan\u003e:\u003c/span\u003e /node_modules/\u003cspan\u003e,\u003c/span\u003e\n      \u003cspan\u003e}\u003c/span\u003e\u003cspan\u003e,\u003c/span\u003e\n      \u003cspan\u003e// webpack5 静态资源新的处理方法\u003c/span\u003e\n       \u003cspan\u003e{\u003c/span\u003e\n        test\u003cspan\u003e:\u003c/span\u003e /\\.(png|jpg|jpeg)$/\u003cspan\u003e,\u003c/span\u003e\n        type\u003cspan\u003e:\u003c/span\u003e 'asset/resource'\u003cspan\u003e,\u003c/span\u003e\n      \u003cspan\u003e}\u003c/span\u003e\u003cspan\u003e,\u003c/span\u003e\n    \u003cspan\u003e]\u003c/span\u003e\u003cspan\u003e,\u003c/span\u003e\n  \u003cspan\u003e}\u003c/span\u003e\u003cspan\u003e,\u003c/span\u003e\n\tplugins\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e[\u003c/span\u003e...\u003cspan\u003e]\u003c/span\u003e\u003cspan\u003e,\u003c/span\u003e\n\tresolve\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e{\u003c/span\u003e\n\t\t\u003cspan\u003e// 支持无后缀引入ts文件 \u003c/span\u003e\n    extensions\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e[\u003c/span\u003e'.ts'\u003cspan\u003e,\u003c/span\u003e '.tsx'\u003cspan\u003e,\u003c/span\u003e '.js'\u003cspan\u003e]\u003c/span\u003e\u003cspan\u003e,\u003c/span\u003e\n\t\t\u003cspan\u003e// 路径别名\u003c/span\u003e\n    \u003cspan\u003e// alias: {\u003c/span\u003e\n    \u003cspan\u003e//   '@': path.resolve(__dirname, '../src/renderer/'),\u003c/span\u003e\n    \u003cspan\u003e// },\u003c/span\u003e\n  \u003cspan\u003e}\u003c/span\u003e\u003cspan\u003e,\u003c/span\u003e\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e重新执行\u003ccode\u003eyarn dev\u003c/code\u003e,依然显示打包成功，剩下的单元测试，样式loader等配置就跟普通的React项目一样了\u003c/p\u003e\n\u003ch3 id=\"user-content-打包部署\"\u003e\u003ca href=\"#%E6%89%93%E5%8C%85%E9%83%A8%E7%BD%B2\" aria-hidden=\"true\" tabindex=\"-1\"\u003e\u003cspan\u003e\u003c/span\u003e\u003c/a\u003e打包部署\u003c/h3\u003e\n\u003cp\u003e使用 electron-builder 进行打包\u003c/p\u003e\n\u003cp\u003e\u003ccode\u003eyarn add electron-builder --dev\u003c/code\u003e\u003c/p\u003e\n\u003cblockquote\u003e\n\u003cp\u003etips：如果在安装 electron 和 electron-builder 失败或者龟速，可以尝试使用淘宝镜像，在 baserc 或者 zshrc中添加\u003c/p\u003e\n\u003cp\u003eexport ELECTRON_MIRROR=https://npm.taobao.org/mirrors/electron/\u003c/p\u003e\n\u003cp\u003eexport ELECTRON_BUILDER_BINARIES_MIRROR=https://npm.taobao.org/mirrors/electron-builder-binaries/\u003c/p\u003e\n\u003cp\u003e再进行安装\u003c/p\u003e\n\u003c/blockquote\u003e\n\u003cp\u003e在 .cli_build 文件夹中创建 build.js 打包两个进程\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003e\u003cspan\u003econst\u003c/span\u003e \u003cspan\u003eWebpack\u003c/span\u003e = \u003cspan\u003erequire\u003c/span\u003e(\u003cspan\u003e'webpack'\u003c/span\u003e)\n\n\u003cspan\u003econst\u003c/span\u003e mainConfig = \u003cspan\u003erequire\u003c/span\u003e(\u003cspan\u003e'./webpack.main'\u003c/span\u003e)\n\u003cspan\u003econst\u003c/span\u003e rendererConfig = \u003cspan\u003erequire\u003c/span\u003e(\u003cspan\u003e'./webpack.renderer'\u003c/span\u003e)\n\n\u003cspan\u003econst\u003c/span\u003e env = \u003cspan\u003e'production'\u003c/span\u003e\n\n\u003cspan\u003efunction\u003c/span\u003e \u003cspan\u003emain\u003c/span\u003e(\u003cspan\u003e\u003c/span\u003e) {\n  \u003cspan\u003econsole\u003c/span\u003e.\u003cspan\u003elog\u003c/span\u003e(\u003cspan\u003e'fn main'\u003c/span\u003e)\n  \u003cspan\u003ePromise\u003c/span\u003e.\u003cspan\u003eall\u003c/span\u003e([\u003cspan\u003ebuildMain\u003c/span\u003e(), \u003cspan\u003ebuildRenderer\u003c/span\u003e()]).\u003cspan\u003ethen\u003c/span\u003e(\u003cspan\u003e() =\u003e\u003c/span\u003e {\n    \u003cspan\u003ebuildApp\u003c/span\u003e()\n  })\n}\n\n\u003cspan\u003efunction\u003c/span\u003e \u003cspan\u003ebuildMain\u003c/span\u003e(\u003cspan\u003e\u003c/span\u003e) {\n  \u003cspan\u003econsole\u003c/span\u003e.\u003cspan\u003elog\u003c/span\u003e(\u003cspan\u003e'fn buildMain'\u003c/span\u003e)\n  mainConfig.\u003cspan\u003emode\u003c/span\u003e = env\n  \u003cspan\u003ereturn\u003c/span\u003e \u003cspan\u003enew\u003c/span\u003e \u003cspan\u003ePromise\u003c/span\u003e(\u003cspan\u003e(\u003cspan\u003eresolve\u003c/span\u003e) =\u003e\u003c/span\u003e {\n    \u003cspan\u003econst\u003c/span\u003e compiler = \u003cspan\u003eWebpack\u003c/span\u003e(mainConfig)\n    compiler.\u003cspan\u003ewatch\u003c/span\u003e({}, \u003cspan\u003e(\u003cspan\u003eerr\u003c/span\u003e) =\u003e\u003c/span\u003e {\n      \u003cspan\u003eif\u003c/span\u003e (err) {\n        \u003cspan\u003econsole\u003c/span\u003e.\u003cspan\u003eerror\u003c/span\u003e(err)\n        \u003cspan\u003ereturn\u003c/span\u003e\n      }\n      \u003cspan\u003eresolve\u003c/span\u003e()\n    })\n  })\n}\n\u003cspan\u003efunction\u003c/span\u003e \u003cspan\u003ebuildRenderer\u003c/span\u003e(\u003cspan\u003e\u003c/span\u003e) {\n  \u003cspan\u003econsole\u003c/span\u003e.\u003cspan\u003elog\u003c/span\u003e(\u003cspan\u003e'fn buildRenderer'\u003c/span\u003e)\n  rendererConfig.\u003cspan\u003emode\u003c/span\u003e = env\n  \u003cspan\u003ereturn\u003c/span\u003e \u003cspan\u003enew\u003c/span\u003e \u003cspan\u003ePromise\u003c/span\u003e(\u003cspan\u003e(\u003cspan\u003eresolve\u003c/span\u003e) =\u003e\u003c/span\u003e {\n    \u003cspan\u003econst\u003c/span\u003e compiler = \u003cspan\u003eWebpack\u003c/span\u003e(rendererConfig)\n    compiler.\u003cspan\u003ewatch\u003c/span\u003e({}, \u003cspan\u003e(\u003cspan\u003eerr\u003c/span\u003e) =\u003e\u003c/span\u003e {\n      \u003cspan\u003eif\u003c/span\u003e (err) {\n        \u003cspan\u003econsole\u003c/span\u003e.\u003cspan\u003eerror\u003c/span\u003e(err)\n        \u003cspan\u003ereturn\u003c/span\u003e\n      }\n      \u003cspan\u003eresolve\u003c/span\u003e()\n    })\n  })\n}\n\u003cspan\u003efunction\u003c/span\u003e \u003cspan\u003ebuildApp\u003c/span\u003e(\u003cspan\u003e\u003c/span\u003e) {\n  \u003cspan\u003econsole\u003c/span\u003e.\u003cspan\u003elog\u003c/span\u003e(\u003cspan\u003e'starting build your app'\u003c/span\u003e)\n  process.\u003cspan\u003eexit\u003c/span\u003e()\n}\n\n\u003cspan\u003emain\u003c/span\u003e()\n\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e\u003ccode\u003epackage.json\u003c/code\u003e 添加 \u003ccode\u003escript\u003c/code\u003e：\u003ccode\u003e\"build\": \"node ./.cli_build/build.js \u0026#x26;\u0026#x26; electron-builder\"\u003c/code\u003e\u003c/p\u003e\n\u003cp\u003e并添加用于 electron-builder 打包的配置\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003e\u003cspan\u003e\"scripts\"\u003c/span\u003e\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e{\u003c/span\u003e\n    \u003cspan\u003e\"dev\"\u003c/span\u003e\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e\"node ./.cli_build/dev.js\"\u003c/span\u003e\u003cspan\u003e,\u003c/span\u003e\n    \u003cspan\u003e\"build\"\u003c/span\u003e\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e\"node ./.cli_build/build.js \u0026#x26;\u0026#x26; electron-builder\"\u003c/span\u003e\u003cspan\u003e,\u003c/span\u003e\n  \t\u003cspan\u003e// 在mac中 打包windows项目\u003c/span\u003e\n    \u003cspan\u003e\"build:windows\"\u003c/span\u003e\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e\"node ./.cli_build/build.js \u0026#x26;\u0026#x26; electron-builder --win --x64\"\u003c/span\u003e\n  \u003cspan\u003e}\u003c/span\u003e\u003cspan\u003e,\u003c/span\u003e\n  \u003cspan\u003e\"build\"\u003c/span\u003e\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e{\u003c/span\u003e\n    \u003cspan\u003e\"productName\"\u003c/span\u003e\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e\"Your App Name\"\u003c/span\u003e\u003cspan\u003e,\u003c/span\u003e\n    \u003cspan\u003e\"appId\"\u003c/span\u003e\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e\"com.example.yourapp\"\u003c/span\u003e\u003cspan\u003e,\u003c/span\u003e\n    \u003cspan\u003e\"directories\"\u003c/span\u003e\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e{\u003c/span\u003e\n      \u003cspan\u003e\"output\"\u003c/span\u003e\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e\"build\"\u003c/span\u003e\n    \u003cspan\u003e}\u003c/span\u003e\u003cspan\u003e,\u003c/span\u003e\n    \u003cspan\u003e\"files\"\u003c/span\u003e\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e[\u003c/span\u003e\n      \u003cspan\u003e\"dist/**/*\"\u003c/span\u003e\n    \u003cspan\u003e]\u003c/span\u003e\u003cspan\u003e,\u003c/span\u003e\n    \u003cspan\u003e\"dmg\"\u003c/span\u003e\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e{\u003c/span\u003e\n      \u003cspan\u003e\"contents\"\u003c/span\u003e\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e[\u003c/span\u003e\n        \u003cspan\u003e{\u003c/span\u003e\n          \u003cspan\u003e\"x\"\u003c/span\u003e\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e410\u003c/span\u003e\u003cspan\u003e,\u003c/span\u003e\n          \u003cspan\u003e\"y\"\u003c/span\u003e\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e150\u003c/span\u003e\u003cspan\u003e,\u003c/span\u003e\n          \u003cspan\u003e\"type\"\u003c/span\u003e\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e\"link\"\u003c/span\u003e\u003cspan\u003e,\u003c/span\u003e\n          \u003cspan\u003e\"path\"\u003c/span\u003e\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e\"/Applications\"\u003c/span\u003e\n        \u003cspan\u003e}\u003c/span\u003e\u003cspan\u003e,\u003c/span\u003e\n        \u003cspan\u003e{\u003c/span\u003e\n          \u003cspan\u003e\"x\"\u003c/span\u003e\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e130\u003c/span\u003e\u003cspan\u003e,\u003c/span\u003e\n          \u003cspan\u003e\"y\"\u003c/span\u003e\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e150\u003c/span\u003e\u003cspan\u003e,\u003c/span\u003e\n          \u003cspan\u003e\"type\"\u003c/span\u003e\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e\"file\"\u003c/span\u003e\n        \u003cspan\u003e}\u003c/span\u003e\n      \u003cspan\u003e]\u003c/span\u003e\n    \u003cspan\u003e}\u003c/span\u003e\u003cspan\u003e,\u003c/span\u003e\n    \u003cspan\u003e// 可以在根目录添加 static 文件夹，里面放置各个端的icon\u003c/span\u003e\n    \u003cspan\u003e\"mac\"\u003c/span\u003e\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e{\u003c/span\u003e\n      \u003cspan\u003e\"icon\"\u003c/span\u003e\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e\"static/icon.icns\"\u003c/span\u003e\n    \u003cspan\u003e}\u003c/span\u003e\u003cspan\u003e,\u003c/span\u003e\n    \u003cspan\u003e\"win\"\u003c/span\u003e\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e{\u003c/span\u003e\n      \u003cspan\u003e\"icon\"\u003c/span\u003e\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e\"static/icon.ico\"\u003c/span\u003e\n    \u003cspan\u003e}\u003c/span\u003e\u003cspan\u003e,\u003c/span\u003e\n    \u003cspan\u003e\"linux\"\u003c/span\u003e\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e{\u003c/span\u003e\n      \u003cspan\u003e\"icon\"\u003c/span\u003e\u003cspan\u003e:\u003c/span\u003e \u003cspan\u003e\"static/icons\"\u003c/span\u003e\n    \u003cspan\u003e}\u003c/span\u003e\n  \u003cspan\u003e}\u003c/span\u003e\u003cspan\u003e,\u003c/span\u003e\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e运行 \u003ccode\u003eyarn build\u003c/code\u003e会在\u003ccode\u003ebuild\u003c/code\u003e文件夹中查看打包后的软件\u003c/p\u003e\n","title":"使用webpack打包构建electron客户端","date":"2021-01-19T16:42:36.000Z","category":"软件开发","tag":"electron,webpack,typescript,react","cover":"http://img.massivejohn.com/electron-cover%201.png","description":"使用webpack构建打包electron客户端，渲染进程使用React和Typescript."}},"__N_SSG":true},"page":"/posts/[id]","query":{"id":"Electron 使用webpack打包构建electron客户端"},"buildId":"yk5Zpotj4p9R4XPv5qhw8","isFallback":false,"gsp":true,"scriptLoader":[]}</script></body></html>

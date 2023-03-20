@@ -1,0 +1,182 @@
+<!DOCTYPE html><html lang="zh-Hans"><head><meta charSet="utf-8"/><meta name="viewport" content="width=device-width"/><link rel="icon" href="/favicon.ico"/><meta name="description" content="Learn how to build a personal website using Next.js"/><meta property="og:image" content="https://og-image.now.sh/Swordword&#x27;s%20blog.png?theme=light&amp;md=0&amp;fontSize=75px&amp;images=https%3A%2F%2Fassets.vercel.com%2Fimage%2Fupload%2Ffront%2Fassets%2Fdesign%2Fnextjs-black-logo.svg"/><meta name="og:title" content="Swordword&#x27;s blog"/><title>学习笔记 GoLang:搭建Web服务器</title><meta name="next-head-count" content="7"/><link rel="preload" href="/_next/static/css/876d048b5dab7c28.css" as="style"/><link rel="stylesheet" href="/_next/static/css/876d048b5dab7c28.css" data-n-g=""/><noscript data-n-css=""></noscript><script defer="" nomodule="" src="/_next/static/chunks/polyfills-c67a75d1b6f99dc8.js"></script><script src="/_next/static/chunks/webpack-a03f34702f60fafc.js" defer=""></script><script src="/_next/static/chunks/framework-2c79e2a64abdb08b.js" defer=""></script><script src="/_next/static/chunks/main-7c48f75ce2db1491.js" defer=""></script><script src="/_next/static/chunks/pages/_app-e272e05dd28ef959.js" defer=""></script><script src="/_next/static/chunks/130-b952c5d507d712ac.js" defer=""></script><script src="/_next/static/chunks/749-555cb8054e68346e.js" defer=""></script><script src="/_next/static/chunks/241-e8e3e8578555aa77.js" defer=""></script><script src="/_next/static/chunks/783-464c81cbfd42177e.js" defer=""></script><script src="/_next/static/chunks/pages/posts/%5Bid%5D-4108770bd2d21ccc.js" defer=""></script><script src="/_next/static/yk5Zpotj4p9R4XPv5qhw8/_buildManifest.js" defer=""></script><script src="/_next/static/yk5Zpotj4p9R4XPv5qhw8/_ssgManifest.js" defer=""></script></head><body><div id="__next"><style data-emotion="css dbbey5">.css-dbbey5{width:100vw;height:100vh;overflow-y:scroll;background:#eee;color:#3c4858;padding-bottom:50px;}</style><div class="css-dbbey5"><style data-emotion="css gpj3uu">.css-gpj3uu{width:100%;height:50px;color:#fff;background-color:rgba(47,65,84,0.7);box-shadow:0 2px 5px 0 rgb(0 0 0 / 16%),0 2px 10px 0 rgb(0 0 0 / 12%);position:fixed;top:0;left:0;z-index:2;}</style><div class="css-gpj3uu"><style data-emotion="css qjodyr">.css-qjodyr{width:1100px;height:100%;margin:auto;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:justify;-webkit-justify-content:space-between;justify-content:space-between;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;}</style><div class="css-qjodyr"><a href="/"><style data-emotion="css 19m5m0c">.css-19m5m0c{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:start;-ms-flex-pack:start;-webkit-justify-content:flex-start;justify-content:flex-start;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;cursor:pointer;}</style><div class="css-19m5m0c"><style data-emotion="css l2tq7e">.css-l2tq7e{width:30px;height:30px;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;}</style><div class="css-l2tq7e"><style data-emotion="css brme6v">.css-brme6v{width:24px;height:24px;margin-left:6px;}</style><svg class="icon css-brme6v" aria-hidden="true"><use xlink:href="#icon-sword"></use></svg></div><style data-emotion="css 879ic9">.css-879ic9{margin-left:20px;}</style><div class="css-879ic9">Swordword</div></div></a><style data-emotion="css fhxb3m">.css-fhxb3m{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;}</style><div class="css-fhxb3m"><a href="/"><style data-emotion="css kfc5ms">.css-kfc5ms{width:100px;height:50px;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;cursor:pointer;}.css-kfc5ms:hover{color:#30A9DE;background-color:rgba(0,0,0,0.1);}</style><div class="css-kfc5ms"><div class="css-l2tq7e"><svg class="icon css-brme6v" aria-hidden="true"><use xlink:href="#icon-home"></use></svg></div><style data-emotion="css 1a2afmv">.css-1a2afmv{margin-left:10px;}</style><div class="css-1a2afmv">首页</div></div></a><style data-emotion="css 1lwiia1">.css-1lwiia1{width:100px;height:50px;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;cursor:pointer;position:relative;}.css-1lwiia1:hover .nav-list{display:block;}</style><div class="css-1lwiia1"><div class="css-l2tq7e"><svg class="icon css-brme6v" aria-hidden="true"><use xlink:href="#icon-list"></use></svg></div><div class="css-1a2afmv">索引</div><style data-emotion="css su4vv2">.css-su4vv2{-webkit-transition:3s ease-out;transition:3s ease-out;display:none;width:100px;position:absolute;top:50px;left:0;background-color:rgba(47,65,84,0.7);box-shadow:0 2px 5px 0 rgb(0 0 0 / 16%),0 2px 10px 0 rgb(0 0 0 / 12%);}</style><div class="nav-list css-su4vv2"><a href="/archive"><div class="css-kfc5ms"><div class="css-l2tq7e"><svg class="icon css-brme6v" aria-hidden="true"><use xlink:href="#icon-guidang"></use></svg></div><div class="css-1a2afmv">归档</div></div></a><a href="/category"><div class="css-kfc5ms"><div class="css-l2tq7e"><svg class="icon css-brme6v" aria-hidden="true"><use xlink:href="#icon-leimupinleifenleileibie2"></use></svg></div><div class="css-1a2afmv">分类</div></div></a><a href="/tag"><div class="css-kfc5ms"><div class="css-l2tq7e"><svg class="icon css-brme6v" aria-hidden="true"><use xlink:href="#icon-tag1"></use></svg></div><div class="css-1a2afmv">标签</div></div></a></div></div><a href="/about"><div class="css-kfc5ms"><div class="css-l2tq7e"><svg class="icon css-brme6v" aria-hidden="true"><use xlink:href="#icon-lianhe4"></use></svg></div><div class="css-1a2afmv">关于</div></div></a><a href="/rss"><div class="css-kfc5ms"><div class="css-l2tq7e"><svg class="icon css-brme6v" aria-hidden="true"><use xlink:href="#icon-rss"></use></svg></div><div class="css-1a2afmv">RSS</div></div></a><div class="css-l2tq7e"><svg class="icon css-brme6v" aria-hidden="true"><use xlink:href="#icon-OOjs_UI_icon_search-ltr"></use></svg></div><div class="css-1a2afmv"><div class="css-l2tq7e"><svg class="icon css-brme6v" aria-hidden="true"><use xlink:href="#icon-sun"></use></svg></div></div></div></div></div><style data-emotion="css 1739oy8">.css-1739oy8{z-index:1;}</style><div class="css-1739oy8"><style data-emotion="css z6d19t">.css-z6d19t{width:100%;height:350px;position:relative;background:url(/_next/static/media/banner.eb35a883.jpg) center;}</style><div class="css-z6d19t"></div></div><style data-emotion="css 3vwp2t">.css-3vwp2t{position:relative;width:1100px;background:#fff;padding:50px 100px;margin:-150px auto 50px;border-radius:8px;}</style><main class="css-3vwp2t"><article style="color:#3c4858"><style data-emotion="css yrjjfw">.css-yrjjfw{height:70px;margin:0;line-height:70px;text-align:center;font-size:40px;}</style><h1 class="css-yrjjfw">学习笔记 GoLang:搭建Web服务器</h1><style data-emotion="css faxeo3">.css-faxeo3{margin-left:250px;}</style><div class="css-faxeo3"><style data-emotion="css hc4w4d">.css-hc4w4d{height:40px;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:start;-ms-flex-pack:start;-webkit-justify-content:flex-start;justify-content:flex-start;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;}</style><div class="css-hc4w4d"><style data-emotion="css 12qt3ml">.css-12qt3ml{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-box-pack:start;-ms-flex-pack:start;-webkit-justify-content:flex-start;justify-content:flex-start;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;}</style><div class="css-12qt3ml"><style data-emotion="css 2ldgmb">.css-2ldgmb{color:#30a9de;}</style><small class="css-2ldgmb"><div class="css-l2tq7e"><svg class="icon css-brme6v" aria-hidden="true"><use xlink:href="#icon-time"></use></svg></div></small><style data-emotion="css qq1p72">.css-qq1p72{margin-left:10px;margin-right:20px;cursor:pointer;}</style><small class="css-qq1p72"><a href="/archive"><span><time dateTime="2021-09-18T02:46:55.000Z">21-09-18</time></span></a></small></div><div class="css-12qt3ml"><small class="css-2ldgmb"><div class="css-l2tq7e"><svg class="icon css-brme6v" aria-hidden="true"><use xlink:href="#icon-leimupinleifenleileibie2"></use></svg></div></small><small class="css-qq1p72"><a href="/category/category"><span>category</span></a></small></div><div class="css-12qt3ml"><small class="css-2ldgmb"><div class="css-l2tq7e"><svg class="icon css-brme6v" aria-hidden="true"><use xlink:href="#icon-tag1"></use></svg></div></small><small class="css-qq1p72"><a href="/tag"><span>前往标签</span></a></small></div></div></div><style data-emotion="css h25mx1">.css-h25mx1{border-bottom:1px solid #30a9de;margin-top:20px;margin-bottom:20px;}</style><div class="css-h25mx1"></div><div><h3 id="user-content-设想"><a href="#%E8%AE%BE%E6%83%B3" aria-hidden="true" tabindex="-1"><span></span></a>设想</h3>
+<p>设计两个关于唱片接口</p>
+<p><code>/albums</code> get请求返回唱片合集，post请求会根据传入的信息新建唱片</p>
+<p><code>/albums/:id</code>根据传入的id返回该唱片的信息</p>
+<h3 id="user-content-code"><a href="#code" aria-hidden="true" tabindex="-1"><span></span></a>Code</h3>
+<h4 id="user-content-获取所有唱片"><a href="#%E8%8E%B7%E5%8F%96%E6%89%80%E6%9C%89%E5%94%B1%E7%89%87" aria-hidden="true" tabindex="-1"><span></span></a>获取所有唱片</h4>
+<p>首先找一个合适的目录，新建一个文件夹<code>web-service-gin</code>, 控制台进入该文件夹， <code>go mod init</code> 初始化包：</p>
+<p><code>$ go mod init example/web-service-gin</code></p>
+<p>在该文件夹下创建 main.go 文件作为我们 RESTful 程序的入口</p>
+<pre><code><span>package</span> main
+...</code></pre>
+<p>首先定义需要返回的数据格式与mock数据</p>
+<pre><code><span>type</span> album <span>struct</span> {
+    ID     <span>string</span>  <span>`json:"id"`</span>
+    Title  <span>string</span>  <span>`json:"title"`</span>
+    Artist <span>string</span>  <span>`json:"artist"`</span>
+    Price  <span>float64</span> <span>`json:"price"`</span>
+}		
+<span>var</span> albums = []album{
+    {ID: <span>"1"</span>, Title: <span>"Blue Train"</span>, Artist: <span>"John Coltrane"</span>, Price: <span>56.99</span>},
+    {ID: <span>"2"</span>, Title: <span>"Jeru"</span>, Artist: <span>"Gerry Mulligan"</span>, Price: <span>17.99</span>},
+    {ID: <span>"3"</span>, Title: <span>"Sarah Vaughan and Clifford Brown"</span>, Artist: <span>"Sarah Vaughan"</span>, Price: <span>39.99</span>},
+}</code></pre>
+<p>定义一个方法，相当于控制器，用来返回所有mock的唱片信息</p>
+<pre><code><span>// getAlbums 以 JSON 的形式返回所有的albums信息</span>
+<span><span>func</span> <span>getAlbums</span><span>(c *gin.Context)</span></span> {
+    c.IndentedJSON(http.StatusOK, albums)
+}</code></pre>
+<blockquote>
+<p>gin.Context 用来接收http request 的入参信息等</p>
+</blockquote>
+<p>声明main函数，在main函数里面根据请求的路由走不同的控制器</p>
+<pre><code><span><span>func</span> <span>main</span><span>()</span></span> {
+	router := gin.Default()
+	router.GET(<span>"/albums"</span>, getAlbums)
+	router.Run(<span>"localhost:8080"</span>)
+}</code></pre>
+<p>需要引用自带的<code>http</code> 模块和<code>github.com/gin-gonic/gin</code>模块 ，完整代码如下：</p>
+<pre><code><span>package</span> main
+
+<span>import</span> (
+	<span>"net/http"</span>
+
+	<span>"github.com/gin-gonic/gin"</span>
+)
+
+<span>type</span> album <span>struct</span> {
+	ID     <span>string</span>  <span>`json:"id"`</span>
+	Title  <span>string</span>  <span>`json:"title"`</span>
+	Artist <span>string</span>  <span>`json:"artist"`</span>
+	Price  <span>float64</span> <span>`json:"price"`</span>
+}
+
+<span>var</span> albums = []album{
+	{ID: <span>"1"</span>, Title: <span>"Blue Train"</span>, Artist: <span>"John Coltrane"</span>, Price: <span>56.99</span>},
+	{ID: <span>"2"</span>, Title: <span>"Jeru"</span>, Artist: <span>"Gerry Mulligan"</span>, Price: <span>17.99</span>},
+	{ID: <span>"3"</span>, Title: <span>"Sarah Vaughan and Clifford Brown"</span>, Artist: <span>"Sarah Vaughan"</span>, Price: <span>39.99</span>},
+}
+
+<span><span>func</span> <span>getAlbums</span><span>(c *gin.Context)</span></span> {
+	c.IndentedJSON(http.StatusOK, albums)
+}
+
+<span><span>func</span> <span>main</span><span>()</span></span> {
+	router := gin.Default()
+	router.GET(<span>"/albums"</span>, getAlbums)
+	router.Run(<span>"localhost:8080"</span>)
+}</code></pre>
+<p>使用<code>go get</code>将 gin 作为依赖项安装</p>
+<blockquote>
+<p>go get 会从GitHub上安装gin包，需要注意网络</p>
+</blockquote>
+<p>在 项目文件夹<code>web-service-gin</code>下，执行代码：<code>go run .</code>，浏览器打开<code>[localhost:8080/albums](http://localhost:8080/albums)</code>会看到返回的 albums json 信息</p>
+<h4 id="user-content-添加唱片"><a href="#%E6%B7%BB%E5%8A%A0%E5%94%B1%E7%89%87" aria-hidden="true" tabindex="-1"><span></span></a>添加唱片</h4>
+<p>目的：当通过post方法请求/albums时，在原有的mock数据基础上添加新唱片</p>
+<p>首先创建<code>postAlbum</code>方法处理post请求的信息</p>
+<pre><code><span><span>func</span> <span>postAlbum</span><span>(c *gin.Context)</span></span> {
+	<span>var</span> newAlbum album
+	<span>if</span> err := c.BindJSON(&#x26;newAlbum); err != <span>nil</span> {
+		<span>return</span>
+	}
+	albums = <span>append</span>(albums, newAlbum)
+	c.IndentedJSON(http.StatusCreated, newAlbum)
+}</code></pre>
+<blockquote>
+<p>c.BindJSON(&#x26; newAlbum) 方法会将请求体的数据赋予 newAlbum</p>
+</blockquote>
+<p>在 mian 方法里添加对 /albums post 方法的处理:</p>
+<pre><code><span><span>func</span> <span>main</span><span>()</span></span> {
+    router := gin.Default()
+    router.GET(<span>"/albums"</span>, getAlbums)
+    router.POST(<span>"/albums"</span>, postAlbums)
+    router.Run(<span>"localhost:8080"</span>)
+}</code></pre>
+<p>重启一下 go 服务<code>go run .</code></p>
+<p>通过 curl 执行post请求</p>
+<pre><code>$ curl http://localhost:8080/albums \
+    --include \
+    --header <span>"Content-Type: application/json"</span> \
+    --request <span>"POST"</span> \
+    --data <span>'{"id": "4","title": "The Modern Sound of Betty Carter","artist": "Betty Carter","price": 49.99}'</span></code></pre>
+<p>成功后在浏览器打开 <code>http://localhost:8080/albums</code>会发现唱片集数量增加到了4个，表明我们新建唱片成功了</p>
+<h4 id="user-content-获取单个唱片的信息"><a href="#%E8%8E%B7%E5%8F%96%E5%8D%95%E4%B8%AA%E5%94%B1%E7%89%87%E7%9A%84%E4%BF%A1%E6%81%AF" aria-hidden="true" tabindex="-1"><span></span></a>获取单个唱片的信息</h4>
+<p>同样的，先创建一个方法来根据id获取唱片信息</p>
+<pre><code><span><span>func</span> <span>getAlbumByID</span><span>(c *gin.Context)</span></span> {
+	id := c.Param(<span>"id"</span>)
+	<span>for</span> _, a := <span>range</span> albums {
+		<span>if</span> a.ID == id {
+			c.IndentedJSON(http.StatusOK, a)
+			<span>return</span>
+		}
+	}
+	c.IndentedJSON(http.StatusNotFound, gin.H{<span>"message"</span>: <span>"album not found"</span>})
+}</code></pre>
+<blockquote>
+<p>c.Param("id") 即 gin.Context.Param("id") 会获得请求URL的路径参数id， go是真方便呐！</p>
+<p>一个 for 循环找到 id相同的唱片并返回，没有的话返回404</p>
+</blockquote>
+<p>在main方法里面监听 <code>/albums/:id</code></p>
+<pre><code><span><span>func</span> <span>main</span><span>()</span></span> {
+	router := gin.Default()
+	router.GET(<span>"/albums"</span>, getAlbums)
+	router.GET(<span>"/albums/:id"</span>, getAlbumByID)
+	router.POST(<span>"/albums"</span>, postAlbum)
+	router.Run(<span>"localhost:8080"</span>)
+}</code></pre>
+<p>重启项目<code>go run .</code>，在浏览打开http://localhost:8080/albums/2会看到id为2 的唱片信息</p>
+<p>将路径换成http://localhost:8080/albums/4，会发现结果为404，因为之前通过post添加的唱片信息在项目重启时已经清空了，可以再执行一边上面的curl语句，就可以开到id为4 的唱片信息了</p>
+<p>完整代码如下</p>
+<pre><code><span>package</span> main
+
+<span>import</span> (
+	<span>"net/http"</span>
+
+	<span>"github.com/gin-gonic/gin"</span>
+)
+
+<span>type</span> album <span>struct</span> {
+	ID     <span>string</span>  <span>`json:"id"`</span>
+	Title  <span>string</span>  <span>`json:"title"`</span>
+	Artist <span>string</span>  <span>`json:"artist"`</span>
+	Price  <span>float64</span> <span>`json:"price"`</span>
+}
+
+<span>var</span> albums = []album{
+	{ID: <span>"1"</span>, Title: <span>"Blue Train"</span>, Artist: <span>"John Coltrane"</span>, Price: <span>56.99</span>},
+	{ID: <span>"2"</span>, Title: <span>"Jeru"</span>, Artist: <span>"Gerry Mulligan"</span>, Price: <span>17.99</span>},
+	{ID: <span>"3"</span>, Title: <span>"Sarah Vaughan and Clifford Brown"</span>, Artist: <span>"Sarah Vaughan"</span>, Price: <span>39.99</span>},
+}
+
+<span><span>func</span> <span>getAlbums</span><span>(c *gin.Context)</span></span> {
+	c.IndentedJSON(http.StatusOK, albums)
+}
+
+<span><span>func</span> <span>postAlbum</span><span>(c *gin.Context)</span></span> {
+	<span>var</span> newAlbum album
+	<span>if</span> err := c.BindJSON(&#x26;newAlbum); err != <span>nil</span> {
+		<span>return</span>
+	}
+	albums = <span>append</span>(albums, newAlbum)
+	c.IndentedJSON(http.StatusCreated, newAlbum)
+}
+
+<span><span>func</span> <span>getAlbumByID</span><span>(c *gin.Context)</span></span> {
+	id := c.Param(<span>"id"</span>)
+	<span>for</span> _, a := <span>range</span> albums {
+		<span>if</span> a.ID == id {
+			c.IndentedJSON(http.StatusOK, a)
+			<span>return</span>
+		}
+	}
+	c.IndentedJSON(http.StatusNotFound, gin.H{<span>"message"</span>: <span>"album not found"</span>})
+}
+
+<span><span>func</span> <span>main</span><span>()</span></span> {
+	router := gin.Default()
+	router.GET(<span>"/albums"</span>, getAlbums)
+	router.GET(<span>"/albums/:id"</span>, getAlbumByID)
+	router.POST(<span>"/albums"</span>, postAlbum)
+	router.Run(<span>"localhost:8080"</span>)
+}</code></pre>
+</div></article></main></div><style data-emotion="css 1st94pw">.css-1st94pw{text-align:center;height:30px;line-height:30px;color:#333;}</style><div class="css-1st94pw"><a href="https://beian.miit.gov.cn/" target="_blank" rel="noreferrer">京ICP备19054504号-2</a></div></div><script id="__NEXT_DATA__" type="application/json">{"props":{"pageProps":{"postData":{"id":"学习笔记 GoLang:搭建web服务器","contentHtml":"\u003ch3 id=\"user-content-设想\"\u003e\u003ca href=\"#%E8%AE%BE%E6%83%B3\" aria-hidden=\"true\" tabindex=\"-1\"\u003e\u003cspan\u003e\u003c/span\u003e\u003c/a\u003e设想\u003c/h3\u003e\n\u003cp\u003e设计两个关于唱片接口\u003c/p\u003e\n\u003cp\u003e\u003ccode\u003e/albums\u003c/code\u003e get请求返回唱片合集，post请求会根据传入的信息新建唱片\u003c/p\u003e\n\u003cp\u003e\u003ccode\u003e/albums/:id\u003c/code\u003e根据传入的id返回该唱片的信息\u003c/p\u003e\n\u003ch3 id=\"user-content-code\"\u003e\u003ca href=\"#code\" aria-hidden=\"true\" tabindex=\"-1\"\u003e\u003cspan\u003e\u003c/span\u003e\u003c/a\u003eCode\u003c/h3\u003e\n\u003ch4 id=\"user-content-获取所有唱片\"\u003e\u003ca href=\"#%E8%8E%B7%E5%8F%96%E6%89%80%E6%9C%89%E5%94%B1%E7%89%87\" aria-hidden=\"true\" tabindex=\"-1\"\u003e\u003cspan\u003e\u003c/span\u003e\u003c/a\u003e获取所有唱片\u003c/h4\u003e\n\u003cp\u003e首先找一个合适的目录，新建一个文件夹\u003ccode\u003eweb-service-gin\u003c/code\u003e, 控制台进入该文件夹， \u003ccode\u003ego mod init\u003c/code\u003e 初始化包：\u003c/p\u003e\n\u003cp\u003e\u003ccode\u003e$ go mod init example/web-service-gin\u003c/code\u003e\u003c/p\u003e\n\u003cp\u003e在该文件夹下创建 main.go 文件作为我们 RESTful 程序的入口\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003e\u003cspan\u003epackage\u003c/span\u003e main\n...\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e首先定义需要返回的数据格式与mock数据\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003e\u003cspan\u003etype\u003c/span\u003e album \u003cspan\u003estruct\u003c/span\u003e {\n    ID     \u003cspan\u003estring\u003c/span\u003e  \u003cspan\u003e`json:\"id\"`\u003c/span\u003e\n    Title  \u003cspan\u003estring\u003c/span\u003e  \u003cspan\u003e`json:\"title\"`\u003c/span\u003e\n    Artist \u003cspan\u003estring\u003c/span\u003e  \u003cspan\u003e`json:\"artist\"`\u003c/span\u003e\n    Price  \u003cspan\u003efloat64\u003c/span\u003e \u003cspan\u003e`json:\"price\"`\u003c/span\u003e\n}\t\t\n\u003cspan\u003evar\u003c/span\u003e albums = []album{\n    {ID: \u003cspan\u003e\"1\"\u003c/span\u003e, Title: \u003cspan\u003e\"Blue Train\"\u003c/span\u003e, Artist: \u003cspan\u003e\"John Coltrane\"\u003c/span\u003e, Price: \u003cspan\u003e56.99\u003c/span\u003e},\n    {ID: \u003cspan\u003e\"2\"\u003c/span\u003e, Title: \u003cspan\u003e\"Jeru\"\u003c/span\u003e, Artist: \u003cspan\u003e\"Gerry Mulligan\"\u003c/span\u003e, Price: \u003cspan\u003e17.99\u003c/span\u003e},\n    {ID: \u003cspan\u003e\"3\"\u003c/span\u003e, Title: \u003cspan\u003e\"Sarah Vaughan and Clifford Brown\"\u003c/span\u003e, Artist: \u003cspan\u003e\"Sarah Vaughan\"\u003c/span\u003e, Price: \u003cspan\u003e39.99\u003c/span\u003e},\n}\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e定义一个方法，相当于控制器，用来返回所有mock的唱片信息\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003e\u003cspan\u003e// getAlbums 以 JSON 的形式返回所有的albums信息\u003c/span\u003e\n\u003cspan\u003e\u003cspan\u003efunc\u003c/span\u003e \u003cspan\u003egetAlbums\u003c/span\u003e\u003cspan\u003e(c *gin.Context)\u003c/span\u003e\u003c/span\u003e {\n    c.IndentedJSON(http.StatusOK, albums)\n}\u003c/code\u003e\u003c/pre\u003e\n\u003cblockquote\u003e\n\u003cp\u003egin.Context 用来接收http request 的入参信息等\u003c/p\u003e\n\u003c/blockquote\u003e\n\u003cp\u003e声明main函数，在main函数里面根据请求的路由走不同的控制器\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003e\u003cspan\u003e\u003cspan\u003efunc\u003c/span\u003e \u003cspan\u003emain\u003c/span\u003e\u003cspan\u003e()\u003c/span\u003e\u003c/span\u003e {\n\trouter := gin.Default()\n\trouter.GET(\u003cspan\u003e\"/albums\"\u003c/span\u003e, getAlbums)\n\trouter.Run(\u003cspan\u003e\"localhost:8080\"\u003c/span\u003e)\n}\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e需要引用自带的\u003ccode\u003ehttp\u003c/code\u003e 模块和\u003ccode\u003egithub.com/gin-gonic/gin\u003c/code\u003e模块 ，完整代码如下：\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003e\u003cspan\u003epackage\u003c/span\u003e main\n\n\u003cspan\u003eimport\u003c/span\u003e (\n\t\u003cspan\u003e\"net/http\"\u003c/span\u003e\n\n\t\u003cspan\u003e\"github.com/gin-gonic/gin\"\u003c/span\u003e\n)\n\n\u003cspan\u003etype\u003c/span\u003e album \u003cspan\u003estruct\u003c/span\u003e {\n\tID     \u003cspan\u003estring\u003c/span\u003e  \u003cspan\u003e`json:\"id\"`\u003c/span\u003e\n\tTitle  \u003cspan\u003estring\u003c/span\u003e  \u003cspan\u003e`json:\"title\"`\u003c/span\u003e\n\tArtist \u003cspan\u003estring\u003c/span\u003e  \u003cspan\u003e`json:\"artist\"`\u003c/span\u003e\n\tPrice  \u003cspan\u003efloat64\u003c/span\u003e \u003cspan\u003e`json:\"price\"`\u003c/span\u003e\n}\n\n\u003cspan\u003evar\u003c/span\u003e albums = []album{\n\t{ID: \u003cspan\u003e\"1\"\u003c/span\u003e, Title: \u003cspan\u003e\"Blue Train\"\u003c/span\u003e, Artist: \u003cspan\u003e\"John Coltrane\"\u003c/span\u003e, Price: \u003cspan\u003e56.99\u003c/span\u003e},\n\t{ID: \u003cspan\u003e\"2\"\u003c/span\u003e, Title: \u003cspan\u003e\"Jeru\"\u003c/span\u003e, Artist: \u003cspan\u003e\"Gerry Mulligan\"\u003c/span\u003e, Price: \u003cspan\u003e17.99\u003c/span\u003e},\n\t{ID: \u003cspan\u003e\"3\"\u003c/span\u003e, Title: \u003cspan\u003e\"Sarah Vaughan and Clifford Brown\"\u003c/span\u003e, Artist: \u003cspan\u003e\"Sarah Vaughan\"\u003c/span\u003e, Price: \u003cspan\u003e39.99\u003c/span\u003e},\n}\n\n\u003cspan\u003e\u003cspan\u003efunc\u003c/span\u003e \u003cspan\u003egetAlbums\u003c/span\u003e\u003cspan\u003e(c *gin.Context)\u003c/span\u003e\u003c/span\u003e {\n\tc.IndentedJSON(http.StatusOK, albums)\n}\n\n\u003cspan\u003e\u003cspan\u003efunc\u003c/span\u003e \u003cspan\u003emain\u003c/span\u003e\u003cspan\u003e()\u003c/span\u003e\u003c/span\u003e {\n\trouter := gin.Default()\n\trouter.GET(\u003cspan\u003e\"/albums\"\u003c/span\u003e, getAlbums)\n\trouter.Run(\u003cspan\u003e\"localhost:8080\"\u003c/span\u003e)\n}\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e使用\u003ccode\u003ego get\u003c/code\u003e将 gin 作为依赖项安装\u003c/p\u003e\n\u003cblockquote\u003e\n\u003cp\u003ego get 会从GitHub上安装gin包，需要注意网络\u003c/p\u003e\n\u003c/blockquote\u003e\n\u003cp\u003e在 项目文件夹\u003ccode\u003eweb-service-gin\u003c/code\u003e下，执行代码：\u003ccode\u003ego run .\u003c/code\u003e，浏览器打开\u003ccode\u003e[localhost:8080/albums](http://localhost:8080/albums)\u003c/code\u003e会看到返回的 albums json 信息\u003c/p\u003e\n\u003ch4 id=\"user-content-添加唱片\"\u003e\u003ca href=\"#%E6%B7%BB%E5%8A%A0%E5%94%B1%E7%89%87\" aria-hidden=\"true\" tabindex=\"-1\"\u003e\u003cspan\u003e\u003c/span\u003e\u003c/a\u003e添加唱片\u003c/h4\u003e\n\u003cp\u003e目的：当通过post方法请求/albums时，在原有的mock数据基础上添加新唱片\u003c/p\u003e\n\u003cp\u003e首先创建\u003ccode\u003epostAlbum\u003c/code\u003e方法处理post请求的信息\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003e\u003cspan\u003e\u003cspan\u003efunc\u003c/span\u003e \u003cspan\u003epostAlbum\u003c/span\u003e\u003cspan\u003e(c *gin.Context)\u003c/span\u003e\u003c/span\u003e {\n\t\u003cspan\u003evar\u003c/span\u003e newAlbum album\n\t\u003cspan\u003eif\u003c/span\u003e err := c.BindJSON(\u0026#x26;newAlbum); err != \u003cspan\u003enil\u003c/span\u003e {\n\t\t\u003cspan\u003ereturn\u003c/span\u003e\n\t}\n\talbums = \u003cspan\u003eappend\u003c/span\u003e(albums, newAlbum)\n\tc.IndentedJSON(http.StatusCreated, newAlbum)\n}\u003c/code\u003e\u003c/pre\u003e\n\u003cblockquote\u003e\n\u003cp\u003ec.BindJSON(\u0026#x26; newAlbum) 方法会将请求体的数据赋予 newAlbum\u003c/p\u003e\n\u003c/blockquote\u003e\n\u003cp\u003e在 mian 方法里添加对 /albums post 方法的处理:\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003e\u003cspan\u003e\u003cspan\u003efunc\u003c/span\u003e \u003cspan\u003emain\u003c/span\u003e\u003cspan\u003e()\u003c/span\u003e\u003c/span\u003e {\n    router := gin.Default()\n    router.GET(\u003cspan\u003e\"/albums\"\u003c/span\u003e, getAlbums)\n    router.POST(\u003cspan\u003e\"/albums\"\u003c/span\u003e, postAlbums)\n    router.Run(\u003cspan\u003e\"localhost:8080\"\u003c/span\u003e)\n}\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e重启一下 go 服务\u003ccode\u003ego run .\u003c/code\u003e\u003c/p\u003e\n\u003cp\u003e通过 curl 执行post请求\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003e$ curl http://localhost:8080/albums \\\n    --include \\\n    --header \u003cspan\u003e\"Content-Type: application/json\"\u003c/span\u003e \\\n    --request \u003cspan\u003e\"POST\"\u003c/span\u003e \\\n    --data \u003cspan\u003e'{\"id\": \"4\",\"title\": \"The Modern Sound of Betty Carter\",\"artist\": \"Betty Carter\",\"price\": 49.99}'\u003c/span\u003e\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e成功后在浏览器打开 \u003ccode\u003ehttp://localhost:8080/albums\u003c/code\u003e会发现唱片集数量增加到了4个，表明我们新建唱片成功了\u003c/p\u003e\n\u003ch4 id=\"user-content-获取单个唱片的信息\"\u003e\u003ca href=\"#%E8%8E%B7%E5%8F%96%E5%8D%95%E4%B8%AA%E5%94%B1%E7%89%87%E7%9A%84%E4%BF%A1%E6%81%AF\" aria-hidden=\"true\" tabindex=\"-1\"\u003e\u003cspan\u003e\u003c/span\u003e\u003c/a\u003e获取单个唱片的信息\u003c/h4\u003e\n\u003cp\u003e同样的，先创建一个方法来根据id获取唱片信息\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003e\u003cspan\u003e\u003cspan\u003efunc\u003c/span\u003e \u003cspan\u003egetAlbumByID\u003c/span\u003e\u003cspan\u003e(c *gin.Context)\u003c/span\u003e\u003c/span\u003e {\n\tid := c.Param(\u003cspan\u003e\"id\"\u003c/span\u003e)\n\t\u003cspan\u003efor\u003c/span\u003e _, a := \u003cspan\u003erange\u003c/span\u003e albums {\n\t\t\u003cspan\u003eif\u003c/span\u003e a.ID == id {\n\t\t\tc.IndentedJSON(http.StatusOK, a)\n\t\t\t\u003cspan\u003ereturn\u003c/span\u003e\n\t\t}\n\t}\n\tc.IndentedJSON(http.StatusNotFound, gin.H{\u003cspan\u003e\"message\"\u003c/span\u003e: \u003cspan\u003e\"album not found\"\u003c/span\u003e})\n}\u003c/code\u003e\u003c/pre\u003e\n\u003cblockquote\u003e\n\u003cp\u003ec.Param(\"id\") 即 gin.Context.Param(\"id\") 会获得请求URL的路径参数id， go是真方便呐！\u003c/p\u003e\n\u003cp\u003e一个 for 循环找到 id相同的唱片并返回，没有的话返回404\u003c/p\u003e\n\u003c/blockquote\u003e\n\u003cp\u003e在main方法里面监听 \u003ccode\u003e/albums/:id\u003c/code\u003e\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003e\u003cspan\u003e\u003cspan\u003efunc\u003c/span\u003e \u003cspan\u003emain\u003c/span\u003e\u003cspan\u003e()\u003c/span\u003e\u003c/span\u003e {\n\trouter := gin.Default()\n\trouter.GET(\u003cspan\u003e\"/albums\"\u003c/span\u003e, getAlbums)\n\trouter.GET(\u003cspan\u003e\"/albums/:id\"\u003c/span\u003e, getAlbumByID)\n\trouter.POST(\u003cspan\u003e\"/albums\"\u003c/span\u003e, postAlbum)\n\trouter.Run(\u003cspan\u003e\"localhost:8080\"\u003c/span\u003e)\n}\u003c/code\u003e\u003c/pre\u003e\n\u003cp\u003e重启项目\u003ccode\u003ego run .\u003c/code\u003e，在浏览打开http://localhost:8080/albums/2会看到id为2 的唱片信息\u003c/p\u003e\n\u003cp\u003e将路径换成http://localhost:8080/albums/4，会发现结果为404，因为之前通过post添加的唱片信息在项目重启时已经清空了，可以再执行一边上面的curl语句，就可以开到id为4 的唱片信息了\u003c/p\u003e\n\u003cp\u003e完整代码如下\u003c/p\u003e\n\u003cpre\u003e\u003ccode\u003e\u003cspan\u003epackage\u003c/span\u003e main\n\n\u003cspan\u003eimport\u003c/span\u003e (\n\t\u003cspan\u003e\"net/http\"\u003c/span\u003e\n\n\t\u003cspan\u003e\"github.com/gin-gonic/gin\"\u003c/span\u003e\n)\n\n\u003cspan\u003etype\u003c/span\u003e album \u003cspan\u003estruct\u003c/span\u003e {\n\tID     \u003cspan\u003estring\u003c/span\u003e  \u003cspan\u003e`json:\"id\"`\u003c/span\u003e\n\tTitle  \u003cspan\u003estring\u003c/span\u003e  \u003cspan\u003e`json:\"title\"`\u003c/span\u003e\n\tArtist \u003cspan\u003estring\u003c/span\u003e  \u003cspan\u003e`json:\"artist\"`\u003c/span\u003e\n\tPrice  \u003cspan\u003efloat64\u003c/span\u003e \u003cspan\u003e`json:\"price\"`\u003c/span\u003e\n}\n\n\u003cspan\u003evar\u003c/span\u003e albums = []album{\n\t{ID: \u003cspan\u003e\"1\"\u003c/span\u003e, Title: \u003cspan\u003e\"Blue Train\"\u003c/span\u003e, Artist: \u003cspan\u003e\"John Coltrane\"\u003c/span\u003e, Price: \u003cspan\u003e56.99\u003c/span\u003e},\n\t{ID: \u003cspan\u003e\"2\"\u003c/span\u003e, Title: \u003cspan\u003e\"Jeru\"\u003c/span\u003e, Artist: \u003cspan\u003e\"Gerry Mulligan\"\u003c/span\u003e, Price: \u003cspan\u003e17.99\u003c/span\u003e},\n\t{ID: \u003cspan\u003e\"3\"\u003c/span\u003e, Title: \u003cspan\u003e\"Sarah Vaughan and Clifford Brown\"\u003c/span\u003e, Artist: \u003cspan\u003e\"Sarah Vaughan\"\u003c/span\u003e, Price: \u003cspan\u003e39.99\u003c/span\u003e},\n}\n\n\u003cspan\u003e\u003cspan\u003efunc\u003c/span\u003e \u003cspan\u003egetAlbums\u003c/span\u003e\u003cspan\u003e(c *gin.Context)\u003c/span\u003e\u003c/span\u003e {\n\tc.IndentedJSON(http.StatusOK, albums)\n}\n\n\u003cspan\u003e\u003cspan\u003efunc\u003c/span\u003e \u003cspan\u003epostAlbum\u003c/span\u003e\u003cspan\u003e(c *gin.Context)\u003c/span\u003e\u003c/span\u003e {\n\t\u003cspan\u003evar\u003c/span\u003e newAlbum album\n\t\u003cspan\u003eif\u003c/span\u003e err := c.BindJSON(\u0026#x26;newAlbum); err != \u003cspan\u003enil\u003c/span\u003e {\n\t\t\u003cspan\u003ereturn\u003c/span\u003e\n\t}\n\talbums = \u003cspan\u003eappend\u003c/span\u003e(albums, newAlbum)\n\tc.IndentedJSON(http.StatusCreated, newAlbum)\n}\n\n\u003cspan\u003e\u003cspan\u003efunc\u003c/span\u003e \u003cspan\u003egetAlbumByID\u003c/span\u003e\u003cspan\u003e(c *gin.Context)\u003c/span\u003e\u003c/span\u003e {\n\tid := c.Param(\u003cspan\u003e\"id\"\u003c/span\u003e)\n\t\u003cspan\u003efor\u003c/span\u003e _, a := \u003cspan\u003erange\u003c/span\u003e albums {\n\t\t\u003cspan\u003eif\u003c/span\u003e a.ID == id {\n\t\t\tc.IndentedJSON(http.StatusOK, a)\n\t\t\t\u003cspan\u003ereturn\u003c/span\u003e\n\t\t}\n\t}\n\tc.IndentedJSON(http.StatusNotFound, gin.H{\u003cspan\u003e\"message\"\u003c/span\u003e: \u003cspan\u003e\"album not found\"\u003c/span\u003e})\n}\n\n\u003cspan\u003e\u003cspan\u003efunc\u003c/span\u003e \u003cspan\u003emain\u003c/span\u003e\u003cspan\u003e()\u003c/span\u003e\u003c/span\u003e {\n\trouter := gin.Default()\n\trouter.GET(\u003cspan\u003e\"/albums\"\u003c/span\u003e, getAlbums)\n\trouter.GET(\u003cspan\u003e\"/albums/:id\"\u003c/span\u003e, getAlbumByID)\n\trouter.POST(\u003cspan\u003e\"/albums\"\u003c/span\u003e, postAlbum)\n\trouter.Run(\u003cspan\u003e\"localhost:8080\"\u003c/span\u003e)\n}\u003c/code\u003e\u003c/pre\u003e\n","title":"学习笔记 GoLang:搭建Web服务器","date":"2021-09-18T02:46:55.000Z","category":"category","tag":null,"cover":null,"description":"使用 go 和 gin 开发 restful API"}},"__N_SSG":true},"page":"/posts/[id]","query":{"id":"学习笔记 GoLang:搭建web服务器"},"buildId":"yk5Zpotj4p9R4XPv5qhw8","isFallback":false,"gsp":true,"scriptLoader":[]}</script></body></html>

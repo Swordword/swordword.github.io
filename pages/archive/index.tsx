@@ -3,9 +3,9 @@ import { css } from '@emotion/react'
 import { InferGetStaticPropsType } from 'next'
 import Link from 'next/link'
 // Local
-import Layout from 'layout';
-import Date from 'components/Date';
-import { getActiveData, IAchive } from 'lib/posts'
+import Layout from '@/layout';
+import Date from '@/components/Date';
+import { getActiveData, IAchive } from '@/lib/posts'
 
 export const HeaderStyle = css`
   font-size: 24px;
@@ -29,34 +29,36 @@ export const BlogStyle = css`
     }
 `
 
-const Index = ({ achiveList, length }: InferGetStaticPropsType<typeof getStaticProps>) => (
-  <Layout>
-    <div css={HeaderStyle}>
-      共计
-      {length}
-      篇文章
-    </div>
-    {achiveList.map((achive) => (
-      <div key={achive.year}>
-        <div css={YearStyle}>
-          {achive.year}
-        </div>
-        {achive.blogList.map(((blog) => (
-          <Link href={`/posts/${blog.id}`} key={blog.id}>
-            <div css={BlogStyle}>
-              <div>{blog.title}</div>
-              <div>
-                {' '}
-                <Date dateString={blog.date} option="LL-dd" />
-              </div>
-            </div>
-          </Link>
-        )
-        ))}
+function Index({ achiveList, length }: InferGetStaticPropsType<typeof getStaticProps>) {
+  return (
+    <Layout>
+      <div css={HeaderStyle}>
+        共计
+        {length}
+        篇文章
       </div>
-    ))}
-  </Layout>
-)
+      {achiveList.map((achive) => (
+        <div key={achive.year}>
+          <div css={YearStyle}>
+            {achive.year}
+          </div>
+          {achive.blogList.map(((blog) => (
+            <Link href={`/posts/${blog.id}`} key={blog.id}>
+              <div css={BlogStyle}>
+                <div>{blog.title}</div>
+                <div>
+                  {' '}
+                  <Date dateString={blog.date} option="LL-dd" />
+                </div>
+              </div>
+            </Link>
+          )
+          ))}
+        </div>
+      ))}
+    </Layout>
+  )
+}
 
 export const getStaticProps = async () => loadAchiveData()
 

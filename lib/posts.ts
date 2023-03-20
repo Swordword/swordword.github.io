@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
-import {unified} from 'unified'
+import { unified } from 'unified'
 import slug from 'remark-slug'
 import toc from 'remark-toc'
 import markdown from 'remark-parse'
@@ -35,8 +35,8 @@ const dateStripped = (obj: { [s: string]: any }): { data?: any } => {
       }
       // ...if property is date/time, stringify/parse...
       else if (
-        typeof value === 'object'
-        && typeof value.getMonth === 'function'
+        typeof value === 'object' &&
+        typeof value.getMonth === 'function'
       ) {
         value = JSON.parse(JSON.stringify(value))
         // eslint-disable-next-line brace-style
@@ -107,7 +107,7 @@ export function getAllPostIds() {
     params: {
       id: decodeURI(fileName.replace(/\.mdx?$/, '')),
     },
-  }));
+  }))
 }
 
 // 获取单个博客的内容
@@ -156,7 +156,7 @@ const unifyAchive = (
   date: string,
   year: number,
   id: string,
-  title: string,
+  title: string
 ) => {
   const sameYear = result.find((r) => r.year === year)
   if (!sameYear) {
@@ -354,7 +354,7 @@ export const getAllPostTags = () => {
       if (!res.find((r) => r.params.tag === tag.toLowerCase())) {
         res.push({
           params: {
-            tag: tag.toLowerCase(),
+            tag: tag?.trim()?.toLowerCase() || 'unknown',
           },
         })
       }
@@ -364,7 +364,6 @@ export const getAllPostTags = () => {
 }
 
 export const getPostListByTag = (tag: string) => {
-  console.log('fn getPostListByTag', tag)
   const tagList: IAchive[] = []
   let sum = 0
   const finishFileNames = getFinishedFiles()

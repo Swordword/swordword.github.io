@@ -2,7 +2,7 @@ import { css } from '@emotion/react'
 import Link from 'next/link'
 
 // Local
-import Icon from 'components/Icon'
+import Icon from '@/components/Icon'
 
 // Type
 

@@ -5,9 +5,9 @@ import { InferGetStaticPropsType } from 'next'
 import Link from 'next/link'
 
 // Local
-import Layout from 'layout'
-import { ICategory, getCategoryData } from 'lib/posts'
-import { YearStyle, BlogStyle } from 'pages/archive'
+import Layout from '@/layout'
+import { ICategory, getCategoryData } from '@/lib/posts'
+import { YearStyle, BlogStyle } from '@/pages/archive'
 
 const CateStyle = css`
   ${YearStyle};
@@ -22,9 +22,9 @@ const CateStyle = css`
   }
 `
 
-const Index = ({
+function Index({
   categoryList,
-}: InferGetStaticPropsType<typeof getStaticProps>) => {
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   const [cateList, setCateList] = useState(categoryList)
 
   const handleClick = (cate: string) => {

@@ -8,8 +8,10 @@ import { IPostData } from '@/pages/index'
 import { ThemeContext } from '@/config/theme'
 import Label from '@/components/Label'
 
-const SingleBlog = (postData: IPostData) => {
-  const { id, title, date, tag, description, category, cover } = postData
+function SingleBlog(postData: IPostData) {
+  const {
+    id, title, date, tag, description, category, cover,
+  } = postData
   const { theme } = useContext(ThemeContext)
 
   const liStyle = css`
@@ -37,10 +39,10 @@ const SingleBlog = (postData: IPostData) => {
           `}
         >
           <Image
-            alt=''
+            alt=""
             src={cover || defaultImage}
             fill
-            sizes='100vw'
+            sizes="100vw"
             style={{
               objectFit: 'cover',
             }}

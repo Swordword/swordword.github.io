@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { ThemeContext, themes } from 'config/theme'
+import { ThemeContext, themes } from '@/config/theme'
 
 
 

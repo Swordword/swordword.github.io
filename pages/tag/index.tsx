@@ -2,8 +2,8 @@ import { InferGetStaticPropsType } from 'next'
 import Link from 'next/link'
 import { css } from '@emotion/react'
 // Local
-import Layout from 'layout'
-import { getTagData } from 'lib/posts'
+import Layout from '@/layout'
+import { getTagData } from '@/lib/posts'
 
 const tagColorList = [
   {
@@ -24,33 +24,34 @@ const tagColorList = [
   },
 ]
 
-const Index = ({ tagList }: InferGetStaticPropsType<typeof getStaticProps>) => (
-  <Layout>
-    <div
-      css={css`
+function Index({ tagList }: InferGetStaticPropsType<typeof getStaticProps>) {
+  return (
+    <Layout>
+      <div
+        css={css`
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
       `}
-    >
-      {tagList.map((a) => {
-        const selectColor = tagColorList[Math.floor(Math.random() * 4)]
-        return (
-          <span
-            key={a.tag}
-            css={css`
+      >
+        {tagList.map((a) => {
+          const selectColor = tagColorList[Math.floor(Math.random() * 4)]
+          return (
+            <span
+              key={a.tag}
+              css={css`
               width: 25%;
               margin-bottom: 12px;
             `}
-          >
-            <span
-              css={css`
+            >
+              <span
+                css={css`
                 position: relative;
               `}
-            >
-              <Link href={`/tag/${a.tag}`}>
-                <span
-                  css={css`
+              >
+                <Link href={`/tag/${a.tag}`}>
+                  <span
+                css={css`
                     display: inline-block;
                     border-radius: 4px;
                     border: 1px solid #d9ecff;
@@ -59,12 +60,12 @@ const Index = ({ tagList }: InferGetStaticPropsType<typeof getStaticProps>) => (
                     padding: 0 10px;
                     cursor: pointer;
                   `}
-                >
-                  {a.tag}
-                </span>
-              </Link>
-              <span
-                css={css`
+              >
+                {a.tag}
+              </span>
+                </Link>
+                <span
+                  css={css`
                   position: absolute;
                   top: 0;
                   right: 10px;
@@ -81,16 +82,17 @@ const Index = ({ tagList }: InferGetStaticPropsType<typeof getStaticProps>) => (
                   white-space: nowrap;
                   border: 1px solid #fff;
                 `}
-              >
-                {a.length}
+                >
+                  {a.length}
+                </span>
               </span>
             </span>
-          </span>
-        )
-      })}
-    </div>
-  </Layout>
-)
+          )
+        })}
+      </div>
+    </Layout>
+  )
+}
 export const getStaticProps = async () => {
   const tagList = await getTagData()
   console.log('tagList', tagList)

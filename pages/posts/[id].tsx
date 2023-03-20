@@ -9,13 +9,13 @@ import {
 import { css } from '@emotion/react'
 
 // Local
-import Layout from 'layout'
-import { getAllPostIds, getPostData } from 'lib/posts'
+import Layout from '@/layout'
+import { getAllPostIds, getPostData } from '@/lib/posts'
 
-import { ThemeContext } from 'config/theme'
-import Label from 'components/Label'
+import { ThemeContext } from '@/config/theme'
+import Label from '@/components/Label'
 
-const Post = ({ postData }: InferGetStaticPropsType<typeof getStaticProps>) => {
+function Post({ postData }: InferGetStaticPropsType<typeof getStaticProps>) {
   const { theme } = useContext(ThemeContext)
   return (
     <Layout>

@@ -1,45 +1,48 @@
 import Link from 'next/link'
 import { GetStaticPropsContext, InferGetStaticPropsType } from 'next'
 // Local
-import Layout from 'layout'
-import Date from 'components/Date'
-import { getAllPostTags, getPostListByTag, IAchive } from 'lib/posts'
+import Layout from '@/layout'
+import Date from '@/components/Date'
+import { getAllPostTags, getPostListByTag, IAchive } from '@/lib/posts'
 
-import { HeaderStyle, YearStyle, BlogStyle } from 'pages/archive'
+import { HeaderStyle, YearStyle, BlogStyle } from '@/pages/archive'
 
-const Category = ({
+function Category({
   achiveList,
   tag,
   length,
-}: InferGetStaticPropsType<typeof getStaticProps>) => (
-  <Layout>
-    <div css={HeaderStyle}>
-      {tag}
-      :共计
-      {length}
-      篇文章
-    </div>
-    {achiveList.map((achive) => (
-      <div key={achive.year}>
-        <div css={YearStyle}>{achive.year}</div>
-        {achive.blogList.map((blog) => (
-          <Link href={`/posts/${blog.id}`} key={blog.id}>
-            <div css={BlogStyle}>
-              <div>{blog.title}</div>
-              <div>
-                {' '}
-                <Date dateString={blog.date} option="LL-dd" />
-              </div>
-            </div>
-          </Link>
-        ))}
+}: InferGetStaticPropsType<typeof getStaticProps>) {
+  return (
+    <Layout>
+      <div css={HeaderStyle}>
+        {tag}
+        :共计
+        {length}
+        篇文章
       </div>
-    ))}
-  </Layout>
-)
+      {achiveList.map((achive) => (
+        <div key={achive.year}>
+          <div css={YearStyle}>{achive.year}</div>
+          {achive.blogList.map((blog) => (
+            <Link href={`/posts/${blog.id}`} key={blog.id}>
+              <div css={BlogStyle}>
+                <div>{blog.title}</div>
+                <div>
+                  {' '}
+                  <Date dateString={blog.date} option="LL-dd" />
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      ))}
+    </Layout>
+  )
+}
 
 export const getStaticPaths = () => {
   const paths = getAllPostTags()
+  console.log('paths', paths)
   return {
     paths,
     fallback: false,

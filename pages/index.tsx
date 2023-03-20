@@ -3,9 +3,9 @@ import Head from 'next/head';
 import { InferGetStaticPropsType } from 'next';
 import { css } from '@emotion/react'
 // Local
-import Layout, { siteTitle } from 'layout';
-import { getSortedPostsData } from 'lib/posts';
-import SingleBlog from 'components/SingleBlog'
+import Layout, { siteTitle } from '@/layout';
+import { getSortedPostsData } from '@/lib/posts';
+import SingleBlog from '@/components/SingleBlog'
 
 export type IPostData = {
   id: string;

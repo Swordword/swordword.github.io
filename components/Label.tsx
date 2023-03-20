@@ -100,7 +100,7 @@ const Label = (props: IProps) => {
         </small>
       </div>
     </div>
-  )
+  );
 }
 
 export default Label

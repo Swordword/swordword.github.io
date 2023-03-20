@@ -5,8 +5,8 @@ import { css } from '@emotion/react'
 import { ThemeContext, themes } from '../config/theme'
 // 用于引入全局样式
 // import ''
-import 'styles/global.css'
-import 'highlight.js/scss/vs2015.scss'
+import '@/styles/global.css'
+// import 'highlight.js/scss/vs2015.scss'
 
 function statistics() {
   // var _hmt = _hmt || [];

@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
-import unified from 'unified'
+import {unified} from 'unified'
 import slug from 'remark-slug'
 import toc from 'remark-toc'
 import markdown from 'remark-parse'
@@ -57,12 +57,13 @@ const dateStripped = (obj: { [s: string]: any }): { data?: any } => {
  */
 const getFinishedFiles = () => {
   const fileNames = fs.readdirSync(postsDirectory)
-  const unfinishedTag = '[未完待续...]'
-  return fileNames.filter((fileName) => {
-    const filePath = path.resolve(postsDirectory, fileName)
-    const content = fs.readFileSync(filePath, 'utf-8')
-    return !content.trim().endsWith(unfinishedTag)
-  })
+  // const unfinishedTag = '[未完待续...]'
+  // return fileNames.filter((fileName) => {
+  //   const filePath = path.resolve(postsDirectory, fileName)
+  //   const content = fs.readFileSync(filePath, 'utf-8')
+  //   return !content.trim().endsWith(unfinishedTag)
+  // })
+  return fileNames
 }
 
 // index page blog 列表
@@ -106,7 +107,7 @@ export function getAllPostIds() {
     params: {
       id: decodeURI(fileName.replace(/\.mdx?$/, '')),
     },
-  }))
+  }));
 }
 
 // 获取单个博客的内容
@@ -321,7 +322,6 @@ export const getTagData = () => {
     const filePath = path.join(postsDirectory, fileName)
     const fileContents = fs.readFileSync(filePath, 'utf8')
     const matterResult = matter(fileContents)
-    console.log('matterResult', matterResult.data)
     const tags = matterResult.data.tag
     if (!tags) return
     const tagList: string[] = tags.split(/[,|，|、]/)
@@ -337,7 +337,6 @@ export const getTagData = () => {
       }
     })
   })
-  console.log('res', res)
   return res
 }
 
@@ -399,7 +398,6 @@ export const getPostListByTag = (tag: string) => {
     length: sum,
     tagList,
   }
-  console.log('res', res)
   // 嵌套对象使用 getStaticProps 需要序列化
   return JSON.stringify(res)
 }

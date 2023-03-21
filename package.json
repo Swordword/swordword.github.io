@@ -5,8 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "start": "next start --port 8001",
-    "export": "next export",
     "build": "next build && next export",
+    "export": "next export",
     "prepare": "husky install",
     "lint": "next lint",
     "new": "plop blog"

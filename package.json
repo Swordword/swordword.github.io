@@ -5,11 +5,11 @@
   "scripts": {
     "dev": "next dev",
     "start": "next start --port 8001",
-    "build": "next build",
-    "new": "plop blog",
     "export": "next export",
+    "build": "next build && next export",
     "prepare": "husky install",
-    "lint": "next lint"
+    "lint": "next lint",
+    "new": "plop blog"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [

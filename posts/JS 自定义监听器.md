@@ -99,7 +99,7 @@ setTimeout(() => {
 
 ```
 
-当然，如果你不想用`class`的话，用函数也可以实现（PS，这个世界越来越奇怪了，JS在向class靠，而C++却在惦记着函数式编程。。。）
+当然，如果你不想用`class`的话，用函数也可以实现
 
 ```js
 function EventEmiter() {}

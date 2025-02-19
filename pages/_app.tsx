@@ -25,10 +25,6 @@ export default function App({ Component, pageProps }: AppProps) {
   }
   React.useEffect(() => {
     statistics()
-    if (typeof window !== 'undefined') {
-      // eslint-disable-next-line global-require
-      require('images/iconfonts/iconfont')
-    }
   })
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>

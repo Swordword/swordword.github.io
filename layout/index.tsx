@@ -39,11 +39,13 @@ export default function Layout({
       </Head>
 
       <Header />
-      <Banner />
-
-      <main className="container relative max-w-[1100px] bg-card text-card-foreground rounded-lg shadow-lg mx-auto -mt-40 mb-12 px-8 py-12">
-        {children}
-      </main>
+      
+      <div className="pt-16"> {/* Add padding-top to account for fixed header */}
+        <Banner />
+        <main className="container relative max-w-[1100px] bg-card text-card-foreground rounded-lg shadow-lg mx-auto -mt-40 mb-12 px-8 py-12">
+          {children}
+        </main>
+      </div>
     </div>
   );
 }

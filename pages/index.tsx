@@ -1,7 +1,6 @@
 // Package
 import Head from 'next/head';
 import { InferGetStaticPropsType } from 'next';
-import { css } from '@emotion/react'
 // Local
 import Layout, { siteTitle } from '@/layout';
 import { getSortedPostsData } from '@/lib/posts';
@@ -25,27 +24,21 @@ export default function Home({
       <Head>
         <title>{siteTitle}</title>
       </Head>
-      <section>
-        <ul css={css`
-        padding:0;
-        `}
-        >
-          {allPostsData.map((postData) => (
-            <SingleBlog
-              id={postData.id}
-              title={postData.title}
-              tag={postData.tag}
-              description={postData.description}
-              date={postData.date}
-              category={postData.category}
-              cover={postData.cover}
-              key={postData.id}
-            />
-          ))}
-        </ul>
-      </section>
+      <div className="space-y-6">
+        {allPostsData.map((postData) => (
+          <SingleBlog
+            id={postData.id}
+            title={postData.title}
+            tag={postData.tag}
+            description={postData.description}
+            date={postData.date}
+            category={postData.category}
+            cover={postData.cover}
+            key={postData.id}
+          />
+        ))}
+      </div>
     </Layout>
-
   );
 }
 

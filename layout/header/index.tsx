@@ -1,43 +1,16 @@
-// Package
-import { css } from '@emotion/react'
 // Local
 import Title from './Title'
 import NavList from './NavList'
 import ThemeSwitch from './ThemeSwitch'
-// Style
-const bgColor = 'rgba(47,65,84,0.7)'
-const color = '#fff'
-
-const style = css`
-  width:100%;
-  height:50px;
-  color:${color};
-  background-color: ${bgColor};
-  box-shadow:0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
-  position: fixed;
-  top:0;
-  left:0;
-  z-index:2;
-`
-const style2 = css`
-  width: 1100px;
-  height: 100%;
-  margin: auto;
-  display: flex;
-  flex-direction: row;
-  justify-content:space-between;
-  align-items:center;
-`
 
 const Header = () => {
   return (
-    <div css={style}
-    >
-      <div css={style2}>
+    <header className="fixed top-0 left-0 w-full h-16 bg-background/80 backdrop-blur-md z-50 border-b border-border/40">
+      <div className="container h-full max-w-[1100px] mx-auto px-4 flex items-center justify-between">
         <Title />
         <NavList />
       </div>
-    </div>
+    </header>
   )
 }
 

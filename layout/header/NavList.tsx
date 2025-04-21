@@ -1,16 +1,25 @@
-import { css } from '@emotion/react'
 import Link from 'next/link'
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+  navigationMenuTriggerStyle,
+} from "@/components/ui/navigation-menu"
+import { cn } from "@/lib/utils"
 
 // Local
 import Icon from '@/components/Icon'
 
 // Type
-
 type Itype = {
   icon: string
   text: string
   path: string
 }
+
 const navList: Itype[] = [
   {
     icon: "#icon-lianhe4",
@@ -23,6 +32,7 @@ const navList: Itype[] = [
     path: "/rss",
   },
 ]
+
 const insideNavList: Itype[] = [
   {
     icon: "#icon-guidang",
@@ -41,84 +51,74 @@ const insideNavList: Itype[] = [
   }
 ]
 
-const gridStyle = css`
-  width:100px;
-  height:50px;
-  display: flex;
-  align-items: center;
-  cursor: pointer;
-  &:hover {
-    color:#30A9DE;
-    background-color: rgba(0,0,0,0.1);
-  }
-`
-
-
-const createNav = ({ icon, text, path }: Itype) =>
-  <Link href={path} key={text}>
-    <div css={gridStyle}>
-      <Icon src={icon} />
-      <div css={css`
-        margin-left:10px;`
-      }
-      >
-        {text}
-      </div>
-    </div>
-  </Link>
-
 const NavList = () => {
   return (
-    <div
-      css={css`
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-    `}
-    >
-      {createNav({ icon: '#icon-home', text: '首页', path: '/' })}
+    <NavigationMenu>
+      <NavigationMenuList>
+        <NavigationMenuItem>
+          <Link href="/" legacyBehavior passHref>
+            <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+              <span className="flex items-center">
+                <Icon src="#icon-home" />
+                <span className="ml-2">首页</span>
+              </span>
+            </NavigationMenuLink>
+          </Link>
+        </NavigationMenuItem>
 
-      <div css={css`
-      width:100px;
-      height:50px;
-      display: flex;
-      align-items: center;
-      cursor: pointer;
-      position: relative;
-      &:hover{
-        .nav-list{
-          display:block;
-        }
-      }
-     `}>
-        <Icon src='#icon-list' />
-        <div css={css`
-        margin-left:10px;`
-        }
-        >
-          索引
-        </div>
-        <div className="nav-list" css={css`
-         transition: 3s ease-out;
-        display:none;
-          width: 100px;
-          position: absolute;
-          top: 50px;
-          left: 0;
-          background-color: rgba(47,65,84,0.7);
-          box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);`}>
-          {
-            insideNavList.map(nav => createNav(nav))
-          }
-        </div>
-      </div>
-      {navList.map(nav => createNav(nav))}
-      <Icon src="#icon-OOjs_UI_icon_search-ltr" />
-      <div css={css`
-      margin-left:10px;`}>
-        <Icon src="#icon-sun" />
-      </div>
-    </div >
+        <NavigationMenuItem>
+          <NavigationMenuTrigger>
+            <span className="flex items-center">
+              <Icon src="#icon-list" />
+              <span className="ml-2">索引</span>
+            </span>
+          </NavigationMenuTrigger>
+          <NavigationMenuContent>
+            <ul className="grid w-[200px] gap-3 p-4">
+              {insideNavList.map((item) => (
+                <li key={item.path}>
+                  <Link href={item.path} legacyBehavior passHref>
+                    <NavigationMenuLink className={cn(
+                      "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
+                    )}>
+                      <div className="flex items-center">
+                        <Icon src={item.icon} />
+                        <span className="ml-2">{item.text}</span>
+                      </div>
+                    </NavigationMenuLink>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </NavigationMenuContent>
+        </NavigationMenuItem>
+
+        {navList.map((item) => (
+          <NavigationMenuItem key={item.path}>
+            <Link href={item.path} legacyBehavior passHref>
+              <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+                <span className="flex items-center">
+                  <Icon src={item.icon} />
+                  <span className="ml-2">{item.text}</span>
+                </span>
+              </NavigationMenuLink>
+            </Link>
+          </NavigationMenuItem>
+        ))}
+
+        <NavigationMenuItem>
+          <button className="p-2 hover:bg-accent rounded-md">
+            <Icon src="#icon-OOjs_UI_icon_search-ltr" />
+          </button>
+        </NavigationMenuItem>
+
+        <NavigationMenuItem>
+          <button className="p-2 hover:bg-accent rounded-md">
+            <Icon src="#icon-sun" />
+          </button>
+        </NavigationMenuItem>
+      </NavigationMenuList>
+    </NavigationMenu>
   )
 }
 

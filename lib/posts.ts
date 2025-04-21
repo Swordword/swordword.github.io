@@ -74,6 +74,7 @@ export function getSortedPostsData() {
     const id = encodeURI(fileName.replace(/\.mdx?$/, ''))
     const fullPath = path.join(postsDirectory, fileName)
     const fileContents = fs.readFileSync(fullPath, 'utf8')
+    console.log('fileContents', fileContents)
     const matterResult = matter(fileContents)
     return {
       id,

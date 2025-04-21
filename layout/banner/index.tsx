@@ -1,23 +1,18 @@
 import Image from 'next/image'
-import { css } from '@emotion/react'
 import backageBanner from '@/images/banner.jpg'
 
-const Index = () => (
-  <div
-    css={css`
-      z-index: 1;
-    `}
-  >
-    <div
-      css={css`
-        width: 100%;
-        height: 350px;
-        position: relative;
-        background: url(${backageBanner.src}) center;
-      `}
-    >
+const Banner = () => (
+  <div className="relative z-10">
+    <div className="w-full h-[350px] relative">
+      <Image
+        src={backageBanner}
+        alt="Banner"
+        fill
+        className="object-cover"
+        priority
+      />
     </div>
   </div>
 )
 
-export default Index
+export default Banner

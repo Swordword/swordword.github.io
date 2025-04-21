@@ -2,14 +2,10 @@
 import React, { useContext } from 'react'
 import Head from 'next/head';
 
-import { css } from '@emotion/react'
-
 // Local
 import Header from './header'
 import Banner from './banner'
-
 import { ThemeContext } from '../config/theme'
-// Style
 
 export const siteTitle = "Swordword's blog";
 
@@ -25,17 +21,8 @@ export default function Layout({
 }) {
   const { theme } = useContext(ThemeContext)
 
-  const LayoutStyle = css`
-  width: 100vw;
-  height: 100vh;
-  overflow-y: scroll;
-  background: ${theme.background};         
-  color: ${theme.foreground};
-  padding-bottom: 50px
-`
-
   return (
-    <div css={LayoutStyle}>
+    <div className="min-h-screen bg-background text-foreground overflow-x-hidden">
       <Head>
         <link rel="icon" href="/favicon.ico" />
         <meta
@@ -52,21 +39,11 @@ export default function Layout({
       </Head>
 
       <Header />
-
       <Banner />
 
-      <main css={css`
-        position:relative;
-        width: 1100px;
-        background: #fff;
-        padding: 50px 100px;
-        margin: -150px auto 50px;
-        border-radius: 8px;`}
-      >
+      <main className="container relative max-w-[1100px] bg-card text-card-foreground rounded-lg shadow-lg mx-auto -mt-40 mb-12 px-8 py-12">
         {children}
       </main>
-
     </div>
-
   );
 }
